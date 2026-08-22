@@ -121,7 +121,7 @@ function CandleChart({ small = false, language = 'ko' }: { small?: boolean; lang
         return (
           <g key={x}>
             <line x1={x} x2={x} y1={high} y2={low} stroke={color} strokeWidth="1" />
-            <rect x={x - 2.2} y={Math.min(open, close)} width="4.4" height="8" rx=".8" fill={color} />
+            <rect x={x - 2.2} y={Math.min(open, close)} width="4.4" height={Math.max(3, Math.abs(close - open))} fill={color} />
           </g>
         );
       })}
@@ -216,7 +216,7 @@ export default function App() {
               <p className="hero-note"><LockKeyhole size={14} /> {t.note}</p>
             </div>
             <div className="hero-visual">
-              <div className="visual-caption"><span><i className="status-dot" /> {t.preview}</span><span>BTC/USDT · 4H</span></div>
+              <div className="visual-caption"><span>{isEnglish ? 'CHART PREVIEW' : '차트 미리보기'}</span><span>BTC/USDT · 4H</span></div>
               <div className="hero-chart-window">
                 <div className="chart-window-head"><span>BTC/USDT <b>4H</b></span><span className="chart-price">63,869.0 <small>+1.42%</small></span></div>
                 <CandleChart language={language} />
