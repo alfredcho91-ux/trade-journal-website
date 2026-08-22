@@ -23,6 +23,7 @@ import {
 import './styles.css';
 
 const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-Windows.zip';
+const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-macOS.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 type Language = 'ko' | 'en';
 
@@ -96,9 +97,9 @@ function ProductLogo() {
   );
 }
 
-function DownloadButton({ compact = false, label }: { compact?: boolean; label: string }) {
+function DownloadButton({ compact = false, label, href = releaseUrl }: { compact?: boolean; label: string; href?: string }) {
   return (
-    <a className={`button button-primary ${compact ? 'button-compact' : ''}`} href={releaseUrl}>
+    <a className={`button button-primary ${compact ? 'button-compact' : ''}`} href={href}>
       <Download size={compact ? 16 : 18} />
       {label}
       <ArrowRight size={compact ? 15 : 17} />
@@ -256,7 +257,7 @@ export default function App() {
 
         <section id="faq" className="section section-faq"><div className="container faq-layout"><div className="faq-heading"><span className="eyebrow">FAQ</span><h2 dangerouslySetInnerHTML={{ __html: t.faqTitle }} /><CircleHelp size={38} /></div><div className="faq-list">{faqsByLanguage[language].map((faq, index) => <FAQItem key={faq.question} {...faq} open={openFaq === index} onToggle={() => setOpenFaq(openFaq === index ? -1 : index)} />)}</div></div></section>
 
-        <section className="download-section"><div className="container download-inner"><div><span className="eyebrow">{t.downloadEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.downloadTitle }} /><p>{t.downloadCopy}</p></div><div className="download-side"><DownloadButton label={t.download} /><a className="text-link muted-link" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={16} /> {t.source}</a></div></div></section>
+        <section className="download-section"><div className="container download-inner"><div><span className="eyebrow">{t.downloadEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.downloadTitle }} /><p>{t.downloadCopy}</p></div><div className="download-side"><div className="download-buttons"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /></div><a className="text-link muted-link" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={16} /> {t.source}</a></div></div></section>
       </main>
 
       <footer className="site-footer"><div className="container footer-inner"><ProductLogo /><p>{t.footer}</p><div className="footer-links"><a href="#features">{t.links[0]}</a><a href="#security">{t.links[1]}</a><a href="#faq">{t.links[2]}</a><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a></div><span className="copyright">{t.copyright}</span></div></footer>

@@ -20,7 +20,7 @@ Browser
 - `src/main.tsx`: 섹션 구성, 제품 미리보기, FAQ 상태, 다운로드 URL
 - `src/styles.css`: 반응형 어두운 트레이딩 플랫폼 스타일
 - `public/_redirects`: 정적 호스팅 SPA fallback
-- `VITE_WINDOWS_RELEASE_URL`: 공개 Windows ZIP 링크를 교체할 수 있는 선택적 환경변수
+- `VITE_WINDOWS_RELEASE_URL`, `VITE_MACOS_RELEASE_URL`: 공개 Windows/macOS ZIP 링크를 교체할 수 있는 선택적 환경변수
 
 제품 미리보기는 실제 무료판 화면의 정보 구조를 설명하기 위한 정적 UI입니다. 거래 데이터나 실시간 시세를 호출하지 않습니다.
 
