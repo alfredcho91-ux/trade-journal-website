@@ -9,6 +9,7 @@ Trade Journal Free의 공식 소개·다운로드용 정적 웹사이트입니�
 - 매매일지·매매분석·Risk Lab 화면 미리보기
 - 읽기 전용 API와 로컬 저장 보안 설명
 - FAQ
+- 거래소 API 발급·권한 설정·프로그램 연결 방법 안내
 - GitHub Releases 최신 Windows/macOS ZIP 다운로드 링크
 
 ## 로컬 실행

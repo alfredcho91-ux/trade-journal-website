@@ -199,6 +199,28 @@ function FAQItem({ question, answer, open, onToggle }: { question: string; answe
   );
 }
 
+function ApiConnectionGuide({ language }: { language: Language }) {
+  const isEnglish = language === 'en';
+  const steps = isEnglish ? [
+    ['Open API management', 'Sign in to your exchange, open API Management or API Keys, and choose Create API Key. Menu names vary by exchange.'],
+    ['Choose read-only access', 'Enable only read or view permissions. Keep order, cancellation, futures trading, and withdrawal permissions disabled.'],
+    ['Add an IP restriction when available', 'If the exchange supports an IP whitelist, use it. This adds another barrier if the key is exposed.'],
+    ['Copy the credentials once', 'Copy the API key and secret to a safe place. Some exchanges show the secret only once. Enter a passphrase only when that exchange requires one.'],
+    ['Connect inside the app', 'Open the exchange connection screen in Trade Journal Free, select the exchange, enter the key, secret, and required passphrase, then run the connection test.'],
+    ['Sync and remove when finished', 'Sync the trade history after the connection succeeds. If you stop using the connection, delete it from the app and revoke the key at the exchange.'],
+  ] : [
+    ['거래소의 API 관리 메뉴 열기', '거래소에 로그인한 뒤 API Management 또는 API Keys 메뉴에서 API Key 생성을 선택합니다. 거래소마다 메뉴 이름은 다를 수 있습니다.'],
+    ['읽기 전용 권한만 선택하기', 'Read 또는 View 권한만 켜세요. 주문·취소·선물 거래·출금 권한은 모두 끈 상태로 둡니다.'],
+    ['가능하면 IP 제한 설정하기', '거래소가 IP 화이트리스트를 지원한다면 함께 설정하세요. API Key가 노출됐을 때 추가 보호막이 됩니다.'],
+    ['발급 정보 안전하게 복사하기', 'API Key와 Secret Key를 안전한 곳에 복사합니다. 거래소에 따라 Secret은 발급 직후 한 번만 보여줍니다. Passphrase는 해당 거래소가 요구할 때만 입력합니다.'],
+    ['프로그램에서 거래소 연결하기', 'Trade Journal Free의 거래소 연결 화면을 열고 거래소를 선택한 뒤 Key, Secret, 필요한 Passphrase를 입력하고 연결 테스트를 실행합니다.'],
+    ['동기화 후 필요하면 삭제하기', '연결 테스트가 성공하면 거래 기록을 동기화합니다. 더 이상 사용하지 않을 때는 프로그램에서 연결을 삭제하고 거래소에서도 API Key를 폐기하세요.'],
+  ];
+  return (
+    <div className="api-guide"><div className="api-guide-heading"><span className="eyebrow">{isEnglish ? 'API CONNECTION GUIDE' : 'API 발급 및 연결 안내'}</span><h3>{isEnglish ? 'Connect safely in a few steps.' : '안전하게 연결하는 순서'}</h3><p>{isEnglish ? 'The exact menu differs by exchange, but the permission rule is always the same: read-only access only.' : '거래소마다 메뉴 이름은 다르지만, 권한 원칙은 같습니다. 거래 기록을 읽는 권한만 사용하세요.'}</p></div><div className="api-step-grid">{steps.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h4>{title}</h4><p>{copy}</p></div></article>)}</div><div className="api-safety-note"><ShieldCheck size={19} /><p>{isEnglish ? 'Before saving: confirm that withdrawal and order permissions are off. Trade Journal Free is for recording and analysis; it does not need permission to trade.' : '저장하기 전 출금·주문 권한이 꺼져 있는지 다시 확인하세요. Trade Journal Free는 기록과 분석을 위한 프로그램이라 거래 권한이 필요하지 않습니다.'}</p></div></div>
+  );
+}
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
@@ -287,7 +309,7 @@ export default function App() {
 
         <section className="security-proof"><div className="container security-proof-inner"><span className="security-badge"><ShieldCheck size={15} /> {isEnglish ? 'READ ONLY' : '읽기 전용'}</span><span className="security-badge"><Database size={15} /> {isEnglish ? 'LOCAL DATA' : '내 컴퓨터에 저장'}</span><span className="security-badge"><LockKeyhole size={15} /> {isEnglish ? 'NO TRADE EXECUTION' : '주문 실행 없음'}</span><p>{isEnglish ? 'Use a read-only key, keep your records local, and review trades without giving the app order access.' : '읽기 전용 키를 사용하고, 기록은 내 컴퓨터에 보관하며, 주문 권한 없이 거래를 복기합니다.'}</p></div></section>
 
-        <section id="how-to" className="section section-workflow"><div className="container"><div className="workflow-intro"><span className="eyebrow">{isEnglish ? 'HOW TO USE' : '사용 방법'}</span><h2>{isEnglish ? <>Download, connect,<br /><span>then review your next trade.</span></> : <>설치하고, 연결하고,<br /><span>다음 거래를 복기하세요.</span></>}</h2></div><div className="workflow-grid">{t.workflow.map(([title, copy], index) => { const Icon = [MonitorDown, Layers3, Sparkles][index]; return <div key={title}><span>{`0${index + 1}`}</span><Icon size={22} /><h3>{title}</h3><p>{copy}</p></div>; })}</div></div></section>
+        <section id="how-to" className="section section-workflow"><div className="container"><div className="workflow-intro"><span className="eyebrow">{isEnglish ? 'HOW TO USE' : '사용 방법'}</span><h2>{isEnglish ? <>Download, connect,<br /><span>then review your next trade.</span></> : <>설치하고, 연결하고,<br /><span>다음 거래를 복기하세요.</span></>}</h2></div><div className="workflow-grid">{t.workflow.map(([title, copy], index) => { const Icon = [MonitorDown, Layers3, Sparkles][index]; return <div key={title}><span>{`0${index + 1}`}</span><Icon size={22} /><h3>{title}</h3><p>{copy}</p></div>; })}</div><ApiConnectionGuide language={language} /></div></section>
 
         <section id="faq" className="section section-faq"><div className="container faq-layout"><div className="faq-heading"><span className="eyebrow">FAQ</span><h2 dangerouslySetInnerHTML={{ __html: t.faqTitle }} /><CircleHelp size={38} /></div><div className="faq-list">{faqsByLanguage[language].map((faq, index) => <FAQItem key={faq.question} {...faq} open={openFaq === index} onToggle={() => setOpenFaq(openFaq === index ? -1 : index)} />)}</div></div></section>
 
