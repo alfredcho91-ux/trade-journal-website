@@ -38,9 +38,9 @@ const heroLeadByLanguage = {
 } as const;
 const advancedFeaturesByLanguage = {
   ko: [
-    ['MFE / MAE 분석', '진입 뒤 얼마나 유리했고 불리했는지 확인해 좋은 진입과 무리한 진입을 구분합니다.'],
-    ['SL / TP 시뮬레이션', '가격 기준 손절·익절 조합을 비교해 내 거래에 맞는 위험 경계를 찾습니다.'],
-    ['시장 국면별 성과', 'Weekly·Daily·4H 추세 조합 중 어떤 시장 상황에서 성과가 좋은지 확인합니다.'],
+    ['진입 후 유리·불리한 움직임', '진입 뒤 가장 많이 올랐던 폭과 가장 많이 밀렸던 폭을 확인해 좋은 진입과 무리한 진입을 구분합니다.'],
+    ['손절·익절 조합 비교', '가격 기준 손절과 익절 조합을 비교해 내 거래에 맞는 위험 경계를 찾습니다.'],
+    ['시장 흐름별 성과', '주봉·일봉·4시간봉 추세 조합 중 어떤 시장 상황에서 성과가 좋은지 확인합니다.'],
     ['조기청산 / 추가 보유', '조금 더 보유했을 때의 결과와 실제 청산을 비교해 청산 타이밍을 돌아봅니다.'],
     ['진입 후 가격 흐름', '청산 뒤 가격이 어떻게 움직였는지 확인해 한 줄 요약 이상의 맥락을 얻습니다.'],
     ['승리·손실 패턴 비교', '승리 거래와 손실 거래의 지표·방향·행동 차이를 비교해 반복 조건을 찾습니다.'],
@@ -76,7 +76,7 @@ const featuresByLanguage = {
     icon: BarChart3,
     eyebrow: 'ANALYSIS',
     title: '감이 아니라 근거로 개선',
-    copy: '승패, 추세 국면, 행동 태그, 손절과 SL/TP 시뮬레이션으로 반복되는 실수를 찾습니다.',
+    copy: '승패, 추세 흐름, 행동 태그, 손절과 익절 비교로 반복되는 실수를 찾습니다.',
     accent: 'amber',
   },
   ],
@@ -184,8 +184,8 @@ function RiskPreview({ language }: { language: Language }) {
   const isEnglish = language === 'en';
   return (
     <div className="app-window risk-window">
-      <div className="window-topbar"><span className="window-dots"><i /><i /><i /></span><span>Risk Lab <em>PRICE BASED</em></span><span className="window-menu">•••</span></div>
-      <div className="risk-preview-body"><div className="analysis-title"><span className="mini-kicker">RISK LAB</span><h3>{isEnglish ? 'Find a better risk boundary' : '손실의 경계를 찾기'}</h3></div><div className="risk-tool-row"><label>SL (%)<b>1.5</b></label><label>TP (%)<b>3.0</b></label><button>{isEnglish ? 'Run analysis' : '분석 실행'} <ArrowRight size={13} /></button></div><div className="heatmap"><span className="heatmap-title">{isEnglish ? 'SL × TP expectancy' : 'SL × TP 기대값'}</span><div className="heatmap-grid">{['+0.08%', '+0.12%', '+0.21%', '-0.04%', '+0.17%', '+0.34%', '-0.12%', '+0.04%', '+0.19%', '-0.22%', '-0.08%', '+0.07%'].map((value, index) => <span className={value.startsWith('+') ? 'heat-positive' : 'heat-negative'} key={index}>{value}</span>)}</div></div><div className="recommendation"><span>{isEnglish ? 'Suggested range' : '추천 범위'}</span><strong>SL 1.3% ~ 1.8%</strong><small>{isEnglish ? 'Price movement · per-trade expectancy' : '가격 움직임 기준 · 거래당 기대값으로 비교'}</small></div></div>
+      <div className="window-topbar"><span className="window-dots"><i /><i /><i /></span><span>{isEnglish ? 'Risk Lab' : '위험 분석'} <em>{isEnglish ? 'PRICE BASED' : '가격 기준'}</em></span><span className="window-menu">•••</span></div>
+      <div className="risk-preview-body"><div className="analysis-title"><span className="mini-kicker">{isEnglish ? 'RISK LAB' : '위험 분석'}</span><h3>{isEnglish ? 'Find a better risk boundary' : '감당할 손실 범위 찾기'}</h3></div><div className="risk-tool-row"><label>{isEnglish ? 'SL (%)' : '손절 (%)'}<b>1.5</b></label><label>{isEnglish ? 'TP (%)' : '익절 (%)'}<b>3.0</b></label><button>{isEnglish ? 'Run analysis' : '분석 실행'} <ArrowRight size={13} /></button></div><div className="heatmap"><span className="heatmap-title">{isEnglish ? 'SL × TP expectancy' : '손절 × 익절 기대값'}</span><div className="heatmap-grid">{['+0.08%', '+0.12%', '+0.21%', '-0.04%', '+0.17%', '+0.34%', '-0.12%', '+0.04%', '+0.19%', '-0.22%', '-0.08%', '+0.07%'].map((value, index) => <span className={value.startsWith('+') ? 'heat-positive' : 'heat-negative'} key={index}>{value}</span>)}</div></div><div className="recommendation"><span>{isEnglish ? 'Suggested range' : '추천 범위'}</span><strong>{isEnglish ? 'SL 1.3% ~ 1.8%' : '손절 1.3% ~ 1.8%'}</strong><small>{isEnglish ? 'Price movement · per-trade expectancy' : '가격 움직임 기준 · 거래당 기대값으로 비교'}</small></div></div>
     </div>
   );
 }
@@ -244,7 +244,7 @@ export default function App() {
               <h1>{isEnglish ? <>Find patterns in your trades,<br /><span>build your own trading rules.</span></> : <>내 거래에서 패턴을 찾고,<br /><span>나만의 매매 기준을<br />만드세요.</span></>}</h1>
               <p className="hero-lead">{heroLeadByLanguage[language]}</p>
               <div className="hero-actions"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /><a className="button button-ghost" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={17} /> {t.github}</a></div>
-              <div className="hero-badges"><span><LockKeyhole size={14} /> READ ONLY API</span><span><Database size={14} /> LOCAL DATA</span><span><ShieldCheck size={14} /> NO TRADE EXECUTION</span></div>
+              <div className="hero-badges"><span><LockKeyhole size={14} /> {isEnglish ? 'READ ONLY API' : '읽기 전용 API'}</span><span><Database size={14} /> {isEnglish ? 'LOCAL DATA' : '내 컴퓨터에 저장'}</span><span><ShieldCheck size={14} /> {isEnglish ? 'NO TRADE EXECUTION' : '주문 실행 없음'}</span></div>
             </div>
             <div className="hero-visual">
               <div className="visual-caption"><span>{isEnglish ? 'CHART PREVIEW' : '차트 미리보기'}</span><span>BTC/USDT · 4H</span></div>
@@ -285,7 +285,7 @@ export default function App() {
           <div className="container security-layout"><div className="security-copy"><span className="eyebrow">{t.securityEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.securityTitle }} /><p>{t.securityCopy}</p><a className="text-link" href={sourceUrl} target="_blank" rel="noreferrer">{t.securityLink} <ExternalLink size={15} /></a></div><div className="security-list"><div className="security-row"><span className="security-icon"><ShieldCheck size={20} /></span><div><h3>{isEnglish ? 'Read-only APIs' : '읽기 전용 API'}</h3><p>{isEnglish ? 'No order, cancellation, or withdrawal permissions.' : '주문·취소·출금 권한을 사용하지 않습니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><LockKeyhole size={20} /></span><div><h3>{isEnglish ? 'Keys stay out of browser storage' : '키를 브라우저에 저장하지 않음'}</h3><p>{isEnglish ? 'macOS Keychain and Windows Credential Manager come first.' : 'macOS Keychain, Windows Credential Manager를 우선 사용합니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><Database size={20} /></span><div><h3>{isEnglish ? 'Your records stay local' : '내 컴퓨터에 남는 기록'}</h3><p>{isEnglish ? 'Journal data and analysis results are stored in local SQLite.' : '저널 데이터와 분석 결과는 로컬 SQLite에 저장됩니다.'}</p></div><Check className="security-check" size={18} /></div></div></div>
         </section>
 
-        <section className="security-proof"><div className="container security-proof-inner"><span className="security-badge"><ShieldCheck size={15} /> READ ONLY</span><span className="security-badge"><Database size={15} /> LOCAL DATA</span><span className="security-badge"><LockKeyhole size={15} /> NO TRADE EXECUTION</span><p>{isEnglish ? 'Use a read-only key, keep your records local, and review trades without giving the app order access.' : '읽기 전용 키를 사용하고, 기록은 내 컴퓨터에 보관하며, 주문 권한 없이 거래를 복기합니다.'}</p></div></section>
+        <section className="security-proof"><div className="container security-proof-inner"><span className="security-badge"><ShieldCheck size={15} /> {isEnglish ? 'READ ONLY' : '읽기 전용'}</span><span className="security-badge"><Database size={15} /> {isEnglish ? 'LOCAL DATA' : '내 컴퓨터에 저장'}</span><span className="security-badge"><LockKeyhole size={15} /> {isEnglish ? 'NO TRADE EXECUTION' : '주문 실행 없음'}</span><p>{isEnglish ? 'Use a read-only key, keep your records local, and review trades without giving the app order access.' : '읽기 전용 키를 사용하고, 기록은 내 컴퓨터에 보관하며, 주문 권한 없이 거래를 복기합니다.'}</p></div></section>
 
         <section id="how-to" className="section section-workflow"><div className="container"><div className="workflow-intro"><span className="eyebrow">{isEnglish ? 'HOW TO USE' : '사용 방법'}</span><h2>{isEnglish ? <>Download, connect,<br /><span>then review your next trade.</span></> : <>설치하고, 연결하고,<br /><span>다음 거래를 복기하세요.</span></>}</h2></div><div className="workflow-grid">{t.workflow.map(([title, copy], index) => { const Icon = [MonitorDown, Layers3, Sparkles][index]; return <div key={title}><span>{`0${index + 1}`}</span><Icon size={22} /><h3>{title}</h3><p>{copy}</p></div>; })}</div></div></section>
 
