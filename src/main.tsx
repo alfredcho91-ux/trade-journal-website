@@ -204,7 +204,6 @@ export default function App() {
             <a href="#security" onClick={closeMenu}>{t.nav[2]}</a>
             <a href="#faq" onClick={closeMenu}>{t.nav[3]}</a>
             <button type="button" className="language-toggle" onClick={toggleLanguage}>{isEnglish ? '한국어' : 'EN'}</button>
-            <DownloadButton compact label={t.download} />
           </nav>
         </div>
       </header>
