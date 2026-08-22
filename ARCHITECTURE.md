@@ -20,9 +20,12 @@ Browser
 - `src/main.tsx`: 섹션 구성, 제품 미리보기, FAQ 상태, 다운로드 URL
 - `src/styles.css`: 반응형 어두운 트레이딩 플랫폼 스타일
 - `public/_redirects`: 정적 호스팅 SPA fallback
+- `public/screenshots/`: 실제 앱 화면을 넣는 선택적 Gallery 자산 디렉터리
 - `VITE_WINDOWS_RELEASE_URL`, `VITE_MACOS_RELEASE_URL`: 공개 Windows/macOS ZIP 링크를 교체할 수 있는 선택적 환경변수
 
 제품 미리보기는 실제 무료판 화면의 정보 구조를 설명하기 위한 정적 UI입니다. 거래 데이터나 실시간 시세를 호출하지 않습니다.
+
+Gallery는 실제 스크린샷 파일이 있을 때만 이미지를 표시하며, 파일이 없으면 명시적인 준비 영역을 보여줍니다. `public/og-image.png`도 실제 공유 이미지를 준비한 뒤 추가할 수 있는 선택적 자산입니다.
 
 ## 배포 경계
 

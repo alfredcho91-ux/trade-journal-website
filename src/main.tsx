@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowRight,
@@ -25,6 +25,35 @@ import './styles.css';
 const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-Windows.zip';
 const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-macOS.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
+const releaseInfo = {
+  version: 'v1.0.0',
+  windowsSize: '약 46 MB',
+  macosSize: '약 31 MB',
+  windowsPlatform: 'Windows 10/11 · x64',
+  macosPlatform: 'macOS · Apple Silicon',
+} as const;
+const heroLeadByLanguage = {
+  ko: '거래 기록을 자동으로 모으고, 진입부터 청산까지 복기하세요. 반복되는 강점과 실수를 찾아 다음 거래에 적용할 나만의 기준을 만듭니다.',
+  en: 'Collect your trade history, replay every entry and exit, and turn recurring strengths and mistakes into rules you can use on the next trade.',
+} as const;
+const advancedFeaturesByLanguage = {
+  ko: [
+    ['MFE / MAE 분석', '진입 뒤 얼마나 유리했고 불리했는지 확인해 좋은 진입과 무리한 진입을 구분합니다.'],
+    ['SL / TP 시뮬레이션', '가격 기준 손절·익절 조합을 비교해 내 거래에 맞는 위험 경계를 찾습니다.'],
+    ['시장 국면별 성과', 'Weekly·Daily·4H 추세 조합 중 어떤 시장 상황에서 성과가 좋은지 확인합니다.'],
+    ['조기청산 / 추가 보유', '조금 더 보유했을 때의 결과와 실제 청산을 비교해 청산 타이밍을 돌아봅니다.'],
+    ['진입 후 가격 흐름', '청산 뒤 가격이 어떻게 움직였는지 확인해 한 줄 요약 이상의 맥락을 얻습니다.'],
+    ['승리·손실 패턴 비교', '승리 거래와 손실 거래의 지표·방향·행동 차이를 비교해 반복 조건을 찾습니다.'],
+  ],
+  en: [
+    ['MFE / MAE review', 'See how far a trade moved for and against you, then separate strong entries from weak ones.'],
+    ['SL / TP simulation', 'Compare price-based stop and target combinations to find a risk boundary that fits your trading.'],
+    ['Performance by regime', 'See which Weekly, Daily, and 4H market conditions have worked best for you.'],
+    ['Early exit / extra hold', 'Compare the recorded exit with a little more holding time to review your timing.'],
+    ['Post-entry price path', 'Follow what price did after entry and exit so one return number has real context.'],
+    ['Win / loss patterns', 'Compare indicators, direction, and behavior between winning and losing trades.'],
+  ],
+} as const;
 type Language = 'ko' | 'en';
 
 const featuresByLanguage = {
@@ -60,28 +89,22 @@ const featuresByLanguage = {
 
 const faqsByLanguage = {
   ko: [
-  {
-    question: '어떤 거래소를 지원하나요?',
-    answer: '현재 Deepcoin, Binance, Bybit, OKX의 읽기 전용 거래 기록 동기화를 지원합니다. 거래소별 API 연결 방식은 다르지만, 주문 실행과 출금 기능은 모든 버전에서 제공하지 않습니다.',
-  },
-  {
-    question: 'API Key가 외부로 전송되나요?',
-    answer: '무료 데스크톱 배포판은 API Key를 브라우저 저장소에 저장하지 않습니다. macOS Keychain 또는 Windows Credential Manager를 우선 사용하고, 서버 모드에서는 암호화된 저장소를 사용합니다. API는 반드시 Read Only 권한으로 만들어야 합니다.',
-  },
-  {
-    question: 'Windows에서 바로 실행할 수 있나요?',
-    answer: '네. GitHub Releases에서 Windows ZIP을 내려받아 압축을 풀고 실행하면 됩니다. 별도의 Python이나 Node.js 설치 없이 사용할 수 있도록 패키징합니다.',
-  },
-  {
-    question: 'Cloudflare Pages에 배포할 수 있나요?',
-    answer: '이 소개 사이트는 백엔드가 없는 Vite 정적 사이트라 Cloudflare Pages에 바로 배포할 수 있습니다. 프로그램 자체는 로컬 데스크톱 앱으로 실행되며, 이 사이트는 다운로드와 문서 안내를 담당합니다.',
-  },
+  { question: '거래 데이터는 어디에 저장되나요?', answer: '거래 기록과 분석 결과는 데스크톱 앱의 로컬 저장소에 남습니다. 이 소개 사이트는 거래 데이터를 수집하지 않습니다.' },
+  { question: '어떤 API 권한이 필요한가요?', answer: '거래 기록 조회에 필요한 Read Only 권한만 사용하세요. 출금과 주문 권한은 활성화하지 않아도 됩니다.' },
+  { question: 'API Key로 주문이나 출금이 가능한가요?', answer: 'Trade Journal Free는 주문·취소·출금을 실행하지 않습니다. 그래도 API를 만들 때는 반드시 읽기 전용 권한만 선택하세요.' },
+  { question: 'API Key는 어떻게 보관되나요?', answer: '무료 데스크톱판은 브라우저 저장소에 키를 넣지 않고 운영체제의 보안 저장소 사용을 우선합니다. 사용 중인 배포판의 안내를 확인하세요.' },
+  { question: 'API Key를 삭제할 수 있나요?', answer: '앱의 거래소 연결 관리에서 연결을 삭제하면 저장된 연결 정보도 함께 제거할 수 있습니다.' },
+  { question: '어떤 거래소를 지원하나요?', answer: '현재 Deepcoin, Binance, Bybit, OKX의 읽기 전용 거래 기록 동기화를 지원합니다.' },
+  { question: 'Windows SmartScreen 경고가 뜨는 이유는 무엇인가요?', answer: '무료 배포판은 Windows 코드 서명이 아직 없어 처음 실행할 때 경고가 표시될 수 있습니다. GitHub Releases의 파일인지 확인한 뒤 실행하세요.' },
   ],
   en: [
-    { question: 'Which exchanges are supported?', answer: 'Read-only trade history sync is available for Deepcoin, Binance, Bybit, and OKX. Exchange connection methods differ, but the app never places orders or withdrawals.' },
-    { question: 'Are my API keys sent outside my computer?', answer: 'The desktop build does not store keys in browser storage. It prefers macOS Keychain or Windows Credential Manager, and server mode uses encrypted storage. Always create a Read Only API key.' },
-    { question: 'Can I run it immediately on Windows?', answer: 'Yes. Download the Windows ZIP from GitHub Releases, extract it, and launch the app. The packaged build does not require a separate Python or Node.js installation.' },
-    { question: 'Can this website be deployed to Cloudflare Pages?', answer: 'Yes. This site is a backend-free Vite static site and can be deployed directly to Cloudflare Pages. The desktop app remains local; this website handles the introduction and download.' },
+    { question: 'Where is my trade data stored?', answer: 'Trade records and analysis results stay in the desktop app’s local storage. This website does not collect trading data.' },
+    { question: 'Which API permissions do I need?', answer: 'Use only the Read Only permissions needed to read trade history. Do not enable withdrawals or order access.' },
+    { question: 'Can the API key place orders or withdrawals?', answer: 'Trade Journal Free never places, cancels, or withdraws orders. Create the exchange key with read-only access anyway.' },
+    { question: 'How are API keys stored?', answer: 'The desktop build does not put keys in browser storage and prefers the operating system’s secure credential storage. Check the instructions for your build.' },
+    { question: 'Can I delete an API key?', answer: 'Delete the exchange connection from the app’s connection settings to remove the saved connection information.' },
+    { question: 'Which exchanges are supported?', answer: 'Read-only trade history sync is available for Deepcoin, Binance, Bybit, and OKX.' },
+    { question: 'Why does Windows SmartScreen show a warning?', answer: 'The free build is not code-signed yet, so Windows may warn on first launch. Verify the file came from GitHub Releases before opening it.' },
   ],
 } as const;
 
@@ -176,11 +199,49 @@ function FAQItem({ question, answer, open, onToggle }: { question: string; answe
   );
 }
 
+const screenshotItems = [
+  { src: '/screenshots/journal.png', ko: '매매일지', en: 'Trade Journal', copyKo: '거래 기록과 실제 순수익을 확인하는 화면', copyEn: 'The journal view for records and net results' },
+  { src: '/screenshots/analysis.png', ko: '매매분석', en: 'Trade Analysis', copyKo: '승패와 반복되는 행동을 비교하는 화면', copyEn: 'Compare outcomes and recurring behavior' },
+  { src: '/screenshots/risk-lab.png', ko: 'Risk Lab', en: 'Risk Lab', copyKo: '가격 기준 손절과 기대값을 비교하는 화면', copyEn: 'Compare price-based stops and expectancy' },
+  { src: '/screenshots/chart-review.png', ko: '포지션 차트 복기', en: 'Position Replay', copyKo: '진입·청산과 지표를 캔들 위에서 복기하는 화면', copyEn: 'Replay entry, exit, and indicators on candles' },
+] as const;
+
+function ScreenshotGallery({ language }: { language: Language }) {
+  const [activeSrc, setActiveSrc] = useState<string | null>(null);
+  const [available, setAvailable] = useState<Record<string, boolean>>({});
+  const isEnglish = language === 'en';
+  const activeItem = screenshotItems.find((item) => item.src === activeSrc);
+  return (
+    <>
+      <div className="screenshot-grid">
+        {screenshotItems.map((item) => {
+          const title = isEnglish ? item.en : item.ko;
+          const copy = isEnglish ? item.copyEn : item.copyKo;
+          return (
+            <article className="screenshot-card" key={item.src}>
+              <button type="button" className={`screenshot-frame ${available[item.src] ? 'screenshot-ready' : ''}`} onClick={() => available[item.src] && setActiveSrc(item.src)} aria-label={available[item.src] ? `${title} ${isEnglish ? 'enlarge' : '크게 보기'}` : `${title} ${isEnglish ? 'screenshot placeholder' : '스크린샷 준비 영역'}`}>
+                {available[item.src] && <img src={item.src} alt={title} onError={() => setAvailable((current) => ({ ...current, [item.src]: false }))} />}
+                {!available[item.src] && <span className="screenshot-placeholder"><MonitorDown size={22} /><b>{isEnglish ? 'Screenshot slot' : '스크린샷 영역'}</b><small>{isEnglish ? 'Add an image to public/screenshots/' : 'public/screenshots/에 이미지를 넣으면 표시됩니다.'}</small></span>}
+                {!available[item.src] && <img className="asset-probe" src={item.src} alt="" aria-hidden="true" onLoad={() => setAvailable((current) => ({ ...current, [item.src]: true }))} onError={() => undefined} />}
+              </button>
+              <div className="screenshot-caption"><span>0{String(screenshotItems.indexOf(item) + 1)}</span><div><h3>{title}</h3><p>{copy}</p></div></div>
+            </article>
+          );
+        })}
+      </div>
+      {activeItem && <div className="lightbox" role="dialog" aria-modal="true" aria-label={isEnglish ? `${activeItem.en} screenshot` : `${activeItem.ko} 스크린샷`} onClick={() => setActiveSrc(null)}><button type="button" className="lightbox-close" onClick={() => setActiveSrc(null)} aria-label={isEnglish ? 'Close image' : '이미지 닫기'}><X size={22} /></button><img src={activeItem.src} alt={isEnglish ? activeItem.en : activeItem.ko} onClick={(event) => event.stopPropagation()} /></div>}
+    </>
+  );
+}
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [language, setLanguage] = useState<Language>('ko');
   const isEnglish = language === 'en';
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
   const t = isEnglish ? {
     nav: ['Features', 'Preview', 'Security', 'FAQ'], eyebrow: 'Free open-source trading journal', heroTitle: 'Better trading starts with understanding your own trades.', heroLead: 'Bring exchange fills together safely and replay every entry and exit. Trade Journal Free does not trade for you; it helps you prepare for the next one.', download: 'Free download for Windows', github: 'View on GitHub', note: 'Read-only API · No order execution · Local-first storage', preview: 'LIVE PREVIEW', netReturn: 'Net return', recent: 'Last 90 days', proof: 'Read-only records in one workspace', featuresEyebrow: 'BUILT FOR REVIEW', featuresTitle: 'Keep the lesson,<br />not just the trade.', featuresCopy: 'A workspace for discovering the behaviors and market conditions you repeat—not just another trade list.', previewEyebrow: 'PRODUCT PREVIEW', previewTitle: 'Simple screens,<br />enough evidence.', previewCopy: 'The same information flow used in the app: find it in the journal, replay it on a chart, then turn it into a better rule.', securityEyebrow: 'LOCAL-FIRST SECURITY', securityTitle: 'Your trade records<br /><span>stay on your computer.</span>', securityCopy: 'Trade Journal Free is not an advertising or external analysis service. Run it personally and fetch only the records you need with read-only API keys.', securityLink: 'Inspect the storage and source code', workflowEyebrow: 'THREE STEPS', workflowTitle: 'Install, connect,<br />and review the next trade.', workflow: [['Free app download', 'Get the Windows ZIP, extract it, and launch.'], ['Connect an exchange', 'Connect a read-only API to sync closed positions.'], ['Start reviewing', 'Use charts and analysis to see what to keep and change.']], faqTitle: 'Questions<br />before you start', downloadEyebrow: 'START YOUR REVIEW', downloadTitle: 'Before the next trade,<br />look at the last one.', downloadCopy: 'Trade Journal Free is free and never places orders.', source: 'View source and releases', footer: 'A free open-source trade review tool for individual traders.', links: ['Features', 'Security', 'FAQ'], copyright: '© 2026 Trade Journal Free'
   } : {
@@ -198,6 +259,7 @@ export default function App() {
           <button type="button" className="mobile-menu-button" onClick={() => setMenuOpen((value) => !value)} aria-label="메뉴 열기">{menuOpen ? <X /> : <Menu />}</button>
           <nav className={`site-nav ${menuOpen ? 'nav-open' : ''}`}>
             <a href="#features" onClick={closeMenu}>{t.nav[0]}</a>
+            <a href="#advanced" onClick={closeMenu}>{isEnglish ? 'Analysis' : '고급 분석'}</a>
             <a href="#preview" onClick={closeMenu}>{t.nav[1]}</a>
             <a href="#security" onClick={closeMenu}>{t.nav[2]}</a>
             <a href="#faq" onClick={closeMenu}>{t.nav[3]}</a>
@@ -212,10 +274,10 @@ export default function App() {
           <div className="container hero-layout">
             <div className="hero-copy">
               <div className="eyebrow"><span className="pulse-dot" /> {t.eyebrow}</div>
-              <h1>{isEnglish ? <>Better trading starts with<br /><span>understanding your own trades.</span></> : <>더 나은 매매는,<br /><span>내 거래를 이해하는<br />것에서 시작됩니다.</span></>}</h1>
-              <p className="hero-lead">{t.heroLead}</p>
+              <h1>{isEnglish ? <>Find patterns in your trades,<br /><span>build your own trading rules.</span></> : <>내 거래에서 패턴을 찾고,<br /><span>나만의 매매 기준을<br />만드세요.</span></>}</h1>
+              <p className="hero-lead">{heroLeadByLanguage[language]}</p>
               <div className="hero-actions"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /><a className="button button-ghost" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={17} /> {t.github}</a></div>
-              <p className="hero-note"><LockKeyhole size={14} /> {t.note}</p>
+              <div className="hero-badges"><span><LockKeyhole size={14} /> READ ONLY API</span><span><Database size={14} /> LOCAL DATA</span><span><ShieldCheck size={14} /> NO TRADE EXECUTION</span></div>
             </div>
             <div className="hero-visual">
               <div className="visual-caption"><span>{isEnglish ? 'CHART PREVIEW' : '차트 미리보기'}</span><span>BTC/USDT · 4H</span></div>
@@ -238,6 +300,13 @@ export default function App() {
           </div>
         </section>
 
+        <section id="advanced" className="section section-advanced">
+          <div className="container">
+            <div className="section-heading"><div><span className="eyebrow">{isEnglish ? 'MORE THAN A JOURNAL' : '단순한 매매일지가 아닙니다'}</span><h2>{isEnglish ? <>Turn trade history<br /><span>into a better process.</span></> : <>기록을 넘어,<br /><span>나만의 기준을 찾습니다.</span></>}</h2></div><p>{isEnglish ? 'The point is not to collect more numbers. It is to find the conditions and decisions you can repeat with confidence.' : '숫자를 더 많이 쌓는 것이 목적이 아닙니다. 반복할 수 있는 조건과 의사결정을 발견하는 것이 목적입니다.'}</p></div>
+            <div className="advanced-grid">{advancedFeaturesByLanguage[language].map(([title, copy], index) => { const Icon = [LineChart, ShieldCheck, Layers3, ArrowRight, BarChart3, CircleHelp][index]; return <article className="advanced-card" key={title}><span className="advanced-icon"><Icon size={20} /></span><span className="card-eyebrow">0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>; })}</div>
+          </div>
+        </section>
+
         <section id="preview" className="section section-preview">
           <div className="container">
             <div className="section-heading preview-heading"><div><span className="eyebrow">{t.previewEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.previewTitle }} /></div><p>{t.previewCopy}</p></div>
@@ -245,18 +314,29 @@ export default function App() {
           </div>
         </section>
 
+        <section id="real-screens" className="section section-screenshots">
+          <div className="container">
+            <div className="section-heading"><div><span className="eyebrow">{isEnglish ? 'REAL APP SCREENS' : '실제 프로그램 화면'}</span><h2>{isEnglish ? <>Bring your own<br /><span>screenshots here.</span></> : <>실제 화면을<br /><span>이곳에 담습니다.</span></>}</h2></div><p>{isEnglish ? 'The gallery is ready for real Journal, Analysis, Risk Lab, and replay screenshots. No simulated image is presented as a real product screen.' : '매매일지·매매분석·Risk Lab·차트 복기 화면을 넣을 수 있는 갤러리입니다. 실제 화면이 없을 때는 가짜 이미지를 보여주지 않습니다.'}</p></div>
+            <ScreenshotGallery language={language} />
+          </div>
+        </section>
+
         <section id="security" className="section section-security">
           <div className="container security-layout"><div className="security-copy"><span className="eyebrow">{t.securityEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.securityTitle }} /><p>{t.securityCopy}</p><a className="text-link" href={sourceUrl} target="_blank" rel="noreferrer">{t.securityLink} <ExternalLink size={15} /></a></div><div className="security-list"><div className="security-row"><span className="security-icon"><ShieldCheck size={20} /></span><div><h3>{isEnglish ? 'Read-only APIs' : '읽기 전용 API'}</h3><p>{isEnglish ? 'No order, cancellation, or withdrawal permissions.' : '주문·취소·출금 권한을 사용하지 않습니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><LockKeyhole size={20} /></span><div><h3>{isEnglish ? 'Keys stay out of browser storage' : '키를 브라우저에 저장하지 않음'}</h3><p>{isEnglish ? 'macOS Keychain and Windows Credential Manager come first.' : 'macOS Keychain, Windows Credential Manager를 우선 사용합니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><Database size={20} /></span><div><h3>{isEnglish ? 'Your records stay local' : '내 컴퓨터에 남는 기록'}</h3><p>{isEnglish ? 'Journal data and analysis results are stored in local SQLite.' : '저널 데이터와 분석 결과는 로컬 SQLite에 저장됩니다.'}</p></div><Check className="security-check" size={18} /></div></div></div>
         </section>
+
+        <section className="security-proof"><div className="container security-proof-inner"><span className="security-badge"><ShieldCheck size={15} /> READ ONLY</span><span className="security-badge"><Database size={15} /> LOCAL DATA</span><span className="security-badge"><LockKeyhole size={15} /> NO TRADE EXECUTION</span><p>{isEnglish ? 'Use a read-only key, keep your records local, and review trades without giving the app order access.' : '읽기 전용 키를 사용하고, 기록은 내 컴퓨터에 보관하며, 주문 권한 없이 거래를 복기합니다.'}</p></div></section>
 
         <section className="section section-workflow"><div className="container"><div className="workflow-intro"><span className="eyebrow">{t.workflowEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.workflowTitle }} /></div><div className="workflow-grid">{t.workflow.map(([title, copy], index) => { const Icon = [MonitorDown, Layers3, Sparkles][index]; return <div key={title}><span>{`0${index + 1}`}</span><Icon size={22} /><h3>{title}</h3><p>{copy}</p></div>; })}</div></div></section>
 
         <section id="faq" className="section section-faq"><div className="container faq-layout"><div className="faq-heading"><span className="eyebrow">FAQ</span><h2 dangerouslySetInnerHTML={{ __html: t.faqTitle }} /><CircleHelp size={38} /></div><div className="faq-list">{faqsByLanguage[language].map((faq, index) => <FAQItem key={faq.question} {...faq} open={openFaq === index} onToggle={() => setOpenFaq(openFaq === index ? -1 : index)} />)}</div></div></section>
 
-        <section className="download-section"><div className="container download-inner"><div><span className="eyebrow">{t.downloadEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.downloadTitle }} /><p>{t.downloadCopy}</p></div><div className="download-side"><div className="download-buttons"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /></div><a className="text-link muted-link" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={16} /> {t.source}</a></div></div></section>
+        <section className="download-section"><div className="container download-inner"><div><span className="eyebrow">{t.downloadEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.downloadTitle }} /><p>{t.downloadCopy}</p></div><div className="download-side"><div className="download-buttons"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /></div><a className="text-link muted-link" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={16} /> {t.source}</a></div></div><div className="container download-facts"><div><b>{releaseInfo.windowsPlatform}</b><span>Windows · {releaseInfo.version} · {releaseInfo.windowsSize}</span></div><div><b>{releaseInfo.macosPlatform}</b><span>macOS · {releaseInfo.version} · {releaseInfo.macosSize}</span></div><div><b>{isEnglish ? 'Free · no account' : '무료 · 회원가입 불필요'}</b><span>{isEnglish ? 'Read-only API · no orders or withdrawals' : 'Read-only API · 주문·출금 기능 없음'}</span></div></div><p className="download-warning">{isEnglish ? 'Windows is not code-signed yet, so SmartScreen may show a first-launch warning. Verify the download source before opening it.' : 'Windows 버전은 아직 코드 서명이 없어 처음 실행할 때 SmartScreen 경고가 표시될 수 있습니다. 다운로드 출처를 확인한 뒤 실행하세요.'}</p></section>
+
+        <section id="legal" className="legal-section"><div className="container legal-grid"><article><h3>{isEnglish ? 'Privacy' : '개인정보 처리방침'}</h3><p>{isEnglish ? 'This static site does not collect API keys or trading records.' : '이 정적 사이트는 API Key나 거래 기록을 수집하지 않습니다.'}</p></article><article><h3>{isEnglish ? 'Terms' : '이용약관'}</h3><p>{isEnglish ? 'Use the app at your own discretion and keep exchange keys read-only.' : '프로그램은 사용자의 판단 아래 이용하고 거래소 키는 읽기 전용으로 관리하세요.'}</p></article><article id="disclaimer"><h3>Disclaimer</h3><p>{isEnglish ? 'This is a personal trade journaling and analysis tool, not investment advice or an auto-trading service.' : '개인의 거래 기록과 분석을 위한 도구이며 투자자문이나 자동매매 서비스가 아닙니다.'}</p></article></div></section>
       </main>
 
-      <footer className="site-footer"><div className="container footer-inner"><ProductLogo /><p>{t.footer}</p><div className="footer-links"><a href="#features">{t.links[0]}</a><a href="#security">{t.links[1]}</a><a href="#faq">{t.links[2]}</a><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a></div><span className="copyright">{t.copyright}</span></div></footer>
+      <footer className="site-footer"><div className="container footer-inner"><ProductLogo /><p>{t.footer}</p><div className="footer-links"><a href="#features">{t.links[0]}</a><a href="#legal">{isEnglish ? 'Privacy' : '개인정보'}</a><a href="#legal">{isEnglish ? 'Terms' : '이용약관'}</a><a href="#disclaimer">Disclaimer</a><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a><a href={`${sourceUrl}/issues`} target="_blank" rel="noreferrer">{isEnglish ? 'Contact' : '문의'} <ExternalLink size={13} /></a></div><span className="copyright">{t.copyright}</span></div></footer>
     </div>
   );
 }
