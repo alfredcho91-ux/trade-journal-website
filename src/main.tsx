@@ -199,41 +199,6 @@ function FAQItem({ question, answer, open, onToggle }: { question: string; answe
   );
 }
 
-const screenshotItems = [
-  { src: '/screenshots/journal.png', ko: '매매일지', en: 'Trade Journal', copyKo: '거래 기록과 실제 순수익을 확인하는 화면', copyEn: 'The journal view for records and net results' },
-  { src: '/screenshots/analysis.png', ko: '매매분석', en: 'Trade Analysis', copyKo: '승패와 반복되는 행동을 비교하는 화면', copyEn: 'Compare outcomes and recurring behavior' },
-  { src: '/screenshots/risk-lab.png', ko: 'Risk Lab', en: 'Risk Lab', copyKo: '가격 기준 손절과 기대값을 비교하는 화면', copyEn: 'Compare price-based stops and expectancy' },
-  { src: '/screenshots/chart-review.png', ko: '포지션 차트 복기', en: 'Position Replay', copyKo: '진입·청산과 지표를 캔들 위에서 복기하는 화면', copyEn: 'Replay entry, exit, and indicators on candles' },
-] as const;
-
-function ScreenshotGallery({ language }: { language: Language }) {
-  const [activeSrc, setActiveSrc] = useState<string | null>(null);
-  const [available, setAvailable] = useState<Record<string, boolean>>({});
-  const isEnglish = language === 'en';
-  const activeItem = screenshotItems.find((item) => item.src === activeSrc);
-  return (
-    <>
-      <div className="screenshot-grid">
-        {screenshotItems.map((item) => {
-          const title = isEnglish ? item.en : item.ko;
-          const copy = isEnglish ? item.copyEn : item.copyKo;
-          return (
-            <article className="screenshot-card" key={item.src}>
-              <button type="button" className={`screenshot-frame ${available[item.src] ? 'screenshot-ready' : ''}`} onClick={() => available[item.src] && setActiveSrc(item.src)} aria-label={available[item.src] ? `${title} ${isEnglish ? 'enlarge' : '크게 보기'}` : `${title} ${isEnglish ? 'screenshot placeholder' : '스크린샷 준비 영역'}`}>
-                {available[item.src] && <img src={item.src} alt={title} onError={() => setAvailable((current) => ({ ...current, [item.src]: false }))} />}
-                {!available[item.src] && <span className="screenshot-placeholder"><MonitorDown size={22} /><b>{isEnglish ? 'Screenshot slot' : '스크린샷 영역'}</b><small>{isEnglish ? 'Add an image to public/screenshots/' : 'public/screenshots/에 이미지를 넣으면 표시됩니다.'}</small></span>}
-                {!available[item.src] && <img className="asset-probe" src={item.src} alt="" aria-hidden="true" onLoad={() => setAvailable((current) => ({ ...current, [item.src]: true }))} onError={() => undefined} />}
-              </button>
-              <div className="screenshot-caption"><span>0{String(screenshotItems.indexOf(item) + 1)}</span><div><h3>{title}</h3><p>{copy}</p></div></div>
-            </article>
-          );
-        })}
-      </div>
-      {activeItem && <div className="lightbox" role="dialog" aria-modal="true" aria-label={isEnglish ? `${activeItem.en} screenshot` : `${activeItem.ko} 스크린샷`} onClick={() => setActiveSrc(null)}><button type="button" className="lightbox-close" onClick={() => setActiveSrc(null)} aria-label={isEnglish ? 'Close image' : '이미지 닫기'}><X size={22} /></button><img src={activeItem.src} alt={isEnglish ? activeItem.en : activeItem.ko} onClick={(event) => event.stopPropagation()} /></div>}
-    </>
-  );
-}
-
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
@@ -258,7 +223,7 @@ export default function App() {
           <ProductLogo />
           <button type="button" className="mobile-menu-button" onClick={() => setMenuOpen((value) => !value)} aria-label="메뉴 열기">{menuOpen ? <X /> : <Menu />}</button>
           <nav className={`site-nav ${menuOpen ? 'nav-open' : ''}`}>
-            <a href="#features" onClick={closeMenu}>{t.nav[0]}</a>
+            <a href="#product" onClick={closeMenu}>{t.nav[0]}</a>
             <a href="#advanced" onClick={closeMenu}>{isEnglish ? 'Analysis' : '고급 분석'}</a>
             <a href="#preview" onClick={closeMenu}>{t.nav[1]}</a>
             <a href="#security" onClick={closeMenu}>{t.nav[2]}</a>
@@ -267,6 +232,8 @@ export default function App() {
           </nav>
         </div>
       </header>
+
+      <div className="product-banner"><div className="container product-banner-inner"><span>{isEnglish ? 'TRADE JOURNAL FREE' : 'TRADE JOURNAL FREE'}</span><div><a href="#product" onClick={closeMenu}>{isEnglish ? 'Product overview' : '제품 소개'} <ArrowRight size={14} /></a><a href="#how-to" onClick={closeMenu}>{isEnglish ? 'How to use' : '사용 방법'} <ArrowRight size={14} /></a></div></div></div>
 
       <main>
         <section className="hero-section">
@@ -293,7 +260,7 @@ export default function App() {
           <div className="container hero-proof"><span>DEEPCOIN</span><span>BINANCE</span><span>BYBIT</span><span>OKX</span><i /><small>{t.proof}</small></div>
         </section>
 
-        <section id="features" className="section section-features">
+        <section id="product" className="section section-features">
           <div className="container">
             <div className="section-heading"><div><span className="eyebrow">{t.featuresEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.featuresTitle }} /></div><p>{t.featuresCopy}</p></div>
             <div className="feature-grid">{featuresByLanguage[language].map(({ icon: Icon, eyebrow, title, copy, accent }) => <article className={`feature-card accent-${accent}`} key={title}><span className="feature-icon"><Icon size={21} /></span><span className="card-eyebrow">{eyebrow}</span><h3>{title}</h3><p>{copy}</p><ArrowRight className="feature-arrow" size={18} /></article>)}</div>
@@ -314,20 +281,13 @@ export default function App() {
           </div>
         </section>
 
-        <section id="real-screens" className="section section-screenshots">
-          <div className="container">
-            <div className="section-heading"><div><span className="eyebrow">{isEnglish ? 'REAL APP SCREENS' : '실제 프로그램 화면'}</span><h2>{isEnglish ? <>Bring your own<br /><span>screenshots here.</span></> : <>실제 화면을<br /><span>이곳에 담습니다.</span></>}</h2></div><p>{isEnglish ? 'The gallery is ready for real Journal, Analysis, Risk Lab, and replay screenshots. No simulated image is presented as a real product screen.' : '매매일지·매매분석·Risk Lab·차트 복기 화면을 넣을 수 있는 갤러리입니다. 실제 화면이 없을 때는 가짜 이미지를 보여주지 않습니다.'}</p></div>
-            <ScreenshotGallery language={language} />
-          </div>
-        </section>
-
         <section id="security" className="section section-security">
           <div className="container security-layout"><div className="security-copy"><span className="eyebrow">{t.securityEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.securityTitle }} /><p>{t.securityCopy}</p><a className="text-link" href={sourceUrl} target="_blank" rel="noreferrer">{t.securityLink} <ExternalLink size={15} /></a></div><div className="security-list"><div className="security-row"><span className="security-icon"><ShieldCheck size={20} /></span><div><h3>{isEnglish ? 'Read-only APIs' : '읽기 전용 API'}</h3><p>{isEnglish ? 'No order, cancellation, or withdrawal permissions.' : '주문·취소·출금 권한을 사용하지 않습니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><LockKeyhole size={20} /></span><div><h3>{isEnglish ? 'Keys stay out of browser storage' : '키를 브라우저에 저장하지 않음'}</h3><p>{isEnglish ? 'macOS Keychain and Windows Credential Manager come first.' : 'macOS Keychain, Windows Credential Manager를 우선 사용합니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><Database size={20} /></span><div><h3>{isEnglish ? 'Your records stay local' : '내 컴퓨터에 남는 기록'}</h3><p>{isEnglish ? 'Journal data and analysis results are stored in local SQLite.' : '저널 데이터와 분석 결과는 로컬 SQLite에 저장됩니다.'}</p></div><Check className="security-check" size={18} /></div></div></div>
         </section>
 
         <section className="security-proof"><div className="container security-proof-inner"><span className="security-badge"><ShieldCheck size={15} /> READ ONLY</span><span className="security-badge"><Database size={15} /> LOCAL DATA</span><span className="security-badge"><LockKeyhole size={15} /> NO TRADE EXECUTION</span><p>{isEnglish ? 'Use a read-only key, keep your records local, and review trades without giving the app order access.' : '읽기 전용 키를 사용하고, 기록은 내 컴퓨터에 보관하며, 주문 권한 없이 거래를 복기합니다.'}</p></div></section>
 
-        <section className="section section-workflow"><div className="container"><div className="workflow-intro"><span className="eyebrow">{t.workflowEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.workflowTitle }} /></div><div className="workflow-grid">{t.workflow.map(([title, copy], index) => { const Icon = [MonitorDown, Layers3, Sparkles][index]; return <div key={title}><span>{`0${index + 1}`}</span><Icon size={22} /><h3>{title}</h3><p>{copy}</p></div>; })}</div></div></section>
+        <section id="how-to" className="section section-workflow"><div className="container"><div className="workflow-intro"><span className="eyebrow">{isEnglish ? 'HOW TO USE' : '사용 방법'}</span><h2>{isEnglish ? <>Download, connect,<br /><span>then review your next trade.</span></> : <>설치하고, 연결하고,<br /><span>다음 거래를 복기하세요.</span></>}</h2></div><div className="workflow-grid">{t.workflow.map(([title, copy], index) => { const Icon = [MonitorDown, Layers3, Sparkles][index]; return <div key={title}><span>{`0${index + 1}`}</span><Icon size={22} /><h3>{title}</h3><p>{copy}</p></div>; })}</div></div></section>
 
         <section id="faq" className="section section-faq"><div className="container faq-layout"><div className="faq-heading"><span className="eyebrow">FAQ</span><h2 dangerouslySetInnerHTML={{ __html: t.faqTitle }} /><CircleHelp size={38} /></div><div className="faq-list">{faqsByLanguage[language].map((faq, index) => <FAQItem key={faq.question} {...faq} open={openFaq === index} onToggle={() => setOpenFaq(openFaq === index ? -1 : index)} />)}</div></div></section>
 
@@ -336,7 +296,7 @@ export default function App() {
         <section id="legal" className="legal-section"><div className="container legal-grid"><article><h3>{isEnglish ? 'Privacy' : '개인정보 처리방침'}</h3><p>{isEnglish ? 'This static site does not collect API keys or trading records.' : '이 정적 사이트는 API Key나 거래 기록을 수집하지 않습니다.'}</p></article><article><h3>{isEnglish ? 'Terms' : '이용약관'}</h3><p>{isEnglish ? 'Use the app at your own discretion and keep exchange keys read-only.' : '프로그램은 사용자의 판단 아래 이용하고 거래소 키는 읽기 전용으로 관리하세요.'}</p></article><article id="disclaimer"><h3>Disclaimer</h3><p>{isEnglish ? 'This is a personal trade journaling and analysis tool, not investment advice or an auto-trading service.' : '개인의 거래 기록과 분석을 위한 도구이며 투자자문이나 자동매매 서비스가 아닙니다.'}</p></article></div></section>
       </main>
 
-      <footer className="site-footer"><div className="container footer-inner"><ProductLogo /><p>{t.footer}</p><div className="footer-links"><a href="#features">{t.links[0]}</a><a href="#legal">{isEnglish ? 'Privacy' : '개인정보'}</a><a href="#legal">{isEnglish ? 'Terms' : '이용약관'}</a><a href="#disclaimer">Disclaimer</a><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a><a href={`${sourceUrl}/issues`} target="_blank" rel="noreferrer">{isEnglish ? 'Contact' : '문의'} <ExternalLink size={13} /></a></div><span className="copyright">{t.copyright}</span></div></footer>
+      <footer className="site-footer"><div className="container footer-inner"><ProductLogo /><p>{t.footer}</p><div className="footer-links"><a href="#product">{t.links[0]}</a><a href="#legal">{isEnglish ? 'Privacy' : '개인정보'}</a><a href="#legal">{isEnglish ? 'Terms' : '이용약관'}</a><a href="#disclaimer">Disclaimer</a><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a><a href={`${sourceUrl}/issues`} target="_blank" rel="noreferrer">{isEnglish ? 'Contact' : '문의'} <ExternalLink size={13} /></a></div><span className="copyright">{t.copyright}</span></div></footer>
     </div>
   );
 }

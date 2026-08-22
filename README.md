@@ -7,7 +7,6 @@ Trade Journal Free의 공식 소개·다운로드용 정적 웹사이트입니�
 - 프로그램 소개와 주요 기능
 - MFE/MAE, SL/TP, Regime, 청산 복기 등 고급 분석 소개
 - 매매일지·매매분석·Risk Lab 화면 미리보기
-- 실제 앱 스크린샷을 추가할 수 있는 Gallery와 클릭 확대
 - 읽기 전용 API와 로컬 저장 보안 설명
 - FAQ
 - GitHub Releases 최신 Windows/macOS ZIP 다운로드 링크
@@ -44,5 +43,3 @@ npm run build
 `https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-macOS.zip`
 
 주소를 변경해야 하면 Cloudflare Pages 환경변수 `VITE_WINDOWS_RELEASE_URL` 또는 `VITE_MACOS_RELEASE_URL`을 지정합니다. API Key, Secret, Passphrase 같은 민감정보는 이 사이트에 넣지 않습니다.
-
-실제 프로그램 화면은 `public/screenshots/`에 `journal.png`, `analysis.png`, `risk-lab.png`, `chart-review.png` 이름으로 추가하면 Gallery에 표시됩니다. 없는 이미지는 가짜 화면으로 대체하지 않습니다.

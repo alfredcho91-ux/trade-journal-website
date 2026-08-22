@@ -39,6 +39,12 @@ button { color: inherit; }
 .site-nav { display: flex; align-items: center; gap: 25px; color: var(--muted); font-size: 12px; font-weight: 600; }
 .site-nav > a:not(.button):hover { color: var(--ink); }
 .nav-github { display: inline-flex; align-items: center; gap: 6px; }
+.product-banner { border-bottom: 1px solid #1c2d49; background: #0c1627; }
+.product-banner-inner { display: flex; align-items: center; justify-content: space-between; min-height: 48px; gap: 18px; }
+.product-banner-inner > span { color: #7184a6; font: 500 10px var(--mono); letter-spacing: .12em; }
+.product-banner-inner > div { display: flex; align-items: center; gap: 22px; }
+.product-banner a { display: inline-flex; align-items: center; gap: 6px; color: #cad7ee; font-size: 12px; font-weight: 700; }
+.product-banner a:hover { color: var(--green); }
 .mobile-menu-button { display: none; border: 0; background: transparent; padding: 8px; }
 
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 0 17px; border: 1px solid transparent; border-radius: 6px; font-size: 12px; font-weight: 800; white-space: nowrap; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
@@ -142,24 +148,6 @@ h1 span, .section-heading h2 span { color: var(--blue-soft); }
 .advanced-card .card-eyebrow { display: block; color: var(--blue-soft); font: 500 10px var(--mono); }
 .advanced-card h3 { margin: 8px 0 10px; font-size: 17px; }
 .advanced-card p { max-width: 280px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
-.section-screenshots { background: #0a111f; }
-.screenshot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 16px; }
-.screenshot-card { min-width: 0; }
-.screenshot-frame { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; padding: 0; border: 1px solid #2b4267; background: #101b2d; cursor: default; }
-.screenshot-frame.screenshot-ready { cursor: zoom-in; }
-.screenshot-frame img:not(.asset-probe) { display: block; width: 100%; height: 100%; object-fit: cover; }
-.screenshot-placeholder { display: grid; place-items: center; gap: 8px; color: #7890b9; text-align: center; }
-.screenshot-placeholder svg { color: #5373ae; }
-.screenshot-placeholder b { color: #b8c8e5; font-size: 12px; }
-.screenshot-placeholder small { color: #647a9f; font-size: 10px; }
-.asset-probe { position: absolute; width: 1px !important; height: 1px !important; opacity: 0; pointer-events: none; }
-.screenshot-caption { display: flex; gap: 13px; margin: 13px 2px 0; }
-.screenshot-caption > span { color: var(--blue-soft); font: 500 11px var(--mono); }
-.screenshot-caption h3 { margin-bottom: 4px; font-size: 14px; }
-.screenshot-caption p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
-.lightbox { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 35px; background: rgba(3, 8, 17, .9); }
-.lightbox img { max-width: min(1200px, 94vw); max-height: 88vh; border: 1px solid #48659a; box-shadow: 0 20px 70px rgba(0, 0, 0, .55); }
-.lightbox-close { position: fixed; top: 20px; right: 22px; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #526b98; color: #fff; background: #152541; cursor: pointer; }
 .security-proof { padding: 26px 0; border-bottom: 1px solid var(--line); background: #0a111e; }
 .security-proof-inner { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 .security-badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border: 1px solid #2d5b51; color: #b9f3da; background: #102a28; font: 500 10px var(--mono); }
@@ -181,12 +169,14 @@ h1 span, .section-heading h2 span { color: var(--blue-soft); }
 }
 
 @media (max-width: 700px) {
+  .product-banner-inner { align-items: stretch; flex-direction: column; gap: 9px; padding: 11px 0; }
+  .product-banner-inner > div { justify-content: space-between; gap: 10px; }
+  .product-banner a { min-height: 32px; }
   .hero-badges { display: grid; grid-template-columns: 1fr; }
-  .advanced-grid, .screenshot-grid, .download-facts, .legal-grid { grid-template-columns: 1fr; }
+  .advanced-grid, .download-facts, .legal-grid { grid-template-columns: 1fr; }
   .advanced-card { min-height: 0; }
   .security-proof-inner { align-items: stretch; }
   .security-badge { justify-content: center; }
   .security-proof p { flex-basis: 100%; margin: 6px 0 0; }
-  .lightbox { padding: 18px; }
   .footer-links { gap: 12px; }
 }
