@@ -203,7 +203,6 @@ export default function App() {
             <a href="#preview" onClick={closeMenu}>{t.nav[1]}</a>
             <a href="#security" onClick={closeMenu}>{t.nav[2]}</a>
             <a href="#faq" onClick={closeMenu}>{t.nav[3]}</a>
-            <a className="nav-github" href={sourceUrl} target="_blank" rel="noreferrer" onClick={closeMenu}><GitBranch size={16} /> GitHub</a>
             <button type="button" className="language-toggle" onClick={toggleLanguage}>{isEnglish ? '한국어' : 'EN'}</button>
             <DownloadButton compact label={t.download} />
           </nav>
