@@ -88,11 +88,7 @@ const faqsByLanguage = {
 function ProductLogo() {
   return (
     <a className="brand" href="#top" aria-label="Trade Journal Free 홈">
-      <span className="brand-mark">TJ</span>
-      <span>
-        <strong>Trade Journal</strong>
-        <small>FREE</small>
-      </span>
+      <img className="brand-image" src="/trading-journal-logo.png" alt="Trading Journal" />
     </a>
   );
 }

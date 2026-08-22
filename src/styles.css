@@ -31,7 +31,8 @@ button { color: inherit; }
 
 .site-header { position: sticky; top: 0; z-index: 50; background: rgba(8, 13, 24, .92); border-bottom: 1px solid rgba(34, 48, 74, .78); backdrop-filter: blur(16px); }
 .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; }
-.brand { display: inline-flex; align-items: center; gap: 10px; min-width: max-content; }
+.brand { display: inline-flex; align-items: center; min-width: max-content; }
+.brand-image { display: block; width: 210px; height: auto; border-radius: 5px; }
 .brand-mark { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #6e9aff; color: #d8e4ff; background: #18336c; border-radius: 7px; font: 500 12px var(--mono); letter-spacing: 0; box-shadow: 0 0 0 4px rgba(92, 141, 255, .08); }
 .brand strong { display: block; font-size: 13px; letter-spacing: -.02em; }
 .brand small { display: block; margin-top: 2px; color: var(--blue-soft); font: 500 9px var(--mono); letter-spacing: .14em; }
@@ -126,3 +127,5 @@ h1 span { color: #8caeff; }
 @media (max-width: 700px) {
   .download-buttons { width: 100%; flex-direction: column; }
 }
+
+.preview-sidebar .brand-image { width: 150px; }
