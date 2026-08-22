@@ -218,7 +218,7 @@ export default function App() {
               <div className="eyebrow"><span className="pulse-dot" /> {t.eyebrow}</div>
               <h1>{isEnglish ? <>Better trading starts with<br /><span>understanding your own trades.</span></> : <>더 나은 매매는,<br /><span>내 거래를 이해하는<br />것에서 시작됩니다.</span></>}</h1>
               <p className="hero-lead">{t.heroLead}</p>
-              <div className="hero-actions"><DownloadButton label={t.download} /><a className="button button-ghost" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={17} /> {t.github}</a></div>
+              <div className="hero-actions"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /><a className="button button-ghost" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={17} /> {t.github}</a></div>
               <p className="hero-note"><LockKeyhole size={14} /> {t.note}</p>
             </div>
             <div className="hero-visual">
