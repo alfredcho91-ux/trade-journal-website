@@ -118,9 +118,11 @@ function CandleChart({ small = false, language = 'ko' }: { small?: boolean; lang
       {candles.map(([x, open, high, low, direction]) => {
         const close = direction === 'up' ? open - 8 : open + 8;
         const color = direction === 'up' ? '#3ddc97' : '#fb7185';
+        const wickHigh = Math.max(2, high - 4);
+        const wickLow = Math.min(62, low + 4);
         return (
           <g key={x}>
-            <line x1={x} x2={x} y1={high} y2={low} stroke={color} strokeWidth="1" />
+            <line x1={x} x2={x} y1={wickHigh} y2={wickLow} stroke={color} strokeWidth="1" />
             <rect x={x - 2.2} y={Math.min(open, close)} width="4.4" height={Math.max(3, Math.abs(close - open))} fill={color} />
           </g>
         );
