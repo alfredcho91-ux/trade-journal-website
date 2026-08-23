@@ -26,7 +26,7 @@ const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.c
 const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-macOS.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 const releaseInfo = {
-  version: 'v1.0.2',
+  version: 'v1.0.10',
   windowsSize: '약 46 MB',
   macosSize: '약 31 MB',
   windowsPlatform: 'Windows 10/11 · x64',
@@ -312,7 +312,7 @@ export default function App() {
           <div className="container hero-layout">
             <div className="hero-copy">
               <div className="eyebrow"><span className="pulse-dot" /> {t.eyebrow}</div>
-              <h1>{isEnglish ? <>Find patterns in your trades,<br /><span>build your own trading rules.</span></> : <>내 거래에서 패턴을 찾고,<br /><span>나만의 매매 기준을<br />만드세요.</span></>}</h1>
+              <h1 className={isEnglish ? undefined : 'hero-title-ko'}>{isEnglish ? <>Find patterns in your trades,<br /><span>build your own trading rules.</span></> : <>내 거래에서<br /><span>패턴을 찾고<br />나만의 매매 기준을 만드세요.</span></>}</h1>
               <p className="hero-lead">{heroLeadByLanguage[language]}</p>
               <div className="hero-actions"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /><a className="button button-ghost" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={17} /> {t.github}</a></div>
               <div className="hero-badges"><span><LockKeyhole size={14} /> {isEnglish ? 'READ ONLY API' : '읽기 전용 API'}</span><span><Database size={14} /> {isEnglish ? 'LOCAL DATA' : '내 컴퓨터에 저장'}</span><span><ShieldCheck size={14} /> {isEnglish ? 'NO TRADE EXECUTION' : '주문 실행 없음'}</span></div>
