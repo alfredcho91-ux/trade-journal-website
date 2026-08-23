@@ -26,7 +26,7 @@ const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.c
 const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-macOS.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 const releaseInfo = {
-  version: 'v1.0.10',
+  version: 'v1.0.11',
   windowsSize: '약 46 MB',
   macosSize: '약 31 MB',
   windowsPlatform: 'Windows 10/11 · x64',
@@ -114,7 +114,7 @@ const faqsByLanguage = {
   { question: 'API Key로 주문이나 출금이 가능한가요?', answer: 'Trade Journal은 주문·취소·출금을 실행하지 않습니다. 그래도 API를 만들 때는 반드시 읽기 전용 권한만 선택하세요.' },
   { question: 'API Key는 어떻게 보관되나요?', answer: '무료 데스크톱판은 브라우저 저장소에 키를 넣지 않고 운영체제의 보안 저장소 사용을 우선합니다. 사용 중인 배포판의 안내를 확인하세요.' },
   { question: 'API Key를 삭제할 수 있나요?', answer: '앱의 거래소 연결 관리에서 연결을 삭제하면 저장된 연결 정보도 함께 제거할 수 있습니다.' },
-  { question: '어떤 거래소를 지원하나요?', answer: '현재 Deepcoin, Binance, Bybit, OKX의 읽기 전용 거래 기록 동기화를 지원합니다.' },
+  { question: '어떤 거래소를 지원하나요?', answer: '현재 Deepcoin SWAP과 Binance의 읽기 전용 거래 기록 동기화를 지원합니다.' },
   { question: 'Windows SmartScreen 경고가 뜨는 이유는 무엇인가요?', answer: '무료 배포판은 Windows 코드 서명이 아직 없어 처음 실행할 때 경고가 표시될 수 있습니다. GitHub Releases의 파일인지 확인한 뒤 실행하세요.' },
   ],
   en: [
@@ -123,7 +123,7 @@ const faqsByLanguage = {
     { question: 'Can the API key place orders or withdrawals?', answer: 'Trade Journal never places, cancels, or withdraws orders. Create the exchange key with read-only access anyway.' },
     { question: 'How are API keys stored?', answer: 'The desktop build does not put keys in browser storage and prefers the operating system’s secure credential storage. Check the instructions for your build.' },
     { question: 'Can I delete an API key?', answer: 'Delete the exchange connection from the app’s connection settings to remove the saved connection information.' },
-    { question: 'Which exchanges are supported?', answer: 'Read-only trade history sync is available for Deepcoin, Binance, Bybit, and OKX.' },
+    { question: 'Which exchanges are supported?', answer: 'Read-only trade history sync is available for Deepcoin SWAP and Binance.' },
     { question: 'Why does Windows SmartScreen show a warning?', answer: 'The free build is not code-signed yet, so Windows may warn on first launch. Verify the file came from GitHub Releases before opening it.' },
   ],
 } as const;
@@ -328,7 +328,7 @@ export default function App() {
               <div className="floating-stat stat-bottom"><span>{isEnglish ? 'Trade analysis' : '거래 분석'}</span><strong>42</strong><small>{isEnglish ? 'Closed positions' : '종료 포지션'}</small></div>
             </div>
           </div>
-          <div className="container hero-proof"><span>DEEPCOIN</span><span>BINANCE</span><span>BYBIT</span><span>OKX</span><i /><small>{t.proof}</small></div>
+          <div className="container hero-proof"><span>DEEPCOIN SWAP</span><span>BINANCE</span><i /><small>{t.proof}</small></div>
         </section>
 
         <section id="product" className="section section-features">

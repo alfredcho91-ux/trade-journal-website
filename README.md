@@ -2,7 +2,7 @@
 
 Trade Journal의 공식 소개·다운로드용 정적 웹사이트입니다. React + Vite로 구성되어 있으며 백엔드를 사용하지 않습니다.
 
-현재 다운로드 버전: `v1.0.10`
+현재 다운로드 버전: `v1.0.11`
 
 ## 포함 내용
 
@@ -13,6 +13,7 @@ Trade Journal의 공식 소개·다운로드용 정적 웹사이트입니다. Re
 - FAQ
 - 거래소 API 발급·권한 설정·프로그램 연결 방법 안내
 - GitHub Releases 최신 Windows/macOS ZIP 다운로드 링크
+- 공식 지원 거래소: Deepcoin SWAP, Binance
 
 ## 로컬 실행
 
