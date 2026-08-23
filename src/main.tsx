@@ -26,7 +26,7 @@ const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.c
 const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-macOS.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 const releaseInfo = {
-  version: 'v1.0.0',
+  version: 'v1.0.1',
   windowsSize: '약 46 MB',
   macosSize: '약 31 MB',
   windowsPlatform: 'Windows 10/11 · x64',
