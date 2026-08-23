@@ -1,6 +1,6 @@
 # Trade Journal Website
 
-Trade Journal Free의 공식 소개·다운로드용 정적 웹사이트입니다. React + Vite로 구성되어 있으며 백엔드를 사용하지 않습니다.
+Trade Journal의 공식 소개·다운로드용 정적 웹사이트입니다. React + Vite로 구성되어 있으며 백엔드를 사용하지 않습니다.
 
 ## 포함 내용
 

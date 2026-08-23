@@ -56,6 +56,26 @@ const advancedFeaturesByLanguage = {
 } as const;
 type Language = 'ko' | 'en';
 
+function normalizeBrandText(value: unknown): unknown {
+  if (typeof value === 'string') {
+    return value
+      .replace(/Trade Journal Free(?!\.exe)/g, 'Trade Journal')
+      .replace(/TRADE JOURNAL FREE/g, 'TRADE JOURNAL')
+      .replace(/Free open-source/g, 'Open-source')
+      .replace(/Free download/g, 'Download')
+      .replace(/Free app download/g, 'App download')
+      .replace(/The free build/g, 'The test build')
+      .replace(/무료 오픈소스/g, '오픈소스')
+      .replace(/무료 앱 다운로드/g, '앱 다운로드')
+      .replace(/Windows 무료 다운로드/g, 'Windows 다운로드');
+  }
+  if (Array.isArray(value)) return value.map(normalizeBrandText);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, normalizeBrandText(item)]));
+  }
+  return value;
+}
+
 const featuresByLanguage = {
   ko: [
   {
@@ -91,7 +111,7 @@ const faqsByLanguage = {
   ko: [
   { question: '거래 데이터는 어디에 저장되나요?', answer: '거래 기록과 분석 결과는 데스크톱 앱의 로컬 저장소에 남습니다. 이 소개 사이트는 거래 데이터를 수집하지 않습니다.' },
   { question: '어떤 API 권한이 필요한가요?', answer: '거래 기록 조회에 필요한 Read Only 권한만 사용하세요. 출금과 주문 권한은 활성화하지 않아도 됩니다.' },
-  { question: 'API Key로 주문이나 출금이 가능한가요?', answer: 'Trade Journal Free는 주문·취소·출금을 실행하지 않습니다. 그래도 API를 만들 때는 반드시 읽기 전용 권한만 선택하세요.' },
+  { question: 'API Key로 주문이나 출금이 가능한가요?', answer: 'Trade Journal은 주문·취소·출금을 실행하지 않습니다. 그래도 API를 만들 때는 반드시 읽기 전용 권한만 선택하세요.' },
   { question: 'API Key는 어떻게 보관되나요?', answer: '무료 데스크톱판은 브라우저 저장소에 키를 넣지 않고 운영체제의 보안 저장소 사용을 우선합니다. 사용 중인 배포판의 안내를 확인하세요.' },
   { question: 'API Key를 삭제할 수 있나요?', answer: '앱의 거래소 연결 관리에서 연결을 삭제하면 저장된 연결 정보도 함께 제거할 수 있습니다.' },
   { question: '어떤 거래소를 지원하나요?', answer: '현재 Deepcoin, Binance, Bybit, OKX의 읽기 전용 거래 기록 동기화를 지원합니다.' },
@@ -100,7 +120,7 @@ const faqsByLanguage = {
   en: [
     { question: 'Where is my trade data stored?', answer: 'Trade records and analysis results stay in the desktop app’s local storage. This website does not collect trading data.' },
     { question: 'Which API permissions do I need?', answer: 'Use only the Read Only permissions needed to read trade history. Do not enable withdrawals or order access.' },
-    { question: 'Can the API key place orders or withdrawals?', answer: 'Trade Journal Free never places, cancels, or withdraws orders. Create the exchange key with read-only access anyway.' },
+    { question: 'Can the API key place orders or withdrawals?', answer: 'Trade Journal never places, cancels, or withdraws orders. Create the exchange key with read-only access anyway.' },
     { question: 'How are API keys stored?', answer: 'The desktop build does not put keys in browser storage and prefers the operating system’s secure credential storage. Check the instructions for your build.' },
     { question: 'Can I delete an API key?', answer: 'Delete the exchange connection from the app’s connection settings to remove the saved connection information.' },
     { question: 'Which exchanges are supported?', answer: 'Read-only trade history sync is available for Deepcoin, Binance, Bybit, and OKX.' },
@@ -110,7 +130,7 @@ const faqsByLanguage = {
 
 function ProductLogo() {
   return (
-    <a className="brand" href="#top" aria-label="Trade Journal Free 홈">
+    <a className="brand" href="#top" aria-label="Trade Journal 홈">
       <img className="brand-image" src="/trading-journal-logo.png" alt="Trading Journal" />
     </a>
   );
@@ -161,7 +181,7 @@ function JournalPreview({ language }: { language: Language }) {
   const isEnglish = language === 'en';
   return (
     <div className="app-window">
-      <div className="window-topbar"><span className="window-dots"><i /><i /><i /></span><span>Trade Journal Free <em>SYNCED</em></span><span className="window-menu">•••</span></div>
+      <div className="window-topbar"><span className="window-dots"><i /><i /><i /></span><span>Trade Journal <em>SYNCED</em></span><span className="window-menu">•••</span></div>
       <div className="window-body journal-preview">
         <aside className="preview-sidebar"><ProductLogo /><span className="sidebar-section">WORKSPACE</span><span className="sidebar-link active"><BookOpen size={14} /> {isEnglish ? 'Journal' : '매매일지'}</span><span className="sidebar-link"><BarChart3 size={14} /> {isEnglish ? 'Analysis' : '매매분석'}</span><span className="sidebar-link"><ShieldCheck size={14} /> Risk Lab</span><span className="sidebar-status"><i /> {isEnglish ? 'API connected' : 'API 연결됨'}</span></aside>
         <div className="preview-main"><div className="preview-heading"><div><span className="mini-kicker">TRADING JOURNAL</span><h3>{isEnglish ? 'Recent trades' : '최근 거래'}</h3></div><span className="date-filter">{isEnglish ? 'Last 90 days' : '최근 90일'}⌄</span></div><div className="stat-row"><span><b>42</b><small>{isEnglish ? 'Closed trades' : '종료 거래'}</small></span><span><b className="green-text">+8.42%</b><small>{isEnglish ? 'Net return' : '순수익률'}</small></span><span><b>1.62</b><small>Profit Factor</small></span></div><div className="journal-table"><div className="table-head"><span>{isEnglish ? 'Symbol' : '종목'}</span><span>{isEnglish ? 'Side' : '방향'}</span><span>{isEnglish ? 'Entry' : '진입가'}</span><span>{isEnglish ? 'Exit' : '종료가'}</span><span>{isEnglish ? 'Result' : '결과'}</span></div><div className="table-row"><span>BTC/USDT</span><span className="tag-long">LONG</span><span>64,299</span><span>65,218</span><strong className="green-text">+2.71%</strong></div><div className="table-row"><span>ETH/USDT</span><span className="tag-short">SHORT</span><span>3,462</span><span>3,418</span><strong className="green-text">+1.26%</strong></div><div className="table-row"><span>BTC/USDT</span><span className="tag-short">SHORT</span><span>63,820</span><span>64,210</span><strong className="red-text">-0.61%</strong></div></div></div>
@@ -206,18 +226,46 @@ function ApiConnectionGuide({ language }: { language: Language }) {
     ['Choose read-only access', 'Enable only read or view permissions. Keep order, cancellation, futures trading, and withdrawal permissions disabled.'],
     ['Add an IP restriction when available', 'If the exchange supports an IP whitelist, use it. This adds another barrier if the key is exposed.'],
     ['Copy the credentials once', 'Copy the API key and secret to a safe place. Some exchanges show the secret only once. Enter a passphrase only when that exchange requires one.'],
-    ['Connect inside the app', 'Open the exchange connection screen in Trade Journal Free, select the exchange, enter the key, secret, and required passphrase, then run the connection test.'],
+    ['Connect inside the app', 'Open the exchange connection screen in Trade Journal, select the exchange, enter the key, secret, and required passphrase, then run the connection test.'],
     ['Sync and remove when finished', 'Sync the trade history after the connection succeeds. If you stop using the connection, delete it from the app and revoke the key at the exchange.'],
   ] : [
     ['거래소의 API 관리 메뉴 열기', '거래소에 로그인한 뒤 API Management 또는 API Keys 메뉴에서 API Key 생성을 선택합니다. 거래소마다 메뉴 이름은 다를 수 있습니다.'],
     ['읽기 전용 권한만 선택하기', 'Read 또는 View 권한만 켜세요. 주문·취소·선물 거래·출금 권한은 모두 끈 상태로 둡니다.'],
     ['가능하면 IP 제한 설정하기', '거래소가 IP 화이트리스트를 지원한다면 함께 설정하세요. API Key가 노출됐을 때 추가 보호막이 됩니다.'],
     ['발급 정보 안전하게 복사하기', 'API Key와 Secret Key를 안전한 곳에 복사합니다. 거래소에 따라 Secret은 발급 직후 한 번만 보여줍니다. Passphrase는 해당 거래소가 요구할 때만 입력합니다.'],
-    ['프로그램에서 거래소 연결하기', 'Trade Journal Free의 거래소 연결 화면을 열고 거래소를 선택한 뒤 Key, Secret, 필요한 Passphrase를 입력하고 연결 테스트를 실행합니다.'],
+    ['프로그램에서 거래소 연결하기', 'Trade Journal의 거래소 연결 화면을 열고 거래소를 선택한 뒤 Key, Secret, 필요한 Passphrase를 입력하고 연결 테스트를 실행합니다.'],
     ['동기화 후 필요하면 삭제하기', '연결 테스트가 성공하면 거래 기록을 동기화합니다. 더 이상 사용하지 않을 때는 프로그램에서 연결을 삭제하고 거래소에서도 API Key를 폐기하세요.'],
   ];
   return (
-    <div className="api-guide"><div className="api-guide-heading"><span className="eyebrow">{isEnglish ? 'API CONNECTION GUIDE' : 'API 발급 및 연결 안내'}</span><h3>{isEnglish ? 'Connect safely in a few steps.' : '안전하게 연결하는 순서'}</h3><p>{isEnglish ? 'The exact menu differs by exchange, but the permission rule is always the same: read-only access only.' : '거래소마다 메뉴 이름은 다르지만, 권한 원칙은 같습니다. 거래 기록을 읽는 권한만 사용하세요.'}</p></div><div className="api-step-grid">{steps.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h4>{title}</h4><p>{copy}</p></div></article>)}</div><div className="api-safety-note"><ShieldCheck size={19} /><p>{isEnglish ? 'Before saving: confirm that withdrawal and order permissions are off. Trade Journal Free is for recording and analysis; it does not need permission to trade.' : '저장하기 전 출금·주문 권한이 꺼져 있는지 다시 확인하세요. Trade Journal Free는 기록과 분석을 위한 프로그램이라 거래 권한이 필요하지 않습니다.'}</p></div></div>
+    <div className="api-guide"><div className="api-guide-heading"><span className="eyebrow">{isEnglish ? 'API CONNECTION GUIDE' : 'API 발급 및 연결 안내'}</span><h3>{isEnglish ? 'Connect safely in a few steps.' : '안전하게 연결하는 순서'}</h3><p>{isEnglish ? 'The exact menu differs by exchange, but the permission rule is always the same: read-only access only.' : '거래소마다 메뉴 이름은 다르지만, 권한 원칙은 같습니다. 거래 기록을 읽는 권한만 사용하세요.'}</p></div><div className="api-step-grid">{steps.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h4>{title}</h4><p>{copy}</p></div></article>)}</div><div className="api-safety-note"><ShieldCheck size={19} /><p>{isEnglish ? 'Before saving: confirm that withdrawal and order permissions are off. Trade Journal is for recording and analysis; it does not need permission to trade.' : '저장하기 전 출금·주문 권한이 꺼져 있는지 다시 확인하세요. Trade Journal은 기록과 분석을 위한 프로그램이라 거래 권한이 필요하지 않습니다.'}</p></div></div>
+  );
+}
+
+function WindowsLaunchGuide({ language }: { language: Language }) {
+  const isEnglish = language === 'en';
+  const steps = isEnglish
+    ? [
+        'Right-click the ZIP, open Properties, check Unblock if available, and click Apply.',
+        'Extract the ZIP and run “Trade Journal Free.exe”.',
+        'On the warning screen, click “More info” and then “Run anyway”.',
+        'Use the local browser page that opens after the app starts.',
+      ]
+    : [
+        'ZIP 파일을 우클릭해 속성을 열고, 차단 해제가 보이면 체크한 뒤 적용합니다.',
+        '압축을 풀고 “Trade Journal Free.exe”를 실행합니다.',
+        '경고 화면에서 “추가 정보”를 누른 뒤 “실행”을 선택합니다.',
+        '앱 실행 후 열리는 로컬 브라우저 화면에서 사용합니다.',
+      ];
+  return (
+    <section className="windows-launch-section">
+      <div className="container windows-launch-guide">
+        <span className="eyebrow">{isEnglish ? 'WINDOWS TEST BUILD' : 'WINDOWS 테스트 버전'}</span>
+        <h2>{isEnglish ? 'SmartScreen may ask for confirmation.' : 'SmartScreen에서 실행을 확인할 수 있습니다.'}</h2>
+        <p>{isEnglish ? 'This test build may not be code-signed. Microsoft Defender SmartScreen can show “Windows protected your PC” or “an unrecognized app was prevented from starting”. Windows has not verified the publisher yet; do not disable your security tools.' : '현재 테스트 버전은 코드 서명이 없을 수 있어 Microsoft Defender SmartScreen에 “인식할 수 없는 앱의 시작을 차단했습니다”라는 문구가 표시될 수 있습니다. Windows가 아직 게시자를 확인하지 못했다는 뜻이며, 보안 기능을 끌 필요는 없습니다.'}</p>
+        <ol>{steps.map((step) => <li key={step}>{step}</li>)}</ol>
+        <small>{isEnglish ? 'Continue only when the file came from the official GitHub repository. Do not run a file from an unknown source.' : '공식 GitHub 저장소에서 받은 파일인지 확인한 경우에만 진행하세요. 출처를 알 수 없는 파일은 실행하지 마세요.'}</small>
+      </div>
+    </section>
   );
 }
 
@@ -229,12 +277,13 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = language;
   }, [language]);
-  const t = isEnglish ? {
+  const rawText = isEnglish ? {
     nav: ['Features', 'Preview', 'Security', 'FAQ'], eyebrow: 'Free open-source trading journal', heroTitle: 'Better trading starts with understanding your own trades.', heroLead: 'Bring exchange fills together safely and replay every entry and exit. Trade Journal Free does not trade for you; it helps you prepare for the next one.', download: 'Free download for Windows', github: 'View on GitHub', note: 'Read-only API · No order execution · Local-first storage', preview: 'LIVE PREVIEW', netReturn: 'Net return', recent: 'Last 90 days', proof: 'Read-only records in one workspace', featuresEyebrow: 'BUILT FOR REVIEW', featuresTitle: 'Keep the lesson,<br />not just the trade.', featuresCopy: 'A workspace for discovering the behaviors and market conditions you repeat—not just another trade list.', previewEyebrow: 'PRODUCT PREVIEW', previewTitle: 'Simple screens,<br />enough evidence.', previewCopy: 'The same information flow used in the app: find it in the journal, replay it on a chart, then turn it into a better rule.', securityEyebrow: 'LOCAL-FIRST SECURITY', securityTitle: 'Your trade records<br /><span>stay on your computer.</span>', securityCopy: 'Trade Journal Free is not an advertising or external analysis service. Run it personally and fetch only the records you need with read-only API keys.', securityLink: 'Inspect the storage and source code', workflowEyebrow: 'THREE STEPS', workflowTitle: 'Install, connect,<br />and review the next trade.', workflow: [['Free app download', 'Get the Windows ZIP, extract it, and launch.'], ['Connect an exchange', 'Connect a read-only API to sync closed positions.'], ['Start reviewing', 'Use charts and analysis to see what to keep and change.']], faqTitle: 'Questions<br />before you start', downloadEyebrow: 'START YOUR REVIEW', downloadTitle: 'Before the next trade,<br />look at the last one.', downloadCopy: 'Trade Journal Free is free and never places orders.', source: 'View source and releases', footer: 'A free open-source trade review tool for individual traders.', links: ['Features', 'Security', 'FAQ'], copyright: '© 2026 Trade Journal Free'
   } : {
     nav: ['기능', '화면 미리보기', '보안', 'FAQ'], eyebrow: '무료 오픈소스 트레이딩 저널', heroTitle: '더 나은 매매는, 내 거래를 이해하는 것에서 시작됩니다.', heroLead: '거래소의 체결 기록을 안전하게 모으고, 진입부터 청산까지 다시 보세요. Trade Journal Free는 매매를 대신하지 않고, 다음 거래를 더 잘 준비하게 합니다.', download: 'Windows 무료 다운로드', github: 'GitHub에서 보기', note: 'Read-only API · 주문 실행 없음 · 로컬 우선 저장', preview: 'LIVE PREVIEW', netReturn: '순수익률', recent: '최근 90일', proof: '읽기 전용 기록을 한곳에서', featuresEyebrow: 'BUILT FOR REVIEW', featuresTitle: '거래를 쌓는 데서<br />끝나지 않도록', featuresCopy: '단순한 거래 목록이 아니라, 내가 반복하는 행동과 시장 환경을 발견하는 작업 공간입니다.', previewEyebrow: 'PRODUCT PREVIEW', previewTitle: '화면은 복잡하지 않게,<br />근거는 충분하게', previewCopy: '실제 앱에서 사용하는 정보 흐름을 그대로 담았습니다. 표에서 발견하고, 차트로 복기하고, 분석으로 다음 규칙을 정합니다.', securityEyebrow: 'LOCAL-FIRST SECURITY', securityTitle: '거래 기록은<br /><span>당신의 컴퓨터에</span>', securityCopy: 'Trade Journal Free는 매매 기록을 광고 데이터나 외부 분석 서버로 보내는 서비스가 아닙니다. 개인용으로 실행하고, 읽기 전용 API로 필요한 기록만 가져옵니다.', securityLink: '저장 구조와 코드를 확인하기', workflowEyebrow: 'THREE STEPS', workflowTitle: '설치하고, 연결하고,<br />다음 거래를 준비하세요.', workflow: [['무료 앱 다운로드', 'Windows ZIP을 받고 압축을 풀어 바로 실행합니다.'], ['거래소 연결', '읽기 전용 API를 연결하면 종료 포지션을 동기화합니다.'], ['복기 시작', '차트와 분석으로 잘한 점과 고칠 점을 확인합니다.']], faqTitle: '시작하기 전에<br />궁금한 점', downloadEyebrow: 'START YOUR REVIEW', downloadTitle: '다음 거래 전에,<br />지난 거래를 먼저 보세요.', downloadCopy: 'Trade Journal Free는 무료이며, 주문을 대신하지 않습니다.', source: '소스코드와 릴리스 보기', footer: '개인 트레이더를 위한 무료 오픈소스 거래 복기 도구.', links: ['기능', '보안', 'FAQ'], copyright: '© 2026 Trade Journal Free'
   };
 
+  const t = normalizeBrandText(rawText) as typeof rawText;
   const closeMenu = () => setMenuOpen(false);
   const toggleLanguage = () => { setLanguage(isEnglish ? 'ko' : 'en'); closeMenu(); };
 
@@ -255,7 +304,7 @@ export default function App() {
         </div>
       </header>
 
-      <div className="product-banner"><div className="container product-banner-inner"><span>{isEnglish ? 'TRADE JOURNAL FREE' : 'TRADE JOURNAL FREE'}</span><div><a href="#product" onClick={closeMenu}>{isEnglish ? 'Product overview' : '제품 소개'} <ArrowRight size={14} /></a><a href="#how-to" onClick={closeMenu}>{isEnglish ? 'How to use' : '사용 방법'} <ArrowRight size={14} /></a></div></div></div>
+      <div className="product-banner"><div className="container product-banner-inner"><span>TRADE JOURNAL</span><div><a href="#product" onClick={closeMenu}>{isEnglish ? 'Product overview' : '제품 소개'} <ArrowRight size={14} /></a><a href="#how-to" onClick={closeMenu}>{isEnglish ? 'How to use' : '사용 방법'} <ArrowRight size={14} /></a></div></div></div>
 
       <main>
         <section className="hero-section">
@@ -314,6 +363,8 @@ export default function App() {
         <section id="faq" className="section section-faq"><div className="container faq-layout"><div className="faq-heading"><span className="eyebrow">FAQ</span><h2 dangerouslySetInnerHTML={{ __html: t.faqTitle }} /><CircleHelp size={38} /></div><div className="faq-list">{faqsByLanguage[language].map((faq, index) => <FAQItem key={faq.question} {...faq} open={openFaq === index} onToggle={() => setOpenFaq(openFaq === index ? -1 : index)} />)}</div></div></section>
 
         <section className="download-section"><div className="container download-inner"><div><span className="eyebrow">{t.downloadEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.downloadTitle }} /><p>{t.downloadCopy}</p></div><div className="download-side"><div className="download-buttons"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /></div><a className="text-link muted-link" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={16} /> {t.source}</a></div></div><div className="container download-facts"><div><b>{releaseInfo.windowsPlatform}</b><span>Windows · {releaseInfo.version} · {releaseInfo.windowsSize}</span></div><div><b>{releaseInfo.macosPlatform}</b><span>macOS · {releaseInfo.version} · {releaseInfo.macosSize}</span></div><div><b>{isEnglish ? 'Free · no account' : '무료 · 회원가입 불필요'}</b><span>{isEnglish ? 'Read-only API · no orders or withdrawals' : 'Read-only API · 주문·출금 기능 없음'}</span></div></div><p className="download-warning">{isEnglish ? 'Windows is not code-signed yet, so SmartScreen may show a first-launch warning. Verify the download source before opening it.' : 'Windows 버전은 아직 코드 서명이 없어 처음 실행할 때 SmartScreen 경고가 표시될 수 있습니다. 다운로드 출처를 확인한 뒤 실행하세요.'}</p></section>
+
+        <WindowsLaunchGuide language={language} />
 
         <section id="legal" className="legal-section"><div className="container legal-grid"><article><h3>{isEnglish ? 'Privacy' : '개인정보 처리방침'}</h3><p>{isEnglish ? 'This static site does not collect API keys or trading records.' : '이 정적 사이트는 API Key나 거래 기록을 수집하지 않습니다.'}</p></article><article><h3>{isEnglish ? 'Terms' : '이용약관'}</h3><p>{isEnglish ? 'Use the app at your own discretion and keep exchange keys read-only.' : '프로그램은 사용자의 판단 아래 이용하고 거래소 키는 읽기 전용으로 관리하세요.'}</p></article><article id="disclaimer"><h3>Disclaimer</h3><p>{isEnglish ? 'This is a personal trade journaling and analysis tool, not investment advice or an auto-trading service.' : '개인의 거래 기록과 분석을 위한 도구이며 투자자문이나 자동매매 서비스가 아닙니다.'}</p></article></div></section>
       </main>

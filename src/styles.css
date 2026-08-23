@@ -158,6 +158,13 @@ h1 span, .section-heading h2 span { color: var(--blue-soft); }
 .download-facts b { color: #e3ebff; font-size: 12px; }
 .download-facts span { color: #92a8cc; font-size: 10px; line-height: 1.5; }
 .download-warning { max-width: 780px; margin: 17px auto 0; color: #8fa2c5; font-size: 11px; line-height: 1.6; text-align: center; }
+.windows-launch-section { padding: 52px 0; border-bottom: 1px solid var(--line); background: #0a111e; }
+.windows-launch-guide { max-width: 780px; }
+.windows-launch-guide h2 { margin: 12px 0 12px; color: #f0f4ff; font-size: clamp(24px, 3vw, 34px); letter-spacing: -.04em; }
+.windows-launch-guide > p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.windows-launch-guide ol { margin: 18px 0 13px 19px; padding: 0; color: #c2d0e9; font-size: 12px; line-height: 1.9; }
+.windows-launch-guide li { padding-left: 4px; }
+.windows-launch-guide small { color: #7185a8; font-size: 10px; line-height: 1.6; }
 .legal-section { padding: 48px 0; border-bottom: 1px solid var(--line); background: #09101d; }
 .legal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .legal-grid article { padding: 18px; border: 1px solid #1f304d; background: #0e192b; }
