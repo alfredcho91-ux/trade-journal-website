@@ -39,8 +39,8 @@ npm run build
 
 기본 다운로드 링크는 아래 Releases 주소를 사용합니다.
 
-`https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-Windows.zip`
+`https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip`
 
-`https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-macOS.zip`
+`https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-macOS.zip`
 
 주소를 변경해야 하면 Cloudflare Pages 환경변수 `VITE_WINDOWS_RELEASE_URL` 또는 `VITE_MACOS_RELEASE_URL`을 지정합니다. API Key, Secret, Passphrase 같은 민감정보는 이 사이트에 넣지 않습니다.

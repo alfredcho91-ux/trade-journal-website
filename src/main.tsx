@@ -22,8 +22,8 @@ import {
 } from 'lucide-react';
 import './styles.css';
 
-const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-Windows.zip';
-const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-macOS.zip';
+const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
+const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-macOS.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 const releaseInfo = {
   version: 'v1.0.2',
@@ -246,13 +246,13 @@ function WindowsLaunchGuide({ language }: { language: Language }) {
   const steps = isEnglish
     ? [
         'Right-click the ZIP, open Properties, check Unblock if available, and click Apply.',
-        'Extract the ZIP and run “Trade Journal Free.exe”.',
+        'Extract the ZIP and run “Trade Journal.exe”.',
         'On the warning screen, click “More info” and then “Run anyway”.',
         'Use the local browser page that opens after the app starts.',
       ]
     : [
         'ZIP 파일을 우클릭해 속성을 열고, 차단 해제가 보이면 체크한 뒤 적용합니다.',
-        '압축을 풀고 “Trade Journal Free.exe”를 실행합니다.',
+        '압축을 풀고 “Trade Journal.exe”를 실행합니다.',
         '경고 화면에서 “추가 정보”를 누른 뒤 “실행”을 선택합니다.',
         '앱 실행 후 열리는 로컬 브라우저 화면에서 사용합니다.',
       ];
@@ -261,7 +261,7 @@ function WindowsLaunchGuide({ language }: { language: Language }) {
       <div className="container windows-launch-guide">
         <span className="eyebrow">{isEnglish ? 'WINDOWS TEST BUILD' : 'WINDOWS 테스트 버전'}</span>
         <h2>{isEnglish ? 'SmartScreen may ask for confirmation.' : 'SmartScreen에서 실행을 확인할 수 있습니다.'}</h2>
-        <p>{isEnglish ? 'This test build may not be code-signed. Microsoft Defender SmartScreen can show “Windows protected your PC” or “an unrecognized app was prevented from starting”. Windows has not verified the publisher yet; do not disable your security tools.' : '현재 테스트 버전은 코드 서명이 없을 수 있어 Microsoft Defender SmartScreen에 “인식할 수 없는 앱의 시작을 차단했습니다”라는 문구가 표시될 수 있습니다. Windows가 아직 게시자를 확인하지 못했다는 뜻이며, 보안 기능을 끌 필요는 없습니다.'}</p>
+        <p>{isEnglish ? 'This test build may not be code-signed. Microsoft Defender SmartScreen can show “Windows protected your PC” or “an unrecognized app was prevented from starting”. Windows has not verified the publisher yet; do not disable your security tools.' : '현재 테스트 버전은 코드 서명이 없을 수 있어 Microsoft Defender SmartScreen에 “Windows의 PC 보호” 또는 “인식할 수 없는 앱의 시작을 차단했습니다”라는 문구가 표시될 수 있습니다. “추가 정보”를 누른 뒤 “실행”을 선택하면 됩니다. Windows가 아직 게시자를 확인하지 못했다는 뜻이며, 보안 기능을 끌 필요는 없습니다.'}</p>
         <ol>{steps.map((step) => <li key={step}>{step}</li>)}</ol>
         <small>{isEnglish ? 'Continue only when the file came from the official GitHub repository. Do not run a file from an unknown source.' : '공식 GitHub 저장소에서 받은 파일인지 확인한 경우에만 진행하세요. 출처를 알 수 없는 파일은 실행하지 마세요.'}</small>
       </div>
