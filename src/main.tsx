@@ -26,7 +26,7 @@ const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.c
 const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Free-macOS.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 const releaseInfo = {
-  version: 'v1.0.1',
+  version: 'v1.0.2',
   windowsSize: '약 46 MB',
   macosSize: '약 31 MB',
   windowsPlatform: 'Windows 10/11 · x64',
@@ -227,14 +227,14 @@ function ApiConnectionGuide({ language }: { language: Language }) {
     ['Add an IP restriction when available', 'If the exchange supports an IP whitelist, use it. This adds another barrier if the key is exposed.'],
     ['Copy the credentials once', 'Copy the API key and secret to a safe place. Some exchanges show the secret only once. Enter a passphrase only when that exchange requires one.'],
     ['Connect inside the app', 'Open the exchange connection screen in Trade Journal, select the exchange, enter the key, secret, and required passphrase, then run the connection test.'],
-    ['Sync and remove when finished', 'Sync the trade history after the connection succeeds. If you stop using the connection, delete it from the app and revoke the key at the exchange.'],
+    ['First sync and removal', 'On the first successful connection, Trade Journal automatically imports the recent 30 days once. If you stop using the connection, delete it from the app and revoke the key at the exchange.'],
   ] : [
     ['거래소의 API 관리 메뉴 열기', '거래소에 로그인한 뒤 API Management 또는 API Keys 메뉴에서 API Key 생성을 선택합니다. 거래소마다 메뉴 이름은 다를 수 있습니다.'],
     ['읽기 전용 권한만 선택하기', 'Read 또는 View 권한만 켜세요. 주문·취소·선물 거래·출금 권한은 모두 끈 상태로 둡니다.'],
     ['가능하면 IP 제한 설정하기', '거래소가 IP 화이트리스트를 지원한다면 함께 설정하세요. API Key가 노출됐을 때 추가 보호막이 됩니다.'],
     ['발급 정보 안전하게 복사하기', 'API Key와 Secret Key를 안전한 곳에 복사합니다. 거래소에 따라 Secret은 발급 직후 한 번만 보여줍니다. Passphrase는 해당 거래소가 요구할 때만 입력합니다.'],
     ['프로그램에서 거래소 연결하기', 'Trade Journal의 거래소 연결 화면을 열고 거래소를 선택한 뒤 Key, Secret, 필요한 Passphrase를 입력하고 연결 테스트를 실행합니다.'],
-    ['동기화 후 필요하면 삭제하기', '연결 테스트가 성공하면 거래 기록을 동기화합니다. 더 이상 사용하지 않을 때는 프로그램에서 연결을 삭제하고 거래소에서도 API Key를 폐기하세요.'],
+    ['첫 자동 동기화와 연결 삭제', '처음 연결이 성공하면 최근 30일 거래를 한 번 자동으로 불러옵니다. 더 이상 사용하지 않을 때는 프로그램에서 연결을 삭제하고 거래소에서도 API Key를 폐기하세요.'],
   ];
   return (
     <div className="api-guide"><div className="api-guide-heading"><span className="eyebrow">{isEnglish ? 'API CONNECTION GUIDE' : 'API 발급 및 연결 안내'}</span><h3>{isEnglish ? 'Connect safely in a few steps.' : '안전하게 연결하는 순서'}</h3><p>{isEnglish ? 'The exact menu differs by exchange, but the permission rule is always the same: read-only access only.' : '거래소마다 메뉴 이름은 다르지만, 권한 원칙은 같습니다. 거래 기록을 읽는 권한만 사용하세요.'}</p></div><div className="api-step-grid">{steps.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h4>{title}</h4><p>{copy}</p></div></article>)}</div><div className="api-safety-note"><ShieldCheck size={19} /><p>{isEnglish ? 'Before saving: confirm that withdrawal and order permissions are off. Trade Journal is for recording and analysis; it does not need permission to trade.' : '저장하기 전 출금·주문 권한이 꺼져 있는지 다시 확인하세요. Trade Journal은 기록과 분석을 위한 프로그램이라 거래 권한이 필요하지 않습니다.'}</p></div></div>
