@@ -23,87 +23,64 @@ import {
 import './styles.css';
 
 const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
-const macReleaseUrl = import.meta.env.VITE_MACOS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-macOS.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 const releaseInfo = {
-  version: 'v1.0.11',
-  windowsSize: '약 46 MB',
-  macosSize: '약 31 MB',
+  version: 'v1.0.14',
+  windowsSize: '45.6 MB',
   windowsPlatform: 'Windows 10/11 · x64',
-  macosPlatform: 'macOS · Apple Silicon',
 } as const;
 const heroLeadByLanguage = {
-  ko: '거래 기록을 자동으로 모으고, 진입부터 청산까지 복기하세요. 반복되는 강점과 실수를 찾아 다음 거래에 적용할 나만의 기준을 만듭니다.',
-  en: 'Collect your trade history, replay every entry and exit, and turn recurring strengths and mistakes into rules you can use on the next trade.',
+  ko: '읽기 전용 API로 종료 거래를 가져오고, 기간 성과부터 개별 거래 복기까지 한 흐름으로 확인하세요. 반복되는 강점과 손실 원인을 다음 매매의 기준으로 바꿉니다.',
+  en: 'Import closed trades with a read-only API, then move from period performance to each trade replay in one clear flow. Turn recurring strengths and losses into rules for the next trade.',
 } as const;
 const advancedFeaturesByLanguage = {
   ko: [
-    ['진입 후 유리·불리한 움직임', '진입 뒤 가장 많이 올랐던 폭과 가장 많이 밀렸던 폭을 확인해 좋은 진입과 무리한 진입을 구분합니다.'],
-    ['손절·익절 조합 비교', '가격 기준 손절과 익절 조합을 비교해 내 거래에 맞는 위험 경계를 찾습니다.'],
-    ['시장 흐름별 성과', '주봉·일봉·4시간봉 추세 조합 중 어떤 시장 상황에서 성과가 좋은지 확인합니다.'],
-    ['조기청산 / 추가 보유', '조금 더 보유했을 때의 결과와 실제 청산을 비교해 청산 타이밍을 돌아봅니다.'],
-    ['진입 후 가격 흐름', '청산 뒤 가격이 어떻게 움직였는지 확인해 한 줄 요약 이상의 맥락을 얻습니다.'],
-    ['승리·손실 패턴 비교', '승리 거래와 손실 거래의 지표·방향·행동 차이를 비교해 반복 조건을 찾습니다.'],
+    ['시장 흐름별 성과', '주봉·일봉·4시간봉의 흐름 조합을 기준으로, 어떤 장세에서 내 매매가 잘 작동했는지 확인합니다.'],
+    ['청산 후 보유 결과', '15분·1시간·2시간·4시간·일봉별로 청산 뒤 1~10개 봉을 더 보유했다면 평균 결과가 어땠는지 비교합니다.'],
+    ['좋은 진입과 불리한 진입', '수익 거래와 손실 거래가 진입 뒤 얼마나 유리하거나 불리하게 움직였는지 쉽게 비교합니다.'],
+    ['진입 당시 지표 비교', 'RSI, Stoch RSI, Slow Stochastic, MACD, VWAP, VPVR을 승리·손실 거래와 함께 다시 봅니다.'],
+    ['손절·익절 기대값', '가격 기준 손절과 익절 조합을 실제 거래 경로에 적용해 기대값과 손실 폭을 비교합니다.'],
+    ['근거 거래까지 추적', '통계에서 끝나지 않고, 해당 결과를 만든 거래 목록과 개별 차트 복기로 바로 이어집니다.'],
   ],
   en: [
-    ['MFE / MAE review', 'See how far a trade moved for and against you, then separate strong entries from weak ones.'],
-    ['SL / TP simulation', 'Compare price-based stop and target combinations to find a risk boundary that fits your trading.'],
-    ['Performance by regime', 'See which Weekly, Daily, and 4H market conditions have worked best for you.'],
-    ['Early exit / extra hold', 'Compare the recorded exit with a little more holding time to review your timing.'],
-    ['Post-entry price path', 'Follow what price did after entry and exit so one return number has real context.'],
-    ['Win / loss patterns', 'Compare indicators, direction, and behavior between winning and losing trades.'],
+    ['Performance by market regime', 'Use Weekly, Daily, and 4H market context to see where your trading has worked best.'],
+    ['Results after holding beyond exit', 'Compare 1–10 completed candles after exit across 15m, 1H, 2H, 4H, and 1D views.'],
+    ['Favorable versus adverse entries', 'Compare how winning and losing trades moved for and against you after entry.'],
+    ['Indicators at entry', 'Review RSI, Stoch RSI, Slow Stochastic, MACD, VWAP, and VPVR beside winning and losing trades.'],
+    ['Stop and target expectancy', 'Apply price-based stop and target combinations to real trade paths and compare expectancy.'],
+    ['Trace every result to trades', 'Move from a statistic to its supporting trade list and then to an individual chart replay.'],
   ],
 } as const;
 type Language = 'ko' | 'en';
-
-function normalizeBrandText(value: unknown): unknown {
-  if (typeof value === 'string') {
-    return value
-      .replace(/Trade Journal Free(?!\.exe)/g, 'Trade Journal')
-      .replace(/TRADE JOURNAL FREE/g, 'TRADE JOURNAL')
-      .replace(/Free open-source/g, 'Open-source')
-      .replace(/Free download/g, 'Download')
-      .replace(/Free app download/g, 'App download')
-      .replace(/The free build/g, 'The test build')
-      .replace(/무료 오픈소스/g, '오픈소스')
-      .replace(/무료 앱 다운로드/g, '앱 다운로드')
-      .replace(/Windows 무료 다운로드/g, 'Windows 다운로드');
-  }
-  if (Array.isArray(value)) return value.map(normalizeBrandText);
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, normalizeBrandText(item)]));
-  }
-  return value;
-}
 
 const featuresByLanguage = {
   ko: [
   {
     icon: BookOpen,
     eyebrow: 'JOURNAL',
-    title: '거래를 한 줄로 정리',
-    copy: '거래소에서 읽어온 종료 포지션을 수익률, 수수료, 펀딩, 보유시간과 함께 한눈에 봅니다.',
+    title: '동기화 후 바로 성과 확인',
+    copy: '첫 연결이 성공하면 최근 종료 거래를 가져오고, 기간 순수익률·순수익금·승률·PF를 바로 확인합니다.',
     accent: 'blue',
   },
   {
     icon: LineChart,
     eyebrow: 'REPLAY',
-    title: '진입부터 청산까지 복기',
-    copy: '실제 캔들 위에 ENTRY, 분할 진입, TP, EXIT를 표시하고 당시의 RSI와 모멘텀을 다시 확인합니다.',
+    title: '한 거래를 끝까지 복기',
+    copy: '실제 캔들 위에서 진입·부분 청산·종료를 확인하고, 당시 지표와 청산 뒤 움직임까지 다시 봅니다.',
     accent: 'green',
   },
   {
     icon: BarChart3,
     eyebrow: 'ANALYSIS',
-    title: '감이 아니라 근거로 개선',
-    copy: '승패, 추세 흐름, 행동 태그, 손절과 익절 비교로 반복되는 실수를 찾습니다.',
+    title: '결론에서 근거 거래까지',
+    copy: '시장 흐름, 진입·청산 품질, 지표 비교 결과에서 실제 근거 거래와 개별 보고서로 이어집니다.',
     accent: 'amber',
   },
   ],
   en: [
-    { icon: BookOpen, eyebrow: 'JOURNAL', title: 'Put every trade in context', copy: 'Bring closed positions together with returns, fees, funding, and holding time.', accent: 'blue' },
-    { icon: LineChart, eyebrow: 'REPLAY', title: 'Replay entry to exit', copy: 'See ENTRY, adds, TP, and EXIT on real candles with the indicators from that moment.', accent: 'green' },
-    { icon: BarChart3, eyebrow: 'ANALYSIS', title: 'Improve with evidence', copy: 'Find recurring mistakes through outcomes, market regimes, behavior tags, and risk tests.', accent: 'amber' },
+    { icon: BookOpen, eyebrow: 'JOURNAL', title: 'See performance after sync', copy: 'After the first connection, import recent closed trades and review net return, PnL, win rate, and PF.', accent: 'blue' },
+    { icon: LineChart, eyebrow: 'REPLAY', title: 'Replay one trade end to end', copy: 'Review entry, partial exits, and the final exit on real candles with the indicators from that moment.', accent: 'green' },
+    { icon: BarChart3, eyebrow: 'ANALYSIS', title: 'Move from conclusions to evidence', copy: 'Open the supporting trades and individual reports behind market, entry, exit, and indicator findings.', accent: 'amber' },
   ],
 } as const;
 
@@ -112,10 +89,11 @@ const faqsByLanguage = {
   { question: '거래 데이터는 어디에 저장되나요?', answer: '거래 기록과 분석 결과는 데스크톱 앱의 로컬 저장소에 남습니다. 이 소개 사이트는 거래 데이터를 수집하지 않습니다.' },
   { question: '어떤 API 권한이 필요한가요?', answer: '거래 기록 조회에 필요한 Read Only 권한만 사용하세요. 출금과 주문 권한은 활성화하지 않아도 됩니다.' },
   { question: 'API Key로 주문이나 출금이 가능한가요?', answer: 'Trade Journal은 주문·취소·출금을 실행하지 않습니다. 그래도 API를 만들 때는 반드시 읽기 전용 권한만 선택하세요.' },
-  { question: 'API Key는 어떻게 보관되나요?', answer: '무료 데스크톱판은 브라우저 저장소에 키를 넣지 않고 운영체제의 보안 저장소 사용을 우선합니다. 사용 중인 배포판의 안내를 확인하세요.' },
+  { question: 'API Key는 어떻게 보관되나요?', answer: 'Trade Journal은 브라우저 저장소에 키를 넣지 않고 운영체제의 보안 저장소 사용을 우선합니다. 사용 중인 배포판의 안내를 확인하세요.' },
   { question: 'API Key를 삭제할 수 있나요?', answer: '앱의 거래소 연결 관리에서 연결을 삭제하면 저장된 연결 정보도 함께 제거할 수 있습니다.' },
-  { question: '어떤 거래소를 지원하나요?', answer: '현재 Deepcoin SWAP과 Binance의 읽기 전용 거래 기록 동기화를 지원합니다.' },
-  { question: 'Windows SmartScreen 경고가 뜨는 이유는 무엇인가요?', answer: '무료 배포판은 Windows 코드 서명이 아직 없어 처음 실행할 때 경고가 표시될 수 있습니다. GitHub Releases의 파일인지 확인한 뒤 실행하세요.' },
+  { question: '어떤 거래소를 지원하나요?', answer: '현재 공개판은 Deepcoin SWAP과 Binance의 읽기 전용 거래 기록 동기화를 지원합니다.' },
+  { question: '처음 연결하면 무엇이 일어나나요?', answer: '연결 검사가 성공하면 최근 30일의 종료 거래를 한 번 자동으로 동기화합니다. 이후에는 앱에서 동기화를 실행해 최신 기록을 가져올 수 있습니다.' },
+  { question: 'Windows SmartScreen 경고가 뜨는 이유는 무엇인가요?', answer: '현재 Windows 공개판은 코드 서명이 아직 없어 처음 실행할 때 경고가 표시될 수 있습니다. GitHub Releases의 파일인지 확인한 뒤 실행하세요.' },
   ],
   en: [
     { question: 'Where is my trade data stored?', answer: 'Trade records and analysis results stay in the desktop app’s local storage. This website does not collect trading data.' },
@@ -123,8 +101,9 @@ const faqsByLanguage = {
     { question: 'Can the API key place orders or withdrawals?', answer: 'Trade Journal never places, cancels, or withdraws orders. Create the exchange key with read-only access anyway.' },
     { question: 'How are API keys stored?', answer: 'The desktop build does not put keys in browser storage and prefers the operating system’s secure credential storage. Check the instructions for your build.' },
     { question: 'Can I delete an API key?', answer: 'Delete the exchange connection from the app’s connection settings to remove the saved connection information.' },
-    { question: 'Which exchanges are supported?', answer: 'Read-only trade history sync is available for Deepcoin SWAP and Binance.' },
-    { question: 'Why does Windows SmartScreen show a warning?', answer: 'The free build is not code-signed yet, so Windows may warn on first launch. Verify the file came from GitHub Releases before opening it.' },
+    { question: 'Which exchanges are supported?', answer: 'The current public build supports read-only trade history sync for Deepcoin SWAP and Binance.' },
+    { question: 'What happens after the first connection?', answer: 'After a successful connection check, Trade Journal imports recent closed trades from the last 30 days once. Run sync in the app later to refresh your records.' },
+    { question: 'Why does Windows SmartScreen show a warning?', answer: 'The current Windows public build is not code-signed yet, so Windows may warn on first launch. Verify the file came from GitHub Releases before opening it.' },
   ],
 } as const;
 
@@ -174,39 +153,6 @@ function CandleChart({ small = false, language = 'ko' }: { small?: boolean; lang
       <line className="chart-marker-exit" x1="86" x2="86" y1="5" y2="60" />
       {!small && <><text x="48" y="8" className="marker-label marker-label-entry">ENTRY</text><text x="87" y="8" className="marker-label marker-label-exit">EXIT</text></>}
     </svg>
-  );
-}
-
-function JournalPreview({ language }: { language: Language }) {
-  const isEnglish = language === 'en';
-  return (
-    <div className="app-window">
-      <div className="window-topbar"><span className="window-dots"><i /><i /><i /></span><span>Trade Journal <em>SYNCED</em></span><span className="window-menu">•••</span></div>
-      <div className="window-body journal-preview">
-        <aside className="preview-sidebar"><ProductLogo /><span className="sidebar-section">WORKSPACE</span><span className="sidebar-link active"><BookOpen size={14} /> {isEnglish ? 'Journal' : '매매일지'}</span><span className="sidebar-link"><BarChart3 size={14} /> {isEnglish ? 'Analysis' : '매매분석'}</span><span className="sidebar-link"><ShieldCheck size={14} /> Risk Lab</span><span className="sidebar-status"><i /> {isEnglish ? 'API connected' : 'API 연결됨'}</span></aside>
-        <div className="preview-main"><div className="preview-heading"><div><span className="mini-kicker">TRADING JOURNAL</span><h3>{isEnglish ? 'Recent trades' : '최근 거래'}</h3></div><span className="date-filter">{isEnglish ? 'Last 90 days' : '최근 90일'}⌄</span></div><div className="stat-row"><span><b>42</b><small>{isEnglish ? 'Closed trades' : '종료 거래'}</small></span><span><b className="green-text">+8.42%</b><small>{isEnglish ? 'Net return' : '순수익률'}</small></span><span><b>1.62</b><small>Profit Factor</small></span></div><div className="journal-table"><div className="table-head"><span>{isEnglish ? 'Symbol' : '종목'}</span><span>{isEnglish ? 'Side' : '방향'}</span><span>{isEnglish ? 'Entry' : '진입가'}</span><span>{isEnglish ? 'Exit' : '종료가'}</span><span>{isEnglish ? 'Result' : '결과'}</span></div><div className="table-row"><span>BTC/USDT</span><span className="tag-long">LONG</span><span>64,299</span><span>65,218</span><strong className="green-text">+2.71%</strong></div><div className="table-row"><span>ETH/USDT</span><span className="tag-short">SHORT</span><span>3,462</span><span>3,418</span><strong className="green-text">+1.26%</strong></div><div className="table-row"><span>BTC/USDT</span><span className="tag-short">SHORT</span><span>63,820</span><span>64,210</span><strong className="red-text">-0.61%</strong></div></div></div>
-      </div>
-    </div>
-  );
-}
-
-function AnalysisPreview({ language }: { language: Language }) {
-  const isEnglish = language === 'en';
-  return (
-    <div className="app-window analysis-window">
-      <div className="window-topbar"><span className="window-dots"><i /><i /><i /></span><span>Trade Analysis <em>90 DAYS</em></span><span className="window-menu">•••</span></div>
-      <div className="analysis-preview-body"><div className="analysis-title"><span className="mini-kicker">TRADE ANALYSIS</span><h3>{isEnglish ? 'Review the numbers behind every trade' : '매매를 숫자로 복기'}</h3><span className="analysis-filter">{isEnglish ? 'ALL · LONG · SHORT' : '전체 · LONG · SHORT'}</span></div><div className="analysis-cards"><span><small>{isEnglish ? 'Win rate' : '승률'}</small><b>58.3%</b><i className="sparkline green-spark">╱╲╱╱╲╱</i></span><span><small>{isEnglish ? 'Avg hold' : '평균 보유'}</small><b>6h 20m</b><i className="sparkline">╲╱╱╲╱</i></span><span><small>{isEnglish ? 'Biggest leak' : '가장 큰 누수'}</small><b className="red-text">{isEnglish ? 'Early exit' : '조기청산'}</b><i className="sparkline red-spark">╱╲╲╱╲</i></span></div><div className="regime-chart"><div className="regime-labels"><span>{isEnglish ? 'Aligned trend' : '정렬 상승'}</span><strong>+1.84R</strong></div><div className="regime-bar"><i style={{ width: '76%' }} /><i style={{ width: '48%' }} /><i style={{ width: '62%' }} /></div><div className="regime-labels"><span>{isEnglish ? 'Trend conflict' : '추세 충돌'}</span><strong className="red-text">-0.42R</strong></div><div className="regime-bar muted"><i style={{ width: '42%' }} /><i style={{ width: '23%' }} /><i style={{ width: '35%' }} /></div></div></div>
-    </div>
-  );
-}
-
-function RiskPreview({ language }: { language: Language }) {
-  const isEnglish = language === 'en';
-  return (
-    <div className="app-window risk-window">
-      <div className="window-topbar"><span className="window-dots"><i /><i /><i /></span><span>{isEnglish ? 'Risk Lab' : '위험 분석'} <em>{isEnglish ? 'PRICE BASED' : '가격 기준'}</em></span><span className="window-menu">•••</span></div>
-      <div className="risk-preview-body"><div className="analysis-title"><span className="mini-kicker">{isEnglish ? 'RISK LAB' : '위험 분석'}</span><h3>{isEnglish ? 'Find a better risk boundary' : '감당할 손실 범위 찾기'}</h3></div><div className="risk-tool-row"><label>{isEnglish ? 'SL (%)' : '손절 (%)'}<b>1.5</b></label><label>{isEnglish ? 'TP (%)' : '익절 (%)'}<b>3.0</b></label><button>{isEnglish ? 'Run analysis' : '분석 실행'} <ArrowRight size={13} /></button></div><div className="heatmap"><span className="heatmap-title">{isEnglish ? 'SL × TP expectancy' : '손절 × 익절 기대값'}</span><div className="heatmap-grid">{['+0.08%', '+0.12%', '+0.21%', '-0.04%', '+0.17%', '+0.34%', '-0.12%', '+0.04%', '+0.19%', '-0.22%', '-0.08%', '+0.07%'].map((value, index) => <span className={value.startsWith('+') ? 'heat-positive' : 'heat-negative'} key={index}>{value}</span>)}</div></div><div className="recommendation"><span>{isEnglish ? 'Suggested range' : '추천 범위'}</span><strong>{isEnglish ? 'SL 1.3% ~ 1.8%' : '손절 1.3% ~ 1.8%'}</strong><small>{isEnglish ? 'Price movement · per-trade expectancy' : '가격 움직임 기준 · 거래당 기대값으로 비교'}</small></div></div>
-    </div>
   );
 }
 
@@ -277,13 +223,59 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = language;
   }, [language]);
-  const rawText = isEnglish ? {
-    nav: ['Features', 'Preview', 'Security', 'FAQ'], eyebrow: 'Free open-source trading journal', heroTitle: 'Better trading starts with understanding your own trades.', heroLead: 'Bring exchange fills together safely and replay every entry and exit. Trade Journal Free does not trade for you; it helps you prepare for the next one.', download: 'Free download for Windows', github: 'View on GitHub', note: 'Read-only API · No order execution · Local-first storage', preview: 'LIVE PREVIEW', netReturn: 'Net return', recent: 'Last 90 days', proof: 'Read-only records in one workspace', featuresEyebrow: 'BUILT FOR REVIEW', featuresTitle: 'Keep the lesson,<br />not just the trade.', featuresCopy: 'A workspace for discovering the behaviors and market conditions you repeat—not just another trade list.', previewEyebrow: 'PRODUCT PREVIEW', previewTitle: 'Simple screens,<br />enough evidence.', previewCopy: 'The same information flow used in the app: find it in the journal, replay it on a chart, then turn it into a better rule.', securityEyebrow: 'LOCAL-FIRST SECURITY', securityTitle: 'Your trade records<br /><span>stay on your computer.</span>', securityCopy: 'Trade Journal Free is not an advertising or external analysis service. Run it personally and fetch only the records you need with read-only API keys.', securityLink: 'Inspect the storage and source code', workflowEyebrow: 'THREE STEPS', workflowTitle: 'Install, connect,<br />and review the next trade.', workflow: [['Free app download', 'Get the Windows ZIP, extract it, and launch.'], ['Connect an exchange', 'Connect a read-only API to sync closed positions.'], ['Start reviewing', 'Use charts and analysis to see what to keep and change.']], faqTitle: 'Questions<br />before you start', downloadEyebrow: 'START YOUR REVIEW', downloadTitle: 'Before the next trade,<br />look at the last one.', downloadCopy: 'Trade Journal Free is free and never places orders.', source: 'View source and releases', footer: 'A free open-source trade review tool for individual traders.', links: ['Features', 'Security', 'FAQ'], copyright: '© 2026 Trade Journal Free'
+  const t = isEnglish ? {
+    nav: ['Product', 'Latest', 'Security', 'FAQ'],
+    eyebrow: 'OPEN-SOURCE TRADE JOURNAL',
+    download: 'Download for Windows',
+    howTo: 'How it works',
+    netReturn: 'Net return',
+    recent: 'Recent 90 days',
+    proof: 'Read-only records, kept on your computer',
+    featuresEyebrow: 'FROM SYNC TO REVIEW',
+    featuresTitle: 'Know what happened,<br />before the next trade.',
+    featuresCopy: 'Bring closed trades together, see the result of the period, and trace the reasons behind every outcome.',
+    securityEyebrow: 'LOCAL-FIRST SECURITY',
+    securityTitle: 'Your trade records<br /><span>stay on your computer.</span>',
+    securityCopy: 'Trade Journal is a desktop review tool, not a trading service. It uses only the records you choose to import with read-only API keys.',
+    securityLink: 'Inspect the source and release history',
+    workflowEyebrow: 'HOW IT WORKS',
+    workflowTitle: 'Install, connect,<br /><span>then review the next trade.</span>',
+    workflow: [['Download the app', 'Download the current Windows ZIP, extract it, and launch Trade Journal.'], ['Connect an exchange', 'Use a read-only API key. The first successful connection imports the recent 30 days of closed trades once.'], ['Review with evidence', 'Move from period results to trade replay, market context, and the evidence behind each finding.']],
+    faqTitle: 'Questions<br />before you start',
+    downloadEyebrow: 'CURRENT PUBLIC BUILD',
+    downloadTitle: 'Start with the trades<br /><span>you already made.</span>',
+    downloadCopy: 'Windows public beta · Version v1.0.14 · Free to use · No account required.',
+    source: 'View source and release history',
+    footer: 'An open-source desktop tool for reviewing and understanding your own trades.',
+    links: ['Product', 'Security', 'FAQ'],
+    copyright: '© 2026 Trade Journal',
   } : {
-    nav: ['기능', '화면 미리보기', '보안', 'FAQ'], eyebrow: '무료 오픈소스 트레이딩 저널', heroTitle: '더 나은 매매는, 내 거래를 이해하는 것에서 시작됩니다.', heroLead: '거래소의 체결 기록을 안전하게 모으고, 진입부터 청산까지 다시 보세요. Trade Journal Free는 매매를 대신하지 않고, 다음 거래를 더 잘 준비하게 합니다.', download: 'Windows 무료 다운로드', github: 'GitHub에서 보기', note: 'Read-only API · 주문 실행 없음 · 로컬 우선 저장', preview: 'LIVE PREVIEW', netReturn: '순수익률', recent: '최근 90일', proof: '읽기 전용 기록을 한곳에서', featuresEyebrow: 'BUILT FOR REVIEW', featuresTitle: '거래를 쌓는 데서<br />끝나지 않도록', featuresCopy: '단순한 거래 목록이 아니라, 내가 반복하는 행동과 시장 환경을 발견하는 작업 공간입니다.', previewEyebrow: 'PRODUCT PREVIEW', previewTitle: '화면은 복잡하지 않게,<br />근거는 충분하게', previewCopy: '실제 앱에서 사용하는 정보 흐름을 그대로 담았습니다. 표에서 발견하고, 차트로 복기하고, 분석으로 다음 규칙을 정합니다.', securityEyebrow: 'LOCAL-FIRST SECURITY', securityTitle: '거래 기록은<br /><span>당신의 컴퓨터에</span>', securityCopy: 'Trade Journal Free는 매매 기록을 광고 데이터나 외부 분석 서버로 보내는 서비스가 아닙니다. 개인용으로 실행하고, 읽기 전용 API로 필요한 기록만 가져옵니다.', securityLink: '저장 구조와 코드를 확인하기', workflowEyebrow: 'THREE STEPS', workflowTitle: '설치하고, 연결하고,<br />다음 거래를 준비하세요.', workflow: [['무료 앱 다운로드', 'Windows ZIP을 받고 압축을 풀어 바로 실행합니다.'], ['거래소 연결', '읽기 전용 API를 연결하면 종료 포지션을 동기화합니다.'], ['복기 시작', '차트와 분석으로 잘한 점과 고칠 점을 확인합니다.']], faqTitle: '시작하기 전에<br />궁금한 점', downloadEyebrow: 'START YOUR REVIEW', downloadTitle: '다음 거래 전에,<br />지난 거래를 먼저 보세요.', downloadCopy: 'Trade Journal Free는 무료이며, 주문을 대신하지 않습니다.', source: '소스코드와 릴리스 보기', footer: '개인 트레이더를 위한 무료 오픈소스 거래 복기 도구.', links: ['기능', '보안', 'FAQ'], copyright: '© 2026 Trade Journal Free'
+    nav: ['제품 소개', '이번 업데이트', '보안', 'FAQ'],
+    eyebrow: '오픈소스 트레이딩 저널',
+    download: 'Windows 다운로드',
+    howTo: '사용 방법',
+    netReturn: '순수익률',
+    recent: '최근 90일',
+    proof: '읽기 전용 거래 기록을 내 컴퓨터에서',
+    featuresEyebrow: '동기화부터 복기까지',
+    featuresTitle: '지난 거래를 이해하고,<br />다음 기준을 만드세요.',
+    featuresCopy: '종료 거래를 한곳에 모으고, 기간 성과를 확인한 뒤, 각각의 결과가 왜 나왔는지 근거 거래까지 추적합니다.',
+    securityEyebrow: 'LOCAL-FIRST SECURITY',
+    securityTitle: '거래 기록은<br /><span>당신의 컴퓨터에</span>',
+    securityCopy: 'Trade Journal은 거래를 실행하는 서비스가 아니라, 내 거래를 복기하는 데스크톱 도구입니다. 읽기 전용 API로 가져온 기록만 분석합니다.',
+    securityLink: '소스와 릴리스 기록 확인하기',
+    workflowEyebrow: '사용 방법',
+    workflowTitle: '설치하고, 연결하고,<br /><span>다음 거래를 복기하세요.</span>',
+    workflow: [['앱 다운로드', '현재 Windows ZIP을 받고 압축을 푼 뒤 Trade Journal을 실행합니다.'], ['거래소 연결', '읽기 전용 API를 연결합니다. 첫 연결이 성공하면 최근 30일의 종료 거래를 한 번 불러옵니다.'], ['근거와 함께 복기', '기간 성과에서 개별 거래 복기, 시장 상황, 분석 근거까지 한 흐름으로 확인합니다.']],
+    faqTitle: '시작하기 전에<br />궁금한 점',
+    downloadEyebrow: '현재 공개판',
+    downloadTitle: '다음 거래 전에,<br /><span>지난 거래를 먼저 보세요.</span>',
+    downloadCopy: 'Windows 공개 베타 · v1.0.14 · 무료 사용 · 회원가입 불필요',
+    source: '소스와 릴리스 기록 보기',
+    footer: '내 거래를 복기하고 이해하기 위한 오픈소스 데스크톱 도구.',
+    links: ['제품 소개', '보안', 'FAQ'],
+    copyright: '© 2026 Trade Journal',
   };
-
-  const t = normalizeBrandText(rawText) as typeof rawText;
   const closeMenu = () => setMenuOpen(false);
   const toggleLanguage = () => { setLanguage(isEnglish ? 'ko' : 'en'); closeMenu(); };
 
@@ -296,7 +288,7 @@ export default function App() {
           <nav className={`site-nav ${menuOpen ? 'nav-open' : ''}`}>
             <a href="#product" onClick={closeMenu}>{t.nav[0]}</a>
             <a href="#advanced" onClick={closeMenu}>{isEnglish ? 'Analysis' : '고급 분석'}</a>
-            <a href="#preview" onClick={closeMenu}>{t.nav[1]}</a>
+            <a href="#updates" onClick={closeMenu}>{t.nav[1]}</a>
             <a href="#security" onClick={closeMenu}>{t.nav[2]}</a>
             <a href="#faq" onClick={closeMenu}>{t.nav[3]}</a>
             <button type="button" className="language-toggle" onClick={toggleLanguage}>{isEnglish ? '한국어' : 'EN'}</button>
@@ -304,7 +296,7 @@ export default function App() {
         </div>
       </header>
 
-      <div className="product-banner"><div className="container product-banner-inner"><span>TRADE JOURNAL</span><div><a href="#product" onClick={closeMenu}>{isEnglish ? 'Product overview' : '제품 소개'} <ArrowRight size={14} /></a><a href="#how-to" onClick={closeMenu}>{isEnglish ? 'How to use' : '사용 방법'} <ArrowRight size={14} /></a></div></div></div>
+      <div className="product-banner"><div className="container product-banner-inner"><span>{isEnglish ? 'WINDOWS PUBLIC BETA · V1.0.14' : 'WINDOWS 공개 베타 · V1.0.14'}</span><div><a href="#product" onClick={closeMenu}>{isEnglish ? 'Product overview' : '제품 소개'} <ArrowRight size={14} /></a><a href="#how-to" onClick={closeMenu}>{isEnglish ? 'How to use' : '사용 방법'} <ArrowRight size={14} /></a></div></div></div>
 
       <main>
         <section className="hero-section">
@@ -314,7 +306,7 @@ export default function App() {
               <div className="eyebrow"><span className="pulse-dot" /> {t.eyebrow}</div>
               <h1 className={isEnglish ? undefined : 'hero-title-ko'}>{isEnglish ? <>Find patterns in your trades,<br /><span>build your own trading rules.</span></> : <>내 거래에서<br />패턴을 찾아<br /><span>나만의 매매법을 만드세요</span></>}</h1>
               <p className="hero-lead">{heroLeadByLanguage[language]}</p>
-              <div className="hero-actions"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /><a className="button button-ghost" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={17} /> {t.github}</a></div>
+              <div className="hero-actions"><DownloadButton label={t.download} /><a className="button button-ghost" href="#how-to"><ArrowRight size={17} /> {t.howTo}</a></div>
               <div className="hero-badges"><span><LockKeyhole size={14} /> {isEnglish ? 'READ ONLY API' : '읽기 전용 API'}</span><span><Database size={14} /> {isEnglish ? 'LOCAL DATA' : '내 컴퓨터에 저장'}</span><span><ShieldCheck size={14} /> {isEnglish ? 'NO TRADE EXECUTION' : '주문 실행 없음'}</span></div>
             </div>
             <div className="hero-visual">
@@ -345,10 +337,15 @@ export default function App() {
           </div>
         </section>
 
-        <section id="preview" className="section section-preview">
+        <section id="updates" className="section section-updates">
           <div className="container">
-            <div className="section-heading preview-heading"><div><span className="eyebrow">{t.previewEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.previewTitle }} /></div><p>{t.previewCopy}</p></div>
-            <div className="showcase-grid"><div className="showcase-item showcase-wide"><JournalPreview language={language} /><div className="showcase-caption"><span>01</span><div><h3>{isEnglish ? 'Trade Journal' : '매매일지'}</h3><p>{isEnglish ? 'Review closed positions and net returns in latest-first order.' : '종료 포지션과 순수익률을 최신순으로 확인합니다.'}</p></div></div></div><div className="showcase-item"><AnalysisPreview language={language} /><div className="showcase-caption"><span>02</span><div><h3>{isEnglish ? 'Trade Analysis' : '매매분석'}</h3><p>{isEnglish ? 'Find the difference between outcomes and behavior.' : '승패와 행동의 차이를 찾아냅니다.'}</p></div></div></div><div className="showcase-item"><RiskPreview language={language} /><div className="showcase-caption"><span>03</span><div><h3>Risk Lab</h3><p>{isEnglish ? 'Compare price-based stops and expectancy.' : '가격 기준 손절과 기대값을 비교합니다.'}</p></div></div></div></div>
+            <div className="section-heading"><div><span className="eyebrow">{isEnglish ? 'CURRENT RELEASE' : '현재 공개판'}</span><h2>{isEnglish ? <>A clearer path from<br /><span>result to evidence.</span></> : <>결과에서 근거 거래까지,<br /><span>더 빠르게 확인합니다.</span></>}</h2></div><p>{isEnglish ? 'The current public build keeps the work focused: import closed positions, understand the period, and open the trades behind every conclusion.' : '현재 공개판은 종료 거래를 가져온 뒤, 기간 성과를 이해하고, 각 결론을 만든 실제 거래까지 바로 확인하는 흐름에 집중합니다.'}</p></div>
+            <div className="release-strip"><div><span>{isEnglish ? 'PUBLIC BUILD' : '공개 배포본'}</span><strong>{releaseInfo.version}</strong></div><div><span>{isEnglish ? 'PLATFORM' : '지원 환경'}</span><strong>{releaseInfo.windowsPlatform}</strong></div><div><span>{isEnglish ? 'DOWNLOAD' : '다운로드'}</span><strong>{releaseInfo.windowsSize}</strong></div><DownloadButton compact label={isEnglish ? 'Get Windows ZIP' : 'Windows ZIP 받기'} /></div>
+            <div className="update-grid">
+              <article><span>01</span><h3>{isEnglish ? 'Period performance, at a glance' : '기간 성과를 한눈에'}</h3><p>{isEnglish ? 'Net return, PnL, win rate, Profit Factor, average hold time, and a compact trading-style summary sit together in the journal.' : '순수익률, 순수익금, 승률, Profit Factor, 평균 보유시간과 매매 스타일 요약을 매매일지에서 함께 확인합니다.'}</p></article>
+              <article><span>02</span><h3>{isEnglish ? 'Analysis that leads to the trades' : '거래로 이어지는 분석'}</h3><p>{isEnglish ? 'Market context, entry and exit quality, and indicator findings can open their supporting trades and individual replays.' : '시장 상황, 진입·청산 품질, 지표 분석 결과에서 근거 거래 목록과 개별 거래 복기로 이어집니다.'}</p></article>
+              <article><span>03</span><h3>{isEnglish ? 'Exit timing in your chosen view' : '선택한 시간 단위의 청산 복기'}</h3><p>{isEnglish ? 'Compare the actual exit with holding 1 to 10 more completed candles in 15m, 1H, 2H, 4H, or 1D views.' : '15분·1시간·2시간·4시간·일봉에서 청산 뒤 1~10개 완료 봉을 더 보유했을 때의 결과를 비교합니다.'}</p></article>
+            </div>
           </div>
         </section>
 
@@ -362,7 +359,7 @@ export default function App() {
 
         <section id="faq" className="section section-faq"><div className="container faq-layout"><div className="faq-heading"><span className="eyebrow">FAQ</span><h2 dangerouslySetInnerHTML={{ __html: t.faqTitle }} /><CircleHelp size={38} /></div><div className="faq-list">{faqsByLanguage[language].map((faq, index) => <FAQItem key={faq.question} {...faq} open={openFaq === index} onToggle={() => setOpenFaq(openFaq === index ? -1 : index)} />)}</div></div></section>
 
-        <section className="download-section"><div className="container download-inner"><div><span className="eyebrow">{t.downloadEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.downloadTitle }} /><p>{t.downloadCopy}</p></div><div className="download-side"><div className="download-buttons"><DownloadButton label={t.download} /><DownloadButton label={isEnglish ? 'Download for macOS' : 'macOS 다운로드'} href={macReleaseUrl} /></div><a className="text-link muted-link" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={16} /> {t.source}</a></div></div><div className="container download-facts"><div><b>{releaseInfo.windowsPlatform}</b><span>Windows · {releaseInfo.version} · {releaseInfo.windowsSize}</span></div><div><b>{releaseInfo.macosPlatform}</b><span>macOS · {releaseInfo.version} · {releaseInfo.macosSize}</span></div><div><b>{isEnglish ? 'Free · no account' : '무료 · 회원가입 불필요'}</b><span>{isEnglish ? 'Read-only API · no orders or withdrawals' : 'Read-only API · 주문·출금 기능 없음'}</span></div></div><p className="download-warning">{isEnglish ? 'Windows is not code-signed yet, so SmartScreen may show a first-launch warning. Verify the download source before opening it.' : 'Windows 버전은 아직 코드 서명이 없어 처음 실행할 때 SmartScreen 경고가 표시될 수 있습니다. 다운로드 출처를 확인한 뒤 실행하세요.'}</p></section>
+        <section className="download-section"><div className="container download-inner"><div><span className="eyebrow">{t.downloadEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.downloadTitle }} /><p>{t.downloadCopy}</p></div><div className="download-side"><div className="download-buttons"><DownloadButton label={t.download} /></div><a className="text-link muted-link" href={sourceUrl} target="_blank" rel="noreferrer"><GitBranch size={16} /> {t.source}</a></div></div><div className="container download-facts"><div><b>{releaseInfo.windowsPlatform}</b><span>Windows · {releaseInfo.version} · {releaseInfo.windowsSize}</span></div><div><b>{isEnglish ? 'Free · no account' : '무료 · 회원가입 불필요'}</b><span>{isEnglish ? 'No account or payment required' : '회원가입이나 결제가 필요하지 않습니다'}</span></div><div><b>{isEnglish ? 'Read-only API' : '읽기 전용 API'}</b><span>{isEnglish ? 'No order, cancellation, or withdrawal functions' : '주문·취소·출금 기능을 제공하지 않습니다'}</span></div></div><p className="download-warning">{isEnglish ? 'Windows is not code-signed yet, so SmartScreen may show a first-launch warning. Verify the download source before opening it.' : 'Windows 버전은 아직 코드 서명이 없어 처음 실행할 때 SmartScreen 경고가 표시될 수 있습니다. 다운로드 출처를 확인한 뒤 실행하세요.'}</p></section>
 
         <WindowsLaunchGuide language={language} />
 
