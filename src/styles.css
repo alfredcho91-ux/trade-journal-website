@@ -12,8 +12,8 @@
   --line: #22304a;
   --panel: #101a2b;
   --panel-strong: #121f33;
-  --blue: #5c8dff;
-  --blue-soft: #8caeff;
+  --blue: #4d8bff;
+  --blue-soft: #7aa7ff;
   --green: #3ddc97;
   --red: #fb7185;
   --amber: #f5b94c;
@@ -66,7 +66,7 @@ button { color: inherit; }
 .pulse-dot, .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(61, 220, 151, .12); }
 h1, h2, h3, p { margin-top: 0; }
 h1 { max-width: 650px; margin-bottom: 25px; color: #f4f7ff; font-size: clamp(36px, 3.8vw, 58px); line-height: 1.12; letter-spacing: -.055em; word-break: keep-all; }
-h1 span { color: #8caeff; }
+h1 span { color: var(--blue); }
 .hero-title-ko { max-width: 720px; font-size: clamp(40px, 4.25vw, 64px); line-height: 1.18; }
 .hero-lead { max-width: 560px; color: var(--muted); font-size: 16px; line-height: 1.85; letter-spacing: -.02em; }
 .hero-actions { display: flex; gap: 11px; margin-top: 32px; }
@@ -141,7 +141,7 @@ h1 span { color: #8caeff; }
 .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
 .hero-badges span { display: inline-flex; align-items: center; gap: 6px; padding: 7px 9px; border: 1px solid #294265; color: #a7b7d5; background: rgba(14, 26, 45, .74); font: 500 9px var(--mono); letter-spacing: .04em; }
 .hero-badges svg { color: var(--green); }
-h1 span, .section-heading h2 span { color: var(--blue-soft); }
+h1 span, .section-heading h2 span { color: var(--blue); }
 .section-advanced { background: #0d1625; }
 .advanced-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .advanced-card { min-height: 210px; padding: 23px; border: 1px solid #263a5b; background: #101c30; }
