@@ -107,6 +107,33 @@ const faqsByLanguage = {
   ],
 } as const;
 
+const screenshotsByLanguage = {
+  ko: [
+    {
+      src: '/screenshots/trade-analysis-evidence.png',
+      title: '상세 거래 분석',
+      copy: '시장 상황, 진입·청산 품질, 지표 조건을 보고 실제 근거 거래까지 바로 내려갑니다.',
+    },
+    {
+      src: '/screenshots/exit-hold-result.png',
+      title: '청산 후 보유 결과',
+      copy: '실제 청산과 이후 1~10개 완료 봉의 평균 결과를 같은 흐름에서 비교합니다.',
+    },
+  ],
+  en: [
+    {
+      src: '/screenshots/trade-analysis-evidence.png',
+      title: 'Detailed trade analysis',
+      copy: 'Start with market, entry, exit, and indicator findings, then open the supporting trades behind them.',
+    },
+    {
+      src: '/screenshots/exit-hold-result.png',
+      title: 'Results after exit',
+      copy: 'Compare the recorded exit with the average result after 1 to 10 more completed candles.',
+    },
+  ],
+} as const;
+
 function ProductLogo() {
   return (
     <a className="brand" href="#top" aria-label="Trade Journal 홈">
@@ -219,6 +246,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [language, setLanguage] = useState<Language>('ko');
+  const [activeScreenshot, setActiveScreenshot] = useState<number | null>(null);
   const isEnglish = language === 'en';
   useEffect(() => {
     document.documentElement.lang = language;
@@ -289,6 +317,7 @@ export default function App() {
             <a href="#product" onClick={closeMenu}>{t.nav[0]}</a>
             <a href="#advanced" onClick={closeMenu}>{isEnglish ? 'Analysis' : '고급 분석'}</a>
             <a href="#updates" onClick={closeMenu}>{t.nav[1]}</a>
+            <a href="#screenshots" onClick={closeMenu}>{isEnglish ? 'In the app' : '실제 화면'}</a>
             <a href="#security" onClick={closeMenu}>{t.nav[2]}</a>
             <a href="#faq" onClick={closeMenu}>{t.nav[3]}</a>
             <button type="button" className="language-toggle" onClick={toggleLanguage}>{isEnglish ? '한국어' : 'EN'}</button>
@@ -349,6 +378,15 @@ export default function App() {
           </div>
         </section>
 
+        <section id="screenshots" className="section section-screenshots">
+          <div className="container">
+            <div className="section-heading"><div><span className="eyebrow">{isEnglish ? 'IN THE APP' : '실제 프로그램 화면'}</span><h2>{isEnglish ? <>Built for review,<br /><span>not just record-keeping.</span></> : <>기록에서 끝나지 않는,<br /><span>실제 분석 화면입니다.</span></>}</h2></div><p>{isEnglish ? 'These are real Trade Journal screens. Open each image to inspect the data density and the path from analysis to individual trades.' : '실제 Trade Journal 화면입니다. 이미지를 열어 분석 결과에서 개별 거래까지 이어지는 흐름을 확인하세요.'}</p></div>
+            <div className="screenshot-grid">
+              {screenshotsByLanguage[language].map((screenshot, index) => <button type="button" className="screenshot-card" key={screenshot.src} onClick={() => setActiveScreenshot(index)}><span className="screenshot-frame"><img src={screenshot.src} alt={`${screenshot.title} 화면`} loading="lazy" /></span><span className="screenshot-caption"><span>0{index + 1}</span><span><strong>{screenshot.title}</strong><small>{screenshot.copy}</small></span><ArrowRight size={18} /></span></button>)}
+            </div>
+          </div>
+        </section>
+
         <section id="security" className="section section-security">
           <div className="container security-layout"><div className="security-copy"><span className="eyebrow">{t.securityEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.securityTitle }} /><p>{t.securityCopy}</p><a className="text-link" href={sourceUrl} target="_blank" rel="noreferrer">{t.securityLink} <ExternalLink size={15} /></a></div><div className="security-list"><div className="security-row"><span className="security-icon"><ShieldCheck size={20} /></span><div><h3>{isEnglish ? 'Read-only APIs' : '읽기 전용 API'}</h3><p>{isEnglish ? 'No order, cancellation, or withdrawal permissions.' : '주문·취소·출금 권한을 사용하지 않습니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><LockKeyhole size={20} /></span><div><h3>{isEnglish ? 'Keys stay out of browser storage' : '키를 브라우저에 저장하지 않음'}</h3><p>{isEnglish ? 'macOS Keychain and Windows Credential Manager come first.' : 'macOS Keychain, Windows Credential Manager를 우선 사용합니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><Database size={20} /></span><div><h3>{isEnglish ? 'Your records stay local' : '내 컴퓨터에 남는 기록'}</h3><p>{isEnglish ? 'Journal data and analysis results are stored in local SQLite.' : '저널 데이터와 분석 결과는 로컬 SQLite에 저장됩니다.'}</p></div><Check className="security-check" size={18} /></div></div></div>
         </section>
@@ -367,6 +405,7 @@ export default function App() {
       </main>
 
       <footer className="site-footer"><div className="container footer-inner"><ProductLogo /><p>{t.footer}</p><div className="footer-links"><a href="#product">{t.links[0]}</a><a href="#legal">{isEnglish ? 'Privacy' : '개인정보'}</a><a href="#legal">{isEnglish ? 'Terms' : '이용약관'}</a><a href="#disclaimer">Disclaimer</a><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a><a href={`${sourceUrl}/issues`} target="_blank" rel="noreferrer">{isEnglish ? 'Contact' : '문의'} <ExternalLink size={13} /></a></div><span className="copyright">{t.copyright}</span></div></footer>
+      {activeScreenshot !== null && <div className="screenshot-lightbox" role="dialog" aria-modal="true" aria-label={screenshotsByLanguage[language][activeScreenshot].title} onClick={() => setActiveScreenshot(null)}><button type="button" className="lightbox-close" onClick={() => setActiveScreenshot(null)} aria-label={isEnglish ? 'Close image' : '이미지 닫기'}><X size={20} /></button><figure onClick={(event) => event.stopPropagation()}><img src={screenshotsByLanguage[language][activeScreenshot].src} alt={`${screenshotsByLanguage[language][activeScreenshot].title} 화면`} /><figcaption>{screenshotsByLanguage[language][activeScreenshot].title}</figcaption></figure></div>}
     </div>
   );
 }
