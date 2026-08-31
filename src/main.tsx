@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
+  Activity,
   ArrowRight,
   BarChart3,
   BookOpen,
@@ -76,32 +77,42 @@ const featuresByLanguage = {
     copy: '시장 흐름, 진입·청산 품질, 지표 비교 결과에서 실제 근거 거래와 개별 보고서로 이어집니다.',
     accent: 'amber',
   },
+  {
+    icon: Layers3,
+    eyebrow: 'PLAN LAB',
+    title: '계획과 실제 실행을 비교',
+    copy: '진행 중 거래의 SL·TP1·TP2·최대 보유시간 계획을 직접 기록하고, 종료 뒤 실제 결과와 비교해 실행 차이를 복기합니다. 과거 계획은 자동으로 추측하지 않습니다.',
+    accent: 'blue',
+  },
   ],
   en: [
     { icon: BookOpen, eyebrow: 'JOURNAL', title: 'See performance after sync', copy: 'After the first connection, import recent closed trades and review net return, PnL, win rate, and PF.', accent: 'blue' },
     { icon: LineChart, eyebrow: 'REPLAY', title: 'Replay one trade end to end', copy: 'Review entry, partial exits, and the final exit on real candles with the indicators from that moment.', accent: 'green' },
     { icon: BarChart3, eyebrow: 'ANALYSIS', title: 'Move from conclusions to evidence', copy: 'Open the supporting trades and individual reports behind market, entry, exit, and indicator findings.', accent: 'amber' },
+    { icon: Layers3, eyebrow: 'PLAN LAB', title: 'Compare the plan with execution', copy: 'Record SL, TP1, TP2, and maximum holding time for an active trade, then compare the plan with the actual result after it closes. Past plans are never inferred automatically.', accent: 'blue' },
   ],
 } as const;
 
 const faqsByLanguage = {
   ko: [
+  { question: '어떤 거래소를 지원하나요?', answer: '현재 공개판은 Deepcoin SWAP과 Binance의 읽기 전용 거래 기록 동기화를 지원합니다.' },
   { question: '거래 데이터는 어디에 저장되나요?', answer: '거래 기록과 분석 결과는 데스크톱 앱의 로컬 저장소에 남습니다. 이 소개 사이트는 거래 데이터를 수집하지 않습니다.' },
   { question: '어떤 API 권한이 필요한가요?', answer: '거래 기록 조회에 필요한 Read Only 권한만 사용하세요. 출금과 주문 권한은 활성화하지 않아도 됩니다.' },
   { question: 'API Key로 주문이나 출금이 가능한가요?', answer: 'Trade Journal은 주문·취소·출금을 실행하지 않습니다. 그래도 API를 만들 때는 반드시 읽기 전용 권한만 선택하세요.' },
   { question: 'API Key는 어떻게 보관되나요?', answer: 'Trade Journal은 브라우저 저장소에 키를 넣지 않고 운영체제의 보안 저장소 사용을 우선합니다. 사용 중인 배포판의 안내를 확인하세요.' },
   { question: 'API Key를 삭제할 수 있나요?', answer: '앱의 거래소 연결 관리에서 연결을 삭제하면 저장된 연결 정보도 함께 제거할 수 있습니다.' },
-  { question: '어떤 거래소를 지원하나요?', answer: '현재 공개판은 Deepcoin SWAP과 Binance의 읽기 전용 거래 기록 동기화를 지원합니다.' },
+  { question: '보조지표는 어떤 가격을 기준으로 계산하나요?', answer: '거래 기록은 연결한 거래소에서 불러오며, 차트 복기와 RSI·MACD·Stoch RSI·Slow Stochastic 등 보조지표는 Binance USDT-M Futures 가격 데이터를 기준으로 계산·갱신합니다.' },
   { question: '처음 연결하면 무엇이 일어나나요?', answer: '연결 검사가 성공하면 최근 30일의 종료 거래를 한 번 자동으로 동기화합니다. 이후에는 앱에서 동기화를 실행해 최신 기록을 가져올 수 있습니다.' },
   { question: 'Windows SmartScreen 경고가 뜨는 이유는 무엇인가요?', answer: '현재 Windows 공개판은 코드 서명이 아직 없어 처음 실행할 때 경고가 표시될 수 있습니다. GitHub Releases의 파일인지 확인한 뒤 실행하세요.' },
   ],
   en: [
+    { question: 'Which exchanges are supported?', answer: 'The current public build supports read-only trade history sync for Deepcoin SWAP and Binance.' },
     { question: 'Where is my trade data stored?', answer: 'Trade records and analysis results stay in the desktop app’s local storage. This website does not collect trading data.' },
     { question: 'Which API permissions do I need?', answer: 'Use only the Read Only permissions needed to read trade history. Do not enable withdrawals or order access.' },
     { question: 'Can the API key place orders or withdrawals?', answer: 'Trade Journal never places, cancels, or withdraws orders. Create the exchange key with read-only access anyway.' },
     { question: 'How are API keys stored?', answer: 'The desktop build does not put keys in browser storage and prefers the operating system’s secure credential storage. Check the instructions for your build.' },
     { question: 'Can I delete an API key?', answer: 'Delete the exchange connection from the app’s connection settings to remove the saved connection information.' },
-    { question: 'Which exchanges are supported?', answer: 'The current public build supports read-only trade history sync for Deepcoin SWAP and Binance.' },
+    { question: 'Which prices are used for indicators?', answer: 'Trade history comes from your connected exchange. Chart replay and indicators such as RSI, MACD, Stoch RSI, and Slow Stochastic are calculated and refreshed using Binance USDT-M Futures price data.' },
     { question: 'What happens after the first connection?', answer: 'After a successful connection check, Trade Journal imports recent closed trades from the last 30 days once. Run sync in the app later to refresh your records.' },
     { question: 'Why does Windows SmartScreen show a warning?', answer: 'The current Windows public build is not code-signed yet, so Windows may warn on first launch. Verify the file came from GitHub Releases before opening it.' },
   ],
@@ -134,9 +145,10 @@ const screenshotsByLanguage = {
   ],
 } as const;
 
-function ProductLogo() {
+function ProductLogo({ language }: { language: Language }) {
+  const isEnglish = language === 'en';
   return (
-    <a className="brand" href="#top" aria-label="Trade Journal 홈">
+    <a className="brand" href="#top" aria-label={isEnglish ? 'Trade Journal home' : 'Trade Journal 홈'}>
       <img className="brand-image" src="/trading-journal-logo.png" alt="Trading Journal" />
     </a>
   );
@@ -311,8 +323,8 @@ export default function App() {
     <div id="top" className="site-shell">
       <header className="site-header">
         <div className="container header-inner">
-          <ProductLogo />
-          <button type="button" className="mobile-menu-button" onClick={() => setMenuOpen((value) => !value)} aria-label="메뉴 열기">{menuOpen ? <X /> : <Menu />}</button>
+          <ProductLogo language={language} />
+          <button type="button" className="mobile-menu-button" onClick={() => setMenuOpen((value) => !value)} aria-label={isEnglish ? (menuOpen ? 'Close menu' : 'Open menu') : (menuOpen ? '메뉴 닫기' : '메뉴 열기')}>{menuOpen ? <X /> : <Menu />}</button>
           <nav className={`site-nav ${menuOpen ? 'nav-open' : ''}`}>
             <a href="#product" onClick={closeMenu}>{t.nav[0]}</a>
             <a href="#advanced" onClick={closeMenu}>{isEnglish ? 'Analysis' : '고급 분석'}</a>
@@ -362,7 +374,7 @@ export default function App() {
         <section id="advanced" className="section section-advanced">
           <div className="container">
             <div className="section-heading"><div><span className="eyebrow">{isEnglish ? 'MORE THAN A JOURNAL' : '단순한 매매일지가 아닙니다'}</span><h2>{isEnglish ? <>Turn trade history<br /><span>into a better process.</span></> : <>기록을 넘어,<br /><span>나만의 기준을 찾습니다.</span></>}</h2></div><p>{isEnglish ? 'The point is not to collect more numbers. It is to find the conditions and decisions you can repeat with confidence.' : '숫자를 더 많이 쌓는 것이 목적이 아닙니다. 반복할 수 있는 조건과 의사결정을 발견하는 것이 목적입니다.'}</p></div>
-            <div className="advanced-grid">{advancedFeaturesByLanguage[language].map(([title, copy], index) => { const Icon = [LineChart, ShieldCheck, Layers3, ArrowRight, BarChart3, CircleHelp][index]; return <article className="advanced-card" key={title}><span className="advanced-icon"><Icon size={20} /></span><span className="card-eyebrow">0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>; })}</div>
+            <div className="advanced-grid">{advancedFeaturesByLanguage[language].map(([title, copy], index) => { const Icon = [LineChart, ShieldCheck, Layers3, Activity, BarChart3, CircleHelp][index]; return <article className="advanced-card" key={title}><span className="advanced-icon"><Icon size={20} /></span><span className="card-eyebrow">0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>; })}</div>
           </div>
         </section>
 
@@ -370,11 +382,6 @@ export default function App() {
           <div className="container">
             <div className="section-heading"><div><span className="eyebrow">{isEnglish ? 'CURRENT RELEASE' : '현재 공개판'}</span><h2>{isEnglish ? <>A clearer path from<br /><span>result to evidence.</span></> : <>결과에서 근거 거래까지,<br /><span>더 빠르게 확인합니다.</span></>}</h2></div><p>{isEnglish ? 'The current public build keeps the work focused: import closed positions, understand the period, and open the trades behind every conclusion.' : '현재 공개판은 종료 거래를 가져온 뒤, 기간 성과를 이해하고, 각 결론을 만든 실제 거래까지 바로 확인하는 흐름에 집중합니다.'}</p></div>
             <div className="release-strip"><div><span>{isEnglish ? 'PUBLIC BUILD' : '공개 배포본'}</span><strong>{releaseInfo.version}</strong></div><div><span>{isEnglish ? 'PLATFORM' : '지원 환경'}</span><strong>{releaseInfo.windowsPlatform}</strong></div><div><span>{isEnglish ? 'DOWNLOAD' : '다운로드'}</span><strong>{releaseInfo.windowsSize}</strong></div><DownloadButton compact label={isEnglish ? 'Get Windows ZIP' : 'Windows ZIP 받기'} /></div>
-            <div className="update-grid">
-              <article><span>01</span><h3>{isEnglish ? 'Period performance, at a glance' : '기간 성과를 한눈에'}</h3><p>{isEnglish ? 'Net return, PnL, win rate, Profit Factor, average hold time, and a compact trading-style summary sit together in the journal.' : '순수익률, 순수익금, 승률, Profit Factor, 평균 보유시간과 매매 스타일 요약을 매매일지에서 함께 확인합니다.'}</p></article>
-              <article><span>02</span><h3>{isEnglish ? 'Analysis that leads to the trades' : '거래로 이어지는 분석'}</h3><p>{isEnglish ? 'Market context, entry and exit quality, and indicator findings can open their supporting trades and individual replays.' : '시장 상황, 진입·청산 품질, 지표 분석 결과에서 근거 거래 목록과 개별 거래 복기로 이어집니다.'}</p></article>
-              <article><span>03</span><h3>{isEnglish ? 'Exit timing in your chosen view' : '선택한 시간 단위의 청산 복기'}</h3><p>{isEnglish ? 'Compare the actual exit with holding 1 to 10 more completed candles in 15m, 1H, 2H, 4H, or 1D views.' : '15분·1시간·2시간·4시간·일봉에서 청산 뒤 1~10개 완료 봉을 더 보유했을 때의 결과를 비교합니다.'}</p></article>
-            </div>
           </div>
         </section>
 
@@ -382,7 +389,7 @@ export default function App() {
           <div className="container">
             <div className="section-heading"><div><span className="eyebrow">{isEnglish ? 'IN THE APP' : '실제 프로그램 화면'}</span><h2>{isEnglish ? <>Built for review,<br /><span>not just record-keeping.</span></> : <>기록에서 끝나지 않는,<br /><span>실제 분석 화면입니다.</span></>}</h2></div><p>{isEnglish ? 'These are real Trade Journal screens. Open each image to inspect the data density and the path from analysis to individual trades.' : '실제 Trade Journal 화면입니다. 이미지를 열어 분석 결과에서 개별 거래까지 이어지는 흐름을 확인하세요.'}</p></div>
             <div className="screenshot-grid">
-              {screenshotsByLanguage[language].map((screenshot, index) => <button type="button" className="screenshot-card" key={screenshot.src} onClick={() => setActiveScreenshot(index)}><span className="screenshot-frame"><img src={screenshot.src} alt={`${screenshot.title} 화면`} loading="lazy" /></span><span className="screenshot-caption"><span>0{index + 1}</span><span><strong>{screenshot.title}</strong><small>{screenshot.copy}</small></span><ArrowRight size={18} /></span></button>)}
+              {screenshotsByLanguage[language].map((screenshot, index) => <button type="button" className="screenshot-card" key={screenshot.src} onClick={() => setActiveScreenshot(index)}><span className="screenshot-frame"><img src={screenshot.src} alt={isEnglish ? screenshot.title : `${screenshot.title} 화면`} loading="lazy" /></span><span className="screenshot-caption"><span>0{index + 1}</span><span><strong>{screenshot.title}</strong><small>{screenshot.copy}</small></span><ArrowRight size={18} /></span></button>)}
             </div>
           </div>
         </section>
@@ -390,8 +397,6 @@ export default function App() {
         <section id="security" className="section section-security">
           <div className="container security-layout"><div className="security-copy"><span className="eyebrow">{t.securityEyebrow}</span><h2 dangerouslySetInnerHTML={{ __html: t.securityTitle }} /><p>{t.securityCopy}</p><a className="text-link" href={sourceUrl} target="_blank" rel="noreferrer">{t.securityLink} <ExternalLink size={15} /></a></div><div className="security-list"><div className="security-row"><span className="security-icon"><ShieldCheck size={20} /></span><div><h3>{isEnglish ? 'Read-only APIs' : '읽기 전용 API'}</h3><p>{isEnglish ? 'No order, cancellation, or withdrawal permissions.' : '주문·취소·출금 권한을 사용하지 않습니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><LockKeyhole size={20} /></span><div><h3>{isEnglish ? 'Keys stay out of browser storage' : '키를 브라우저에 저장하지 않음'}</h3><p>{isEnglish ? 'macOS Keychain and Windows Credential Manager come first.' : 'macOS Keychain, Windows Credential Manager를 우선 사용합니다.'}</p></div><Check className="security-check" size={18} /></div><div className="security-row"><span className="security-icon"><Database size={20} /></span><div><h3>{isEnglish ? 'Your records stay local' : '내 컴퓨터에 남는 기록'}</h3><p>{isEnglish ? 'Journal data and analysis results are stored in local SQLite.' : '저널 데이터와 분석 결과는 로컬 SQLite에 저장됩니다.'}</p></div><Check className="security-check" size={18} /></div></div></div>
         </section>
-
-        <section className="security-proof"><div className="container security-proof-inner"><span className="security-badge"><ShieldCheck size={15} /> {isEnglish ? 'READ ONLY' : '읽기 전용'}</span><span className="security-badge"><Database size={15} /> {isEnglish ? 'LOCAL DATA' : '내 컴퓨터에 저장'}</span><span className="security-badge"><LockKeyhole size={15} /> {isEnglish ? 'NO TRADE EXECUTION' : '주문 실행 없음'}</span><p>{isEnglish ? 'Use a read-only key, keep your records local, and review trades without giving the app order access.' : '읽기 전용 키를 사용하고, 기록은 내 컴퓨터에 보관하며, 주문 권한 없이 거래를 복기합니다.'}</p></div></section>
 
         <section id="how-to" className="section section-workflow"><div className="container"><div className="workflow-intro"><span className="eyebrow">{isEnglish ? 'HOW TO USE' : '사용 방법'}</span><h2>{isEnglish ? <>Download, connect,<br /><span>then review your next trade.</span></> : <>설치하고, 연결하고,<br /><span>다음 거래를 복기하세요.</span></>}</h2></div><div className="workflow-grid">{t.workflow.map(([title, copy], index) => { const Icon = [MonitorDown, Layers3, Sparkles][index]; return <div key={title}><span>{`0${index + 1}`}</span><Icon size={22} /><h3>{title}</h3><p>{copy}</p></div>; })}</div><ApiConnectionGuide language={language} /></div></section>
 
@@ -404,8 +409,8 @@ export default function App() {
         <section id="legal" className="legal-section"><div className="container legal-grid"><article><h3>{isEnglish ? 'Privacy' : '개인정보 처리방침'}</h3><p>{isEnglish ? 'This static site does not collect API keys or trading records.' : '이 정적 사이트는 API Key나 거래 기록을 수집하지 않습니다.'}</p></article><article><h3>{isEnglish ? 'Terms' : '이용약관'}</h3><p>{isEnglish ? 'Use the app at your own discretion and keep exchange keys read-only.' : '프로그램은 사용자의 판단 아래 이용하고 거래소 키는 읽기 전용으로 관리하세요.'}</p></article><article id="disclaimer"><h3>Disclaimer</h3><p>{isEnglish ? 'This is a personal trade journaling and analysis tool, not investment advice or an auto-trading service.' : '개인의 거래 기록과 분석을 위한 도구이며 투자자문이나 자동매매 서비스가 아닙니다.'}</p></article></div></section>
       </main>
 
-      <footer className="site-footer"><div className="container footer-inner"><ProductLogo /><p>{t.footer}</p><div className="footer-links"><a href="#product">{t.links[0]}</a><a href="#legal">{isEnglish ? 'Privacy' : '개인정보'}</a><a href="#legal">{isEnglish ? 'Terms' : '이용약관'}</a><a href="#disclaimer">Disclaimer</a><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a><a href={`${sourceUrl}/issues`} target="_blank" rel="noreferrer">{isEnglish ? 'Contact' : '문의'} <ExternalLink size={13} /></a></div><span className="copyright">{t.copyright}</span></div></footer>
-      {activeScreenshot !== null && <div className="screenshot-lightbox" role="dialog" aria-modal="true" aria-label={screenshotsByLanguage[language][activeScreenshot].title} onClick={() => setActiveScreenshot(null)}><button type="button" className="lightbox-close" onClick={() => setActiveScreenshot(null)} aria-label={isEnglish ? 'Close image' : '이미지 닫기'}><X size={20} /></button><figure onClick={(event) => event.stopPropagation()}><img src={screenshotsByLanguage[language][activeScreenshot].src} alt={`${screenshotsByLanguage[language][activeScreenshot].title} 화면`} /><figcaption>{screenshotsByLanguage[language][activeScreenshot].title}</figcaption></figure></div>}
+      <footer className="site-footer"><div className="container footer-inner"><ProductLogo language={language} /><p>{t.footer}</p><div className="footer-links"><a href="#product">{t.links[0]}</a><a href="#legal">{isEnglish ? 'Privacy' : '개인정보'}</a><a href="#legal">{isEnglish ? 'Terms' : '이용약관'}</a><a href="#disclaimer">Disclaimer</a><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a><a href={`${sourceUrl}/issues`} target="_blank" rel="noreferrer">{isEnglish ? 'Contact' : '문의'} <ExternalLink size={13} /></a></div><span className="copyright">{t.copyright}</span></div></footer>
+      {activeScreenshot !== null && <div className="screenshot-lightbox" role="dialog" aria-modal="true" aria-label={screenshotsByLanguage[language][activeScreenshot].title} onClick={() => setActiveScreenshot(null)}><button type="button" className="lightbox-close" onClick={() => setActiveScreenshot(null)} aria-label={isEnglish ? 'Close image' : '이미지 닫기'}><X size={20} /></button><figure onClick={(event) => event.stopPropagation()}><img src={screenshotsByLanguage[language][activeScreenshot].src} alt={isEnglish ? screenshotsByLanguage[language][activeScreenshot].title : `${screenshotsByLanguage[language][activeScreenshot].title} 화면`} /><figcaption>{screenshotsByLanguage[language][activeScreenshot].title}</figcaption></figure></div>}
     </div>
   );
 }
