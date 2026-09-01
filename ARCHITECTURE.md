@@ -15,10 +15,15 @@ Browser
         -> GitHub source link
 ```
 
-주요 화면은 단일 랜딩 페이지 안에서 섹션 앵커로 이동합니다.
+주요 제품 소개는 랜딩 페이지 안에서 섹션 앵커로 이동하며, 상세 설치 문서는 별도 `/guide` 경로로 제공합니다.
 
-- `src/main.tsx`: 제품 소개, 현재 공개판, 보안/연결 안내, FAQ 상태, 다운로드 URL
-- `src/styles.css`: 반응형 어두운 트레이딩 플랫폼 스타일
+- `src/main.tsx`: React 진입점
+- `src/App.tsx`: 홈페이지 섹션, 언어 전환, 모바일 메뉴, FAQ와 스크린샷 확대 상태
+- `src/GuidePage.tsx`: Windows 설치, 거래소 API 권한, 앱 연결, 동기화와 문제 해결 가이드
+- `src/guideContent.ts`: 상세 가이드의 한국어·영어 원문
+- `src/content.tsx`: 한국어·영어 제품 카피와 FAQ 원문
+- `src/styles.css`: 제품 마케팅 사이트 디자인 시스템과 반응형 레이아웃
+- `public/screenshots/`: 실제 데스크톱 앱 화면
 - `public/_redirects`: 정적 호스팅 SPA fallback
 - `VITE_WINDOWS_RELEASE_URL`: 공개 Windows ZIP 링크를 교체할 수 있는 선택적 환경변수
 
