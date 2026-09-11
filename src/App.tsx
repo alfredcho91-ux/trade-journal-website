@@ -22,7 +22,7 @@ import { content, type Language } from './content';
 const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 const releaseInfo = {
-  version: 'v1.0.14',
+  version: 'v1.0.25',
   platform: 'Windows 10/11 · x64',
   size: '45.6 MB',
 } as const;
