@@ -18,6 +18,7 @@ import {
   X,
 } from 'lucide-react';
 import { content, type Language } from './content';
+import { featureDetailHref } from './featurePages';
 
 const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
@@ -206,7 +207,7 @@ export default function App() {
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <h3>{question}</h3>
                   <p>{answer}</p>
-                  <a className="text-link feature-card-link" href={`${featureUrl}#${['journal', 'rules', 'diagnosis'][index]}`} aria-label={isEnglish ? `${question} Learn more` : `${question} 자세히 보기`}>{isEnglish ? 'Learn more' : '자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
+                  <a className="text-link feature-card-link" href={featureDetailHref(['journal', 'rules', 'diagnosis'][index], language)} aria-label={isEnglish ? `${question} Learn more` : `${question} 자세히 보기`}>{isEnglish ? 'Learn more' : '자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
                 </article>
               ))}
             </div>
@@ -257,7 +258,7 @@ export default function App() {
                   <small>{metric}</small>
                   <h3>{title}</h3>
                   <p>{copy}</p>
-                  <a className="text-link feature-card-link" href={`${featureUrl}#${['playbook', 'rules', 'analytics'][index]}`} aria-label={isEnglish ? `Learn more about ${title}` : `${title} 자세히 보기`}>{isEnglish ? 'Learn more' : '자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
+                  <a className="text-link feature-card-link" href={featureDetailHref(['playbook', 'rules', 'analytics'][index], language)} aria-label={isEnglish ? `Learn more about ${title}` : `${title} 자세히 보기`}>{isEnglish ? 'Learn more' : '자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
                 </article>
               ))}
             </div>
@@ -273,8 +274,8 @@ export default function App() {
               <p>{t.plan.copy}</p>
               <small><LockKeyhole size={14} aria-hidden="true" />{t.plan.note}</small>
               <div className="feature-inline-links">
-                <a className="text-link" href={`${featureUrl}#plan`}>{isEnglish ? 'Explore Plan Lab' : 'Plan Lab 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
-                <a className="text-link" href={`${featureUrl}#experiments`}>{isEnglish ? 'Explore Experiments' : 'Experiments 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
+                <a className="text-link" href={featureDetailHref('plan', language)}>{isEnglish ? 'Explore Plan Lab' : 'Plan Lab 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
+                <a className="text-link" href={featureDetailHref('experiments', language)}>{isEnglish ? 'Explore Experiments' : 'Experiments 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
               </div>
             </div>
             <div className="plan-compare" aria-label={isEnglish ? 'Conceptual comparison of a trading plan and actual execution' : '거래 계획과 실제 실행 비교 개념도'}>

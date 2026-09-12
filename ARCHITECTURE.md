@@ -24,6 +24,9 @@ Browser
 - `src/guideContent.ts`: 상세 가이드의 한국어·영어 원문
 - `src/FeaturesPage.tsx`: 기능별 설명, 목차 앵커, 기존 실제 분석 화면
 - `src/featureContent.ts`: 세 사용 단계로 묶은 8개 기능의 한국어·영어 설명
+- `src/featurePages.ts`: 6개 상세 페이지 경로, 한/영 설명과 기능 간 연결
+- `src/FeatureDetail.tsx`: 기존 가이드 스타일을 재사용하는 상세 본문과 스크린샷 자리 표시
+- `vite.config.ts`: 상세 경로별 기본 한국어 SEO/Open Graph HTML 생성(새 프레임워크 없음)
 - `src/content.tsx`: 한국어·영어 제품 카피와 FAQ 원문
 - `src/styles.css`: 제품 마케팅 사이트 디자인 시스템과 반응형 레이아웃
 - `public/screenshots/`: 실제 데스크톱 앱 화면

@@ -7,7 +7,10 @@ Trade Journal의 공식 소개·다운로드용 정적 웹사이트입니다. Re
 ## 포함 내용
 
 - 프로그램 소개와 주요 기능
-- `/features`: 기록하기 → 전략·실행 복기하기 → 계획하고 측정하기로 묶은 한/영 기능 안내. 메인 카드의 자세히 보기에서 기능별 앵커로 이동합니다.
+- `/features`: 기록하기 → 전략·실행 복기하기 → 계획하고 측정하기로 묶은 한/영 기능 안내. 기존 앵커는 유지하고, 메인 카드의 자세히 보기는 독립 상세 페이지로 연결합니다.
+- 독립 상세 안내: `/features/journal`, `/features/strategy-playbook`(규칙 엔진 포함), `/features/analytics`, `/features/review`, `/features/plan-lab`, `/features/experiments`. 주요 기능·사용 순서·예시·관련 기능·저장 방식을 설명합니다.
+- 각 상세 페이지는 한/영 전환을 지원하며, 기본 한국어 제목·설명·Open Graph 메타데이터를 빌드 시 HTML에도 포함합니다. 영어 전환 시 브라우저 메타데이터도 갱신됩니다.
+- 실제 화면이 없는 기능은 명시적인 자리 표시를 사용합니다. 추가할 화면: Journal 상세/심리, Playbook 버전/규칙, Analytics Workspace 조작/결과, Trading Review 진단, Plan Lab 수정 이력/비교, Experiments 활성화/Measure. 기존 분석 화면 2장은 관련 화면으로 구분해 재사용합니다.
 - 실제 프로그램 스크린샷 기반 제품 소개
 - 거래 → 저널 → 복기 → 진단 → 계획 → 실험 → 측정으로 이어지는 제품 흐름
 - Strategy Playbook과 전략 버전 관리, 거래별 정확한 전략 버전 연결

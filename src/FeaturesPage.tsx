@@ -2,24 +2,41 @@ import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Download } from 'lucide-react';
 import type { Language } from './content';
 import { featureContent } from './featureContent';
+import { featurePages, featureDetailHref } from './featurePages';
+import FeatureDetail from './FeatureDetail';
 
 const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
 
-export default function FeaturesPage() {
+export default function FeaturesPage({ slug }: { slug?: string }) {
   const [language, setLanguage] = useState<Language>(() => new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'ko');
   const isEnglish = language === 'en';
   const t = featureContent[language];
   const homeUrl = isEnglish ? '/?lang=en' : '/';
+  const page = featurePages.find(item => item.slug === slug);
+  const title = page ? page[language].title : t.title;
+  const intro = page ? page[language].description : t.intro;
+
+  useEffect(() => {
+    // A direct hash may be resolved before React has mounted its target.
+    const target = document.getElementById(window.location.hash.slice(1));
+    target?.scrollIntoView({ behavior: 'instant' });
+  }, [slug]);
 
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = isEnglish ? 'Features | Trade Journal' : '기능 안내 | Trade Journal';
+    document.title = page ? `${title} | Trade Journal` : isEnglish ? 'Features | Trade Journal' : '기능 안내 | Trade Journal';
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (description) description.content = t.intro;
+    if (description) description.content = intro;
+    document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute('content', document.title);
+    document.querySelector<HTMLMetaElement>('meta[property="og:description"]')?.setAttribute('content', intro);
+    document.querySelector<HTMLMetaElement>('meta[property="og:locale"]')?.setAttribute('content', isEnglish ? 'en_US' : 'ko_KR');
+    document.querySelector<HTMLMetaElement>('meta[property="og:locale:alternate"]')?.setAttribute('content', isEnglish ? 'ko_KR' : 'en_US');
+    document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')?.setAttribute('content', document.title);
+    document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')?.setAttribute('content', intro);
     const url = new URL(window.location.href);
     url.searchParams.set('lang', language);
     window.history.replaceState(null, '', url);
-  }, [isEnglish, language, t.intro]);
+  }, [isEnglish, language, intro, title, page]);
 
   return (
     <div className="docs-shell features-shell">
@@ -39,11 +56,11 @@ export default function FeaturesPage() {
           <div className="container">
             <div className="docs-hero-copy">
               <span className="eyebrow">{isEnglish ? 'FEATURE GUIDE · WINDOWS DESKTOP' : '기능 안내 · WINDOWS 데스크톱'}</span>
-              <h1>{t.title}</h1>
-              <p>{t.intro}</p>
+              <h1>{title}</h1>
+              <p>{intro}</p>
             </div>
             <nav className="feature-groups" aria-label={isEnglish ? 'Choose a review stage' : '사용 단계 선택'}>
-              {t.groups.map((group, index) => <a href={`#${group.id}`} key={group.id}><span>0{index + 1}</span><strong>{group.title}</strong><ArrowRight size={18} aria-hidden="true" /></a>)}
+              {page ? [['#capabilities', isEnglish ? 'Capabilities' : '주요 기능'], ['#how-it-works', isEnglish ? 'How it works' : '사용 순서'], ['#next-step', isEnglish ? 'Next steps' : '다음 단계']].map(([href, label], index) => <a href={href} key={href}><span>0{index + 1}</span><strong>{label}</strong><ArrowRight size={18} aria-hidden="true" /></a>) : t.groups.map((group, index) => <a href={`#${group.id}`} key={group.id}><span>0{index + 1}</span><strong>{group.title}</strong><ArrowRight size={18} aria-hidden="true" /></a>)}
             </nav>
           </div>
         </section>
@@ -51,11 +68,11 @@ export default function FeaturesPage() {
           <aside className="docs-sidebar">
             <strong>{isEnglish ? 'Explore the features' : '기능 살펴보기'}</strong>
             <nav aria-label={isEnglish ? 'Feature sections' : '기능 목차'}>
-              {t.groups.flatMap(group => group.features).map((feature, index) => <a href={`#${feature.id}`} key={feature.id}><span>{String(index + 1).padStart(2, '0')}</span>{feature.name}</a>)}
+              {page ? featurePages.map((item, index) => <a href={`/features/${item.slug}?lang=${language}`} key={item.slug} aria-current={item.slug === page.slug ? 'page' : undefined}><span>0{index + 1}</span>{item[language].title.split(' · ')[0]}</a>) : t.groups.flatMap(group => group.features).map((feature, index) => <a href={`#${feature.id}`} key={feature.id}><span>{String(index + 1).padStart(2, '0')}</span>{feature.name}</a>)}
             </nav>
           </aside>
           <div id="feature-content" className="docs-content">
-            {t.groups.map((group, groupIndex) => (
+            {page ? <FeatureDetail page={page} language={language} /> : t.groups.map((group, groupIndex) => (
               <section className="feature-group" id={group.id} key={group.id} aria-labelledby={`${group.id}-title`}>
                 <div className="docs-heading feature-group-heading"><span className="eyebrow">0{groupIndex + 1}</span><h2 id={`${group.id}-title`}>{group.title}</h2><p>{group.copy}</p></div>
                 {group.features.map(feature => (
@@ -65,6 +82,7 @@ export default function FeaturesPage() {
                     <p>{feature.copy}</p>
                     <ul className="feature-actions">{feature.actions.map(action => <li key={action}><Check size={15} aria-hidden="true" /><span>{action}</span></li>)}</ul>
                     <p className="feature-takeaway">{feature.takeaway}</p>
+                    {feature.id !== 'sync' && <a className="text-link" href={featureDetailHref(feature.id, language)} aria-label={`${feature.name} ${isEnglish ? 'details' : '상세 안내'}`}>{isEnglish ? 'Explore this feature' : '기능 상세 보기'}<ArrowRight size={15} aria-hidden="true" /></a>}
                     {feature.id === 'sync' && <a className="text-link" href="/guide">{isEnglish ? 'Setup and API connection guide' : '설치·API 연결 가이드'}<ArrowRight size={15} aria-hidden="true" /></a>}
                     {feature.id === 'analytics' && (
                       <div className="feature-screenshots">
