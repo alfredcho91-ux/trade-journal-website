@@ -60,13 +60,14 @@ function SectionIntro({ eyebrow, title, copy, compact = false }: { eyebrow: stri
 }
 
 export default function App() {
-  const [language, setLanguage] = useState<Language>('ko');
+  const [language, setLanguage] = useState<Language>(() => new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'ko');
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [activeScreenshot, setActiveScreenshot] = useState<ScreenshotKey | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const t = content[language];
   const isEnglish = language === 'en';
+  const featureUrl = `/features?lang=${language}`;
 
   const screenshots = {
     analysis: {
@@ -119,6 +120,7 @@ export default function App() {
 
   const navItems = [
     ['#product', t.nav.product],
+    [featureUrl, isEnglish ? 'Features' : '기능 안내'],
     ['#analysis', t.nav.analysis],
     ['#security', t.nav.security],
     ['/guide', t.nav.workflow],
@@ -204,6 +206,7 @@ export default function App() {
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <h3>{question}</h3>
                   <p>{answer}</p>
+                  <a className="text-link feature-card-link" href={`${featureUrl}#${['journal', 'rules', 'diagnosis'][index]}`} aria-label={isEnglish ? `${question} Learn more` : `${question} 자세히 보기`}>{isEnglish ? 'Learn more' : '자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
                 </article>
               ))}
             </div>
@@ -227,6 +230,7 @@ export default function App() {
                 </li>
               ))}
             </ol>
+            <a className="feature-entry text-link" href={featureUrl}>{isEnglish ? 'Find the feature for your next question' : '지금 궁금한 질문에 맞는 기능 살펴보기'}<ArrowRight size={17} aria-hidden="true" /></a>
           </div>
         </section>
 
@@ -253,6 +257,7 @@ export default function App() {
                   <small>{metric}</small>
                   <h3>{title}</h3>
                   <p>{copy}</p>
+                  <a className="text-link feature-card-link" href={`${featureUrl}#${['playbook', 'rules', 'analytics'][index]}`} aria-label={isEnglish ? `Learn more about ${title}` : `${title} 자세히 보기`}>{isEnglish ? 'Learn more' : '자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
                 </article>
               ))}
             </div>
@@ -267,6 +272,10 @@ export default function App() {
               <h2>{t.plan.title}</h2>
               <p>{t.plan.copy}</p>
               <small><LockKeyhole size={14} aria-hidden="true" />{t.plan.note}</small>
+              <div className="feature-inline-links">
+                <a className="text-link" href={`${featureUrl}#plan`}>{isEnglish ? 'Explore Plan Lab' : 'Plan Lab 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
+                <a className="text-link" href={`${featureUrl}#experiments`}>{isEnglish ? 'Explore Experiments' : 'Experiments 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
+              </div>
             </div>
             <div className="plan-compare" aria-label={isEnglish ? 'Conceptual comparison of a trading plan and actual execution' : '거래 계획과 실제 실행 비교 개념도'}>
               <div className="compare-row compare-planned">
@@ -384,7 +393,7 @@ export default function App() {
         <div className="container footer-top">
           <div><ProductLogo language={language} /><p>{t.footer.copy}</p></div>
           <nav aria-label={isEnglish ? 'Footer navigation' : '하단 메뉴'}>
-            {navItems.slice(0, 3).map(([href, label]) => <a key={href} href={href}>{label}</a>)}
+            {navItems.slice(0, 4).map(([href, label]) => <a key={href} href={href}>{label}</a>)}
             <a href={sourceUrl} target="_blank" rel="noreferrer">{t.footer.source}<ExternalLink size={13} aria-hidden="true" /></a>
             <a href={`${sourceUrl}/issues`} target="_blank" rel="noreferrer">{t.footer.contact}<ExternalLink size={13} aria-hidden="true" /></a>
           </nav>

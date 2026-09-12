@@ -16,11 +16,14 @@ Browser
 ```
 
 주요 제품 소개는 랜딩 페이지 안에서 섹션 앵커로 이동하며, 상세 설치 문서는 별도 `/guide` 경로로 제공합니다.
+기능별 사용 상황과 설명은 `/features`에서 제공하며, `?lang=en`으로 영어 안내와 메인 페이지 간 언어를 유지합니다.
 
 - `src/main.tsx`: React 진입점
 - `src/App.tsx`: 홈페이지 섹션, 언어 전환, 모바일 메뉴, FAQ와 스크린샷 확대 상태
 - `src/GuidePage.tsx`: Windows 설치, 거래소 API 권한, 앱 연결, 동기화와 문제 해결 가이드
 - `src/guideContent.ts`: 상세 가이드의 한국어·영어 원문
+- `src/FeaturesPage.tsx`: 기능별 설명, 목차 앵커, 기존 실제 분석 화면
+- `src/featureContent.ts`: 세 사용 단계로 묶은 8개 기능의 한국어·영어 설명
 - `src/content.tsx`: 한국어·영어 제품 카피와 FAQ 원문
 - `src/styles.css`: 제품 마케팅 사이트 디자인 시스템과 반응형 레이아웃
 - `public/screenshots/`: 실제 데스크톱 앱 화면

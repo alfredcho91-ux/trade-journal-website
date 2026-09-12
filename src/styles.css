@@ -528,6 +528,32 @@ h3 { color: var(--ink); letter-spacing: -.025em; }
   .docs-footer > div > a:last-child { margin-left: 0; }
 }
 
+.feature-entry, .feature-card-link { margin-top: 24px; }
+.feature-inline-links { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 25px; }
+.feature-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 42px; }
+.feature-groups a { display: flex; align-items: center; gap: 14px; padding: 22px 0; border-top: 1px solid var(--line-blue); border-bottom: 1px solid var(--line-blue); font-size: 14px; }
+.feature-groups a > span { color: #7598d7; font: 500 10px var(--mono); }
+.feature-groups a > svg { margin-left: auto; flex-shrink: 0; color: #7598d7; }
+.feature-groups a:hover { color: #8caeff; }
+.feature-group { padding: 70px 0 0; scroll-margin-top: 110px; }
+.feature-group-heading { padding-bottom: 30px; border-bottom: 1px solid #354052; }
+.feature-detail { padding: 18px 0 42px; margin-bottom: 34px; border-bottom: 1px solid #29313c; scroll-margin-top: 140px; }
+.feature-detail h3 { margin: 20px 0; font-size: clamp(23px, 2.3vw, 31px); line-height: 1.4; word-break: keep-all; }
+.feature-detail > p { max-width: 760px; color: #9ba6b4; font-size: 14px; line-height: 1.9; word-break: keep-all; }
+.feature-actions { display: grid; gap: 13px; margin: 25px 0; padding: 0; list-style: none; }
+.feature-actions li { display: flex; gap: 12px; color: #cbd4e2; font-size: 13px; line-height: 1.7; }
+.feature-actions svg { flex-shrink: 0; margin-top: 4px; color: #5dbba3; }
+.feature-detail > .feature-takeaway { padding: 16px 20px; border-left: 2px solid #5478b7; background: var(--bg-navy); font-size: 13px; }
+.feature-screenshots { display: grid; gap: 28px; margin-top: 34px; }
+.feature-screenshots figure { margin: 0; }
+.feature-screenshots a { display: block; border: 1px solid #32445e; border-radius: 6px; overflow: hidden; cursor: zoom-in; }
+.feature-screenshots img { display: block; width: 100%; height: auto; }
+.feature-screenshots figcaption { margin-top: 12px; color: #8f9baa; font-size: 11px; line-height: 1.8; }
+@media (max-width: 680px) {
+  .feature-groups { grid-template-columns: 1fr; gap: 0; }
+  .feature-groups a + a { border-top: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
