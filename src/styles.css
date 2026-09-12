@@ -410,6 +410,7 @@ h3 { color: var(--ink); letter-spacing: -.025em; }
   .docs-summary { max-width: 620px; }
   .docs-layout { grid-template-columns: 1fr; gap: 0; }
   .docs-sidebar { position: sticky; z-index: 50; top: 70px; margin-inline: calc((100vw - 100%) / -2); padding: 0 calc((100vw - 100%) / 2); overflow-x: auto; border-bottom: 1px solid #303944; background: rgba(13, 17, 23, .95); backdrop-filter: blur(14px); scrollbar-width: none; }
+  .features-shell .docs-sidebar { margin-inline: 0; padding-inline: 0; }
   .docs-sidebar::-webkit-scrollbar { display: none; }
   .docs-sidebar > strong { display: none; }
   .docs-sidebar nav { display: flex; width: max-content; border: 0; }
@@ -559,11 +560,10 @@ h3 { color: var(--ink); letter-spacing: -.025em; }
 .detail-capabilities article { padding: 24px 0; border-top: 1px solid var(--line-blue); }
 .detail-capabilities h3 { margin: 16px 0 12px; font-size: 19px; line-height: 1.5; }
 .detail-capabilities p { color: var(--muted); font-size: 14px; line-height: 1.85; margin: 0; }
-.screenshot-placeholder { display: flex; align-items: center; gap: 22px; margin: 32px 0 0; padding: 32px; border: 1px dashed #58729a; border-radius: 6px; background: var(--bg-navy); }
-.screenshot-placeholder > svg { flex-shrink: 0; color: #8caeff; }
-.screenshot-placeholder strong { display: block; font-size: 16px; }
-.screenshot-placeholder p { margin: 10px 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
-.screenshot-placeholder small { color: var(--muted); font-size: 12px; }
+.detail-screenshot { margin: 32px 0 0; }
+.detail-screenshot a { display: block; overflow: hidden; border: 1px solid #32445e; border-radius: 6px; background: var(--bg-navy); cursor: zoom-in; }
+.detail-screenshot img { display: block; width: 100%; height: auto; }
+.detail-screenshot figcaption { margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.8; }
 .detail-example { padding: 24px; border-left: 2px solid #5478b7; background: var(--bg-navy); }
 .detail-example h3 { font-size: 16px; margin-bottom: 12px; }
 .detail-example p { margin: 0; }
@@ -573,7 +573,6 @@ h3 { color: var(--ink); letter-spacing: -.025em; }
 .features-shell .docs-section { scroll-margin-top: 100px; }
 @media (max-width: 680px) {
   .detail-capabilities { grid-template-columns: 1fr; gap: 0; }
-  .screenshot-placeholder { padding: 22px; align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {

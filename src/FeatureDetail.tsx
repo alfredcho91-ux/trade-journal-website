@@ -1,20 +1,56 @@
-import { ArrowRight, Image } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { featureContent } from './featureContent';
 import { featurePages } from './featurePages';
 import type { Language } from './content';
+
+const screenshots: Record<string, { src: string; en: string; ko: string }> = {
+  journal: {
+    src: '/screenshots/feature-journal.png',
+    en: 'Trade Journal report for a closed synthetic trade, showing rule evaluation and the behavior journal',
+    ko: '합성 완료 거래의 규칙 평가와 행동 기록을 보여주는 Trade Journal 리포트',
+  },
+  'strategy-playbook': {
+    src: '/screenshots/feature-strategy-playbook.png',
+    en: 'Strategy Playbook showing an active strategy, version history, and entry, risk, and exit rules',
+    ko: '활성 전략, 버전 이력, 진입·리스크·청산 규칙을 보여주는 Strategy Playbook',
+  },
+  analytics: {
+    src: '/screenshots/feature-analytics.png',
+    en: 'Analytics Edge Explorer showing a confidence-score analysis across 24 synthetic trades',
+    ko: '24건의 합성 거래를 신뢰도 점수로 분석한 Analytics Edge Explorer',
+  },
+  review: {
+    src: '/screenshots/feature-trading-review.png',
+    en: 'Trading Review showing observed patterns and Strategy versus Execution evidence',
+    ko: '관찰된 패턴과 전략 대 실행 근거를 보여주는 Trading Review',
+  },
+  'plan-lab': {
+    src: '/screenshots/feature-plan-lab.png',
+    en: 'Plan Lab detail showing a verified pre-trade plan, targets, reward-risk result, and actual-versus-plan comparison',
+    ko: '검증된 사전 계획, 목표가, 손익비 결과와 실제 대비 계획 비교를 보여주는 Plan Lab',
+  },
+  experiments: {
+    src: '/screenshots/feature-experiments-measure.png',
+    en: 'Active experiment showing its hypothesis, measurement target, baseline, current result, and criterion met status',
+    ko: '가설, 측정 목표, 기준 구간, 현재 결과와 기준 충족 상태를 보여주는 활성 실험',
+  },
+};
 
 export default function FeatureDetail({ page, language }: { page: typeof featurePages[number]; language: Language }) {
   const en = language === 'en';
   const t = page[language];
   const summary = featureContent[language].groups.flatMap(group => group.features).find(item => item.id === page.featureId)!;
+  const screenshot = screenshots[page.slug];
 
   return <>
     <section className="docs-section" aria-labelledby="purpose-title">
       <div className="docs-heading"><span className="eyebrow">{summary.name}</span><h2 id="purpose-title">{summary.question}</h2><p>{summary.copy}</p></div>
       <p className="detail-learning">{summary.takeaway}</p>
-      <figure className="screenshot-placeholder" aria-label={en ? 'Product screenshot placeholder' : '제품 스크린샷 자리 표시'}>
-        <Image size={28} aria-hidden="true" />
-        <figcaption><strong>{en ? 'Product screenshot to be added' : '실제 제품 화면 추가 예정'}</strong><p>{t.screenshot}</p><small>{en ? 'This is a placeholder, not an app screen.' : '이 영역은 자리 표시이며 실제 앱 화면이 아닙니다.'}</small></figcaption>
+      <figure className="detail-screenshot">
+        <a href={screenshot.src} target="_blank" rel="noreferrer" aria-label={en ? 'Enlarge product screenshot in a new tab' : '제품 화면 크게 보기 (새 탭)'}>
+          <img src={screenshot.src} width="1440" height="900" alt={screenshot[language]} />
+        </a>
+        <figcaption>{t.screenshot}</figcaption>
       </figure>
     </section>
     <section id="capabilities" className="docs-section" aria-labelledby="capabilities-title">
