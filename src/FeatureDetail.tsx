@@ -58,7 +58,7 @@ export default function FeatureDetail({ page, language }: { page: typeof feature
       <div className="detail-capabilities">{t.capabilities.map(([title, copy], index) => <article key={title}><span className="mono-label">0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
     </section>
     <section id="how-it-works" className="docs-section" aria-labelledby="how-title">
-      <div className="docs-heading"><h2 id="how-title">{en ? 'How it works' : '이렇게 사용합니다'}</h2></div>
+      <div className="docs-heading"><h2 id="how-title">{en ? 'How to use' : '사용 방법'}</h2></div>
       <ol className="docs-instructions">{t.steps.map(([title, copy], index) => <li key={title}><span>{index + 1}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol>
       <aside className="detail-example"><h3>{en ? 'A review example' : '복기 예시'}</h3><p>{t.example}</p></aside>
       {page.slug === 'analytics' && <div className="feature-screenshots">

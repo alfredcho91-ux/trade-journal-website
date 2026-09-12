@@ -72,6 +72,9 @@ h3 { color: var(--ink); letter-spacing: -.025em; }
 .text-link, .inline-action { display: inline-flex; align-items: center; gap: 8px; color: #9dbaff; font-size: 12px; font-weight: 700; }
 .text-link:hover, .inline-action:hover { color: #dbe6ff; }
 .inline-action { padding: 0; border: 0; background: transparent; cursor: pointer; }
+.feature-guide-cta { min-height: 44px; padding: 9px 13px; border: 1px solid #6388ce; border-radius: 5px; color: #e2ebff; background: rgba(62, 103, 184, .2); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); transition: color .2s ease, border-color .2s ease, background-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.feature-guide-cta:hover { border-color: #8baaf0; color: #fff; background: rgba(71, 120, 218, .3); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 8px 20px rgba(25, 58, 125, .18); transform: translateY(-1px); }
+.feature-guide-cta:focus-visible { outline: 2px solid #9ab9f2; outline-offset: 3px; border-color: #a9c2f7; color: #fff; background: rgba(71, 120, 218, .32); }
 
 .hero-section { position: relative; padding-top: 116px; border-bottom: 1px solid var(--line); background: #0b0f15; }
 .hero-ambient { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 19%, rgba(46, 86, 151, .16), transparent 34%), linear-gradient(rgba(77, 104, 145, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(77, 104, 145, .045) 1px, transparent 1px); background-size: auto, 88px 88px, 88px 88px; mask-image: linear-gradient(to bottom, #000 0, rgba(0, 0, 0, .58) 45%, transparent 86%); }

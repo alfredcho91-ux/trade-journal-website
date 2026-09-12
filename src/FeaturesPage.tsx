@@ -60,7 +60,7 @@ export default function FeaturesPage({ slug }: { slug?: string }) {
               <p>{intro}</p>
             </div>
             <nav className="feature-groups" aria-label={isEnglish ? 'Choose a review stage' : '사용 단계 선택'}>
-              {page ? [['#capabilities', isEnglish ? 'Capabilities' : '주요 기능'], ['#how-it-works', isEnglish ? 'How it works' : '사용 순서'], ['#next-step', isEnglish ? 'Next steps' : '다음 단계']].map(([href, label], index) => <a href={href} key={href}><span>0{index + 1}</span><strong>{label}</strong><ArrowRight size={18} aria-hidden="true" /></a>) : t.groups.map((group, index) => <a href={`#${group.id}`} key={group.id}><span>0{index + 1}</span><strong>{group.title}</strong><ArrowRight size={18} aria-hidden="true" /></a>)}
+              {page ? [['#capabilities', isEnglish ? 'Capabilities' : '주요 기능'], ['#how-it-works', isEnglish ? 'How to use' : '사용 방법'], ['#next-step', isEnglish ? 'Next steps' : '다음 단계']].map(([href, label], index) => <a href={href} key={href}><span>0{index + 1}</span><strong>{label}</strong><ArrowRight size={18} aria-hidden="true" /></a>) : t.groups.map((group, index) => <a href={`#${group.id}`} key={group.id}><span>0{index + 1}</span><strong>{group.title}</strong><ArrowRight size={18} aria-hidden="true" /></a>)}
             </nav>
           </div>
         </section>
@@ -82,7 +82,7 @@ export default function FeaturesPage({ slug }: { slug?: string }) {
                     <p>{feature.copy}</p>
                     <ul className="feature-actions">{feature.actions.map(action => <li key={action}><Check size={15} aria-hidden="true" /><span>{action}</span></li>)}</ul>
                     <p className="feature-takeaway">{feature.takeaway}</p>
-                    {feature.id !== 'sync' && <a className="text-link" href={featureDetailHref(feature.id, language)} aria-label={`${feature.name} ${isEnglish ? 'details' : '상세 안내'}`}>{isEnglish ? 'Explore this feature' : '기능 상세 보기'}<ArrowRight size={15} aria-hidden="true" /></a>}
+                    {feature.id !== 'sync' && <a className="text-link feature-guide-cta" href={featureDetailHref(feature.id, language)} aria-label={`${feature.name} ${isEnglish ? 'details' : '상세 안내'}`}>{isEnglish ? 'Explore this feature' : '기능 상세 보기'}<ArrowRight size={15} aria-hidden="true" /></a>}
                     {feature.id === 'sync' && <a className="text-link" href="/guide">{isEnglish ? 'Setup and API connection guide' : '설치·API 연결 가이드'}<ArrowRight size={15} aria-hidden="true" /></a>}
                     {feature.id === 'analytics' && (
                       <div className="feature-screenshots">
