@@ -97,11 +97,11 @@ export default function GuidePage() {
               <div className="docs-connect-grid">
                 <ol className="docs-instructions">{t.connect.steps.map(([title, copy], index) => <li key={title}><span>{index + 1}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol>
                 <div className="credential-demo" aria-label={t.connect.demoTitle}>
-                  <div><KeyRound size={18} aria-hidden="true" /><strong>{t.connect.demoTitle}</strong><span>READ ONLY</span></div>
-                  <label><span>Exchange</span><b>{selected.name}<ChevronDown size={14} /></b></label>
-                  <label><span>API Key</span><b>••••••••••••••••</b></label>
-                  <label><span>API Secret</span><b>••••••••••••••••</b></label>
-                  {exchange === 'deepcoin' && <label><span>Passphrase</span><b>••••••••••••</b></label>}
+                  <div><KeyRound size={18} aria-hidden="true" /><strong>{t.connect.demoTitle}</strong><span>{isEnglish ? 'READ ONLY' : '읽기 전용'}</span></div>
+                  <label><span>{isEnglish ? 'Exchange' : '거래소'}</span><b>{selected.name}<ChevronDown size={14} /></b></label>
+                  <label><span>{isEnglish ? 'API Key' : 'API 키'}</span><b>••••••••••••••••</b></label>
+                  <label><span>{isEnglish ? 'API Secret' : 'API 비밀 키'}</span><b>••••••••••••••••</b></label>
+                  {exchange === 'deepcoin' && <label><span>{isEnglish ? 'Passphrase' : '암호 문구'}</span><b>••••••••••••</b></label>}
                   <span className="credential-demo-action"><ShieldCheck size={15} />{t.connect.action}</span>
                   <p><LockKeyhole size={14} />{t.connect.secure}</p>
                 </div>

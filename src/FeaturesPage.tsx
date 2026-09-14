@@ -46,7 +46,7 @@ export default function FeaturesPage({ slug }: { slug?: string }) {
           <a className="brand" href={homeUrl}><img src="/trading-journal-logo.png" alt="Trade Journal" /></a>
           <div className="docs-header-actions">
             <a className="docs-home" href={homeUrl}><ArrowLeft size={15} aria-hidden="true" />{isEnglish ? 'Product home' : '제품 홈'}</a>
-            <button type="button" className="language-toggle" onClick={() => setLanguage(isEnglish ? 'ko' : 'en')} aria-label={isEnglish ? '한국어로 보기' : 'View in English'}>{isEnglish ? '한국어' : 'EN'}</button>
+            <button type="button" className="language-toggle" onClick={() => setLanguage(isEnglish ? 'ko' : 'en')} aria-label={isEnglish ? '한국어로 보기' : '영문으로 보기'}>{isEnglish ? '한국어' : '영문'}</button>
             <a className="button button-primary button-compact" href={releaseUrl}><Download size={16} aria-hidden="true" />{isEnglish ? 'Windows download' : 'Windows 다운로드'}</a>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function FeaturesPage({ slug }: { slug?: string }) {
         <section className="docs-hero">
           <div className="container">
             <div className="docs-hero-copy">
-              <span className="eyebrow">{isEnglish ? 'FEATURE GUIDE · WINDOWS DESKTOP' : '기능 안내 · WINDOWS 데스크톱'}</span>
+              <span className="eyebrow">{isEnglish ? 'FEATURE GUIDE · WINDOWS DESKTOP' : '기능 안내 · Windows 데스크톱'}</span>
               <h1>{title}</h1>
               <p>{intro}</p>
             </div>

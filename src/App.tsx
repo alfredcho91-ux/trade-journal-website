@@ -137,7 +137,7 @@ export default function App() {
           <ProductLogo language={language} />
           <nav className={`site-nav${menuOpen ? ' nav-open' : ''}`} aria-label={isEnglish ? 'Primary navigation' : '주요 메뉴'}>
             {navItems.map(([href, label]) => <a key={href} href={href} onClick={closeMenu}>{label}</a>)}
-            <button type="button" className="language-toggle" onClick={toggleLanguage} aria-label={isEnglish ? '한국어로 보기' : 'View in English'}>{isEnglish ? '한국어' : 'EN'}</button>
+            <button type="button" className="language-toggle" onClick={toggleLanguage} aria-label={isEnglish ? '한국어로 보기' : '영문으로 보기'}>{isEnglish ? '한국어' : '영문'}</button>
             <span className="mobile-download"><DownloadButton label={t.nav.download} compact /></span>
           </nav>
           <div className="header-actions">
@@ -176,7 +176,7 @@ export default function App() {
               <span className="product-window-bar" aria-hidden="true">
                 <span className="window-dots"><i /><i /><i /></span>
                 <b>Trade Journal</b>
-                <small>Windows desktop</small>
+                <small>{isEnglish ? 'Windows desktop' : 'Windows 데스크톱'}</small>
               </span>
               <span className="product-image-viewport">
                 <img src="/screenshots/trade-analysis-evidence.png" alt={t.hero.imageAlt} />
@@ -274,8 +274,8 @@ export default function App() {
               <p>{t.plan.copy}</p>
               <small><LockKeyhole size={14} aria-hidden="true" />{t.plan.note}</small>
               <div className="feature-inline-links">
-                <a className="text-link feature-guide-cta" href={featureDetailHref('plan', language)}>{isEnglish ? 'Explore Plan Lab' : 'Plan Lab 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
-                <a className="text-link feature-guide-cta" href={featureDetailHref('experiments', language)}>{isEnglish ? 'Explore Experiments' : 'Experiments 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
+                <a className="text-link feature-guide-cta" href={featureDetailHref('plan', language)}>{isEnglish ? 'Explore Plan Lab' : '계획 분석 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
+                <a className="text-link feature-guide-cta" href={featureDetailHref('experiments', language)}>{isEnglish ? 'Explore Experiments' : '실험 자세히 보기'}<ArrowRight size={15} aria-hidden="true" /></a>
               </div>
             </div>
             <div className="plan-compare" aria-label={isEnglish ? 'Conceptual comparison of a trading plan and actual execution' : '거래 계획과 실제 실행 비교 개념도'}>
