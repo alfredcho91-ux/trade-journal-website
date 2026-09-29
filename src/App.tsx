@@ -23,9 +23,9 @@ import { featureDetailHref } from './featurePages';
 const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 const releaseInfo = {
-  version: 'v1.0.25',
+  version: 'v1.0.26',
   platform: 'Windows 10/11 · x64',
-  size: '45.6 MB',
+  size: '53.9 MB',
 } as const;
 
 type ScreenshotKey = 'analysis' | 'exit';
@@ -104,6 +104,12 @@ export default function App() {
     url.searchParams.set('lang', language);
     window.history.replaceState(null, '', url);
   }, [isEnglish, language]);
+
+  useEffect(() => {
+    // On a cold load, the browser resolves a hash before React renders its target.
+    // Reapply it once after mount so shared homepage section links land correctly.
+    document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' });
+  }, []);
 
   useEffect(() => {
     if (!activeScreenshot) return;
