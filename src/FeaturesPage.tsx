@@ -83,7 +83,7 @@ export default function FeaturesPage({ slug }: { slug?: string }) {
                     <ul className="feature-actions">{feature.actions.map(action => <li key={action}><Check size={15} aria-hidden="true" /><span>{action}</span></li>)}</ul>
                     <p className="feature-takeaway">{feature.takeaway}</p>
                     {feature.id !== 'sync' && <a className="text-link feature-guide-cta" href={featureDetailHref(feature.id, language)} aria-label={`${feature.name} ${isEnglish ? 'details' : '상세 안내'}`}>{isEnglish ? 'Explore this feature' : '기능 상세 보기'}<ArrowRight size={15} aria-hidden="true" /></a>}
-                    {feature.id === 'sync' && <a className="text-link" href="/guide">{isEnglish ? 'Setup and API connection guide' : '설치·API 연결 가이드'}<ArrowRight size={15} aria-hidden="true" /></a>}
+                    {feature.id === 'sync' && <a className="text-link" href={`/guide?lang=${language}`}>{isEnglish ? 'Setup and API connection guide' : '설치·API 연결 가이드'}<ArrowRight size={15} aria-hidden="true" /></a>}
                     {feature.id === 'analytics' && (
                       <div className="feature-screenshots">
                         <figure>
@@ -102,7 +102,7 @@ export default function FeaturesPage({ slug }: { slug?: string }) {
             ))}
           </div>
         </div>
-        <section className="docs-finish"><div className="container docs-finish-inner"><div><span className="eyebrow">TRADE JOURNAL</span><h2>{isEnglish ? 'Start with your own records.' : '내 거래 기록부터 시작하세요.'}</h2><p>{isEnglish ? 'A local-first Windows desktop app with read-only exchange connections.' : '읽기 전용 거래소 연결을 사용하는 로컬 우선 Windows 데스크톱 앱입니다.'}</p></div><a className="button button-primary" href={releaseUrl}><Download size={18} aria-hidden="true" />{isEnglish ? 'Download for Windows' : 'Windows 다운로드'}</a></div></section>
+        <section className="docs-finish"><div className="container docs-finish-inner"><div><span className="eyebrow">TRADE JOURNAL</span><h2>{isEnglish ? 'Try the sample, then your own records.' : '샘플로 체험하고 내 기록으로 이어가세요.'}</h2><p>{isEnglish ? 'A local-first Windows desktop app with read-only exchange connections.' : '읽기 전용 거래소 연결을 사용하는 로컬 우선 Windows 데스크톱 앱입니다.'}</p></div><a className="button button-primary" href={releaseUrl}><Download size={18} aria-hidden="true" />{isEnglish ? 'Download for Windows' : 'Windows 다운로드'}</a></div></section>
       </main>
       <footer className="docs-footer"><div className="container"><a className="brand" href={homeUrl}><img src="/trading-journal-logo.png" alt="Trade Journal" /></a><p>{isEnglish ? 'A journal for reviewing your own trades. Not investment advice.' : '내 거래를 기록하고 복기하는 도구입니다. 투자자문을 제공하지 않습니다.'}</p><a href={homeUrl}>{isEnglish ? 'Back to home' : '홈으로 돌아가기'}<ArrowLeft size={13} aria-hidden="true" /></a></div></footer>
     </div>

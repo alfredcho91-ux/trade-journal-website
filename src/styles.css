@@ -564,6 +564,9 @@ h3 { color: var(--ink); letter-spacing: -.025em; }
 .detail-capabilities h3 { margin: 16px 0 12px; font-size: 19px; line-height: 1.5; }
 .detail-capabilities p { color: var(--muted); font-size: 14px; line-height: 1.85; margin: 0; }
 .detail-screenshot { margin: 32px 0 0; }
+.detail-screenshot > summary { color: var(--blue-bright); cursor: pointer; line-height: 1.7; }
+.detail-screenshot > p { margin-top: 16px; }
+.detail-screenshot figure { margin: 0; }
 .detail-screenshot a { display: block; overflow: hidden; border: 1px solid #32445e; border-radius: 6px; background: var(--bg-navy); cursor: zoom-in; }
 .detail-screenshot img { display: block; width: 100%; height: auto; }
 .detail-screenshot figcaption { margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.8; }

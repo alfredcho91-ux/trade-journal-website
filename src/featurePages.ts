@@ -8,7 +8,7 @@ export const featurePages = [
     ],
     "ko": {
       "title": "매매일지 · 거래 맥락을 남기는 저널",
-      "description": "거래 내역에 메모, 진입 유형, 심리·행동 기록과 전략 버전을 연결하고 규칙 준수를 복기하세요.",
+      "description": "자신감·집중도·FOMO·메모를 짧게 남기고 나중에 비교하세요. 모든 항목을 채울 필요는 없으며 모르는 값은 미기록으로 둘 수 있습니다.",
       "capabilities": [
         [
           "거래 내역과 맥락",
@@ -20,7 +20,7 @@ export const featurePages = [
         ],
         [
           "심리 기록",
-          "거래 전·중·후 감정, 자신감과 집중도를 남깁니다. 앱이 감정이나 동기를 추측하지 않습니다."
+          "자신감·집중도·FOMO 등 기억나는 내용만 남깁니다. 미기록은 실패가 아니며 앱이 감정이나 동기를 추측하지 않습니다."
         ],
         [
           "전략 연결과 규칙 복기",
@@ -29,41 +29,37 @@ export const featurePages = [
       ],
       "steps": [
         [
-          "종료 거래를 엽니다",
-          "매매일지에서 복기할 종료 거래를 고르고 ‘거래 리포트’를 엽니다. 종목·방향·진입·청산·성과와 차트를 먼저 확인합니다."
+          "샘플 또는 내 거래를 엽니다",
+          "API 없이 샘플 거래를 열거나 읽기 전용으로 가져온 내 종료 거래에서 거래 리포트를 엽니다."
         ],
         [
-          "계획을 기록합니다",
-          "계획 손절률 (%)·계획 목표수익률 (%)과 계획 진입 근거를 입력하고 진입 유형 태그를 쉼표로 구분해 적습니다. 이 값은 사용자가 남기는 거래 설명이지 전략의 출처가 아닙니다."
+          "기억나는 맥락만 남깁니다",
+          "자신감·집중도·FOMO, 메모나 진입 유형 태그 중 필요한 내용부터 짧게 기록합니다. 모든 항목을 채우지 않아도 되며 모르는 값은 모르는 상태로 남깁니다."
         ],
         [
-          "심리와 행동을 남깁니다",
-          "심리 영역에서 거래 전·중·후 상태와 자신감·집중도를, 행동 영역에서 추격 진입·보복 매매와 실수 태그를 기록합니다. 메모 영역에는 추가 내용을 남깁니다."
+          "기록을 저장합니다",
+          "행동 기록 저장으로 입력한 심리·행동·메모를 저장합니다. 빈 심리 항목을 나쁜 행동이나 실패로 해석하지 않습니다."
         ],
         [
-          "행동 기록을 저장합니다",
-          "‘행동 기록 저장’을 눌러 계획·심리·행동·메모 변경을 저장합니다. 저장 상태가 완료된 뒤 다음 항목으로 이동합니다."
+          "사용한 전략이 있으면 연결합니다",
+          "전략 할당에서 실제 사용한 전략과 버전을 선택해 저장합니다. 규칙은 당시 연결한 버전을 기준으로 평가합니다."
         ],
         [
-          "전략 버전을 할당합니다",
-          "전략 할당 영역에서 ‘전략 할당’을 누르고 실제 사용한 전략과 버전을 선택한 뒤 ‘전략 저장’을 누릅니다. 이것이 당시 전략 기준의 출처입니다."
+          "규칙의 근거를 확인합니다",
+          "준수는 확인된 충족, 위반은 평가 가능한 조건의 미충족, 판정 불가는 근거나 자동 평가 지원 부족입니다. 준수율은 평가 가능한 규칙 중 준수 비율, 평가 범위는 전체 규칙 중 평가 가능한 비율입니다."
         ],
         [
-          "규칙 판정을 읽습니다",
-          "규칙 준수 영역에서 준수는 확인된 충족, 위반은 평가 가능한 조건의 미충족, 판정 불가는 필요한 근거가 없거나 자동 평가할 수 없음을 뜻합니다. 준수율은 평가 가능한 규칙 중 준수 비율이고 평가 범위는 전체 규칙 중 평가 가능한 비율입니다."
-        ],
-        [
-          "누적 기록으로 이동합니다",
-          "개별 거래의 설명·전략 출처·규칙 판정을 확인한 뒤 분석 작업공간에서 조건별 기록을 비교하거나 거래 복기에서 기간 단위 근거를 검토합니다."
+          "하루의 예시와 누적 기록을 봅니다",
+          "샘플의 일일 저널에서는 기록이 있는 예시 날짜를 바로 열 수 있습니다. 누적된 기록은 안내형 분석의 질문이나 복기 요약에서 비교합니다."
         ]
       ],
       "example": "예: 이익으로 끝난 거래라도 ‘추격 진입’으로 기록했다면, 이후 분석 작업공간에서 해당 행동과 결과의 연관성을 따로 살펴볼 수 있습니다.",
       "connection": "저널은 제품의 바탕입니다. 플레이북의 기준을 거래에 연결하고, 쌓인 기록을 분석 작업공간과 거래 복기에서 검토합니다.",
-      "screenshot": "거래 상세의 메모·진입 유형·심리 기록과 전략 할당·규칙 결과"
+      "screenshot": "이전 화면 참고: 이 캡처는 매매일지 상세가 아닌 계획 분석 목록입니다. 현재 저널 안내는 아래 사용 방법을 확인하세요."
     },
     "en": {
       "title": "Trade Journal · Keep the context",
-      "description": "Connect trade history with notes, setup tags, psychology, behavior, strategy versions, and rule-adherence evidence.",
+      "description": "Keep short records of confidence, focus, FOMO, or notes for later comparison. You do not need to fill every field; unknown values can remain unrecorded.",
       "capabilities": [
         [
           "History and context",
@@ -75,7 +71,7 @@ export const featurePages = [
         ],
         [
           "Psychology",
-          "Record emotions before, during, and after the trade, plus confidence and focus. The app does not infer emotions or motives."
+          "Record what you remember about confidence, focus, or FOMO. Unrecorded values are not failures; the app does not infer emotions or motives."
         ],
         [
           "Strategy and rules",
@@ -84,37 +80,33 @@ export const featurePages = [
       ],
       "steps": [
         [
-          "Open a closed trade",
-          "Choose a closed trade in Journal and open Trade report. Review its symbol, direction, entry, exit, performance, and chart first."
+          "Open sample or personal trades",
+          "Open a sample trade without API credentials, or open Trade report for one of your imported closed trades."
         ],
         [
-          "Record the PLAN",
-          "Enter Planned stop (%), Planned target (%), and Planned entry rationale, then type comma-separated Setup tags. These are user-recorded descriptions, not strategy provenance."
+          "Record what you remember",
+          "Start with a short note, confidence, focus, FOMO, or setup tags. Use the fields that matter to you; unknown values can stay unknown."
         ],
         [
-          "Add psychology and behavior",
-          "Use PSYCHOLOGY for before, during, and after states plus confidence and focus. Use BEHAVIOR for FOMO, revenge trading, and Mistake tags; add context under NOTES."
+          "Save the record",
+          "Use Save behavior journal to save your psychology, behavior, and notes. Missing psychology is not bad behavior or failure."
         ],
         [
-          "Save the behavior journal",
-          "Select Save behavior journal to persist PLAN, PSYCHOLOGY, BEHAVIOR, and NOTES changes. Wait for the saved state before moving on."
+          "Link a strategy if you used one",
+          "Choose and save the Strategy Version actually used under Strategy Assignment. Rules are evaluated against that assigned version."
         ],
         [
-          "Assign the Strategy Version",
-          "Under Strategy Assignment, select Assign Strategy, choose the Strategy and Version actually used, then select Save Strategy. This records the strategy provenance for that trade."
+          "Read the rule evidence",
+          "FOLLOWED is confirmed compliance; VIOLATED is an evaluable condition not met; NOT_EVALUABLE means evidence or evaluation support is missing. Adherence is the followed share of evaluable rules; Coverage is the evaluable share of all rules."
         ],
         [
-          "Read rule evaluation",
-          "In Rule Adherence, FOLLOWED means confirmed compliance, VIOLATED means an evaluable condition was not met, and NOT_EVALUABLE means required evidence or an evaluator is unavailable. Adherence is the followed share of evaluable rules; Coverage is the evaluable share of all rules."
-        ],
-        [
-          "Continue with accumulated records",
-          "After reviewing the trade description, strategy provenance, and rule evidence, compare recorded conditions in Analytics or examine period evidence in Trading Review."
+          "Explore a day and accumulated records",
+          "In the sample Daily Journal, open a populated example day directly. Compare accumulated records through Guided Analytics questions or Review summaries."
         ]
       ],
       "example": "Example: a winning trade tagged as a FOMO entry can later be reviewed in Analytics for its association with outcomes.",
       "connection": "Journal is the foundation: link Playbook criteria to individual trades, then review accumulated records in Analytics and Trading Review.",
-      "screenshot": "Trade detail with notes, setup, psychology, strategy assignment, and rule results"
+      "screenshot": "Earlier screen reference: this capture shows the Plan Lab list, not Journal detail. Follow the usage guide below for the current Journal flow."
     }
   },
   {
@@ -126,11 +118,11 @@ export const featurePages = [
     ],
     "ko": {
       "title": "전략 플레이북 · 당시의 전략으로 복기하기",
-      "description": "재사용할 전략과 수정 불가능한 과거 버전을 보존하고, 기록된 사실로 규칙 준수와 평가 가능 범위를 확인하세요.",
+      "description": "사람이 읽기 쉬운 규칙과 당시 전략 버전을 남기세요. 지원되는 조건만 자동 평가하며 글로만 작성한 규칙도 유효합니다.",
       "capabilities": [
         [
-          "재사용할 전략",
-          "진입·리스크·청산 기준을 한 전략에 모아 여러 거래에 같은 기준을 적용합니다."
+          "읽기 쉬운 규칙",
+          "‘자신감 점수가 3 이상’처럼 조건을 읽고 진입·리스크·청산 기준을 작성합니다. 정확한 규칙 정의는 필요할 때 펼쳐 확인합니다."
         ],
         [
           "변경되지 않는 과거 버전",
@@ -152,7 +144,7 @@ export const featurePages = [
         ],
         [
           "규칙을 정의합니다",
-          "진입 규칙·리스크 규칙·청산 규칙에서 ‘규칙 추가’를 누르고 조건을 작성합니다. 지원되는 평가 조건을 설정한 뒤 ‘전략 생성’으로 저장합니다."
+          "진입·리스크·청산 규칙에 원하는 기준을 글로 적습니다. 자동 평가가 지원되는 조건은 추가로 설정할 수 있고 글로만 남긴 규칙도 저장할 수 있습니다. 화면은 읽기 쉬운 조건을 먼저 보여주며 정확한 정의도 확인할 수 있습니다."
         ],
         [
           "버전 상태를 관리합니다",
@@ -173,15 +165,15 @@ export const featurePages = [
       ],
       "example": "예: 최대 보유시간을 바꿨다면 새 버전을 만듭니다. 이전 거래는 이전 버전에 연결된 상태로 남아 당시 기준으로 복기할 수 있습니다.",
       "connection": "‘따르려던 전략’은 플레이북에, ‘실제로 한 일’은 저널에 남깁니다. 분석 작업공간과 거래 복기가 두 기록을 함께 검토하도록 연결합니다.",
-      "screenshot": "전략 버전 목록과 진입·리스크·청산 규칙, 세 가지 판정 상태"
+      "screenshot": "이전 플레이북 화면: 현재는 사람이 읽기 쉬운 조건을 먼저 보여주고 정확한 규칙 정의는 펼쳐 확인합니다."
     },
     "en": {
       "title": "Strategy Playbook · Review the strategy you used",
-      "description": "Preserve reusable strategies and immutable historical versions; evaluate rule adherence and coverage from recorded facts.",
+      "description": "Keep readable rules and the Strategy Version you used. Supported conditions can be evaluated automatically; text-only rules remain valid.",
       "capabilities": [
         [
-          "Reusable strategies",
-          "Keep entry, risk, and exit criteria together and apply the same strategy across trades."
+          "Readable rules",
+          "Read conditions such as ‘Confidence score is at least 3’ and write entry, risk, and exit criteria. Expand the exact rule definition when needed."
         ],
         [
           "Immutable historical versions",
@@ -203,7 +195,7 @@ export const featurePages = [
         ],
         [
           "Define the rules",
-          "Use Add rule under Entry rules, Risk rules, and Exit rules, then enter each criterion and any supported evaluation condition. Select Create Strategy to save it."
+          "Write your entry, risk, and exit criteria in words. Add supported evaluation conditions where useful; text-only rules can also be saved. Readable conditions appear first, with exact definitions available to inspect."
         ],
         [
           "Manage version states",
@@ -224,7 +216,7 @@ export const featurePages = [
       ],
       "example": "Example: change the maximum holding time in a new version. Earlier trades stay linked to the old version for review against their original criteria.",
       "connection": "Playbook captures the intended strategy; Journal captures recorded execution. Analytics and Trading Review help examine the two together.",
-      "screenshot": "Strategy versions, entry/risk/exit rules, and the three evaluation states"
+      "screenshot": "Earlier Playbook screen: current rules show readable conditions first, with exact definitions available on demand."
     }
   },
   {
@@ -235,8 +227,8 @@ export const featurePages = [
       "experiments"
     ],
     "ko": {
-      "title": "분석 작업공간 · 기록에서 패턴 찾기",
-      "description": "전략·진입 유형·심리·종목·방향·시간·규칙별 지표를 비교하고 필터와 표본 수를 함께 살펴보세요.",
+      "title": "안내형 분석 · 궁금한 질문부터 시작하기",
+      "description": "심리·전략·종목·방향·규칙·시간에 관한 질문을 선택하고 기록된 차이와 표본을 확인하세요. 고급 분석은 선택 사항입니다.",
       "capabilities": [
         [
           "성과와 전략 비교",
@@ -257,41 +249,37 @@ export const featurePages = [
       ],
       "steps": [
         [
-          "분석 영역을 고릅니다",
-          "매매분석의 분석 작업공간에서 패턴 탐색, 전략, 심리, 규칙, 시간 중 질문에 맞는 영역을 선택합니다."
+          "궁금한 질문을 선택합니다",
+          "매매분석의 안내형 분석에서 심리·전략·종목·방향·규칙·시간 질문을 고릅니다. 지표와 분류 기준을 먼저 설정하지 않아도 분석을 시작할 수 있습니다."
         ],
         [
-          "지표와 분류 기준을 선택합니다",
-          "지표에서 볼 값을, 분류 기준에서 전략·전략 버전·진입 유형·심리·종목·방향·규칙 결과 같은 지원 그룹을 선택합니다."
+          "요약과 표본을 읽습니다",
+          "질문을 선택하면 기록된 거래를 비교합니다. 관찰된 차이와 그룹별 판정 가능 표본, 미기록·사용 불가 정보를 함께 확인합니다."
         ],
         [
-          "기간과 필터를 설정합니다",
-          "필수 시작 시각·종료 시각을 입력하고 필터를 펼쳐 기록된 조건이나 정확한 전략 버전을 좁힙니다. 시간 분석은 화면에 표시된 청산 시각과 협정 세계시 기준을 따릅니다."
+          "필요하면 기간과 조건을 바꿉니다",
+          "기간·종목 등 조건 바꾸기를 펼쳐 수정한 뒤 분석 실행으로 적용합니다. 시간 범위는 표시된 UTC 종료 시각 기준입니다."
         ],
         [
-          "분석을 실행합니다",
-          "‘분석 실행’을 눌러 현재 지표·분류 기준·필터 조합을 제출합니다. 설정을 바꾸면 다시 실행해야 새 범위가 결과에 반영됩니다."
+          "규칙 분석의 의미를 구분합니다",
+          "준수율은 평가 가능한 규칙 중 준수 비율, 평가 범위는 전체 규칙 중 평가 가능한 비율입니다. 판정 불가를 위반으로 보지 않습니다."
         ],
         [
-          "요약과 그룹 결과를 읽습니다",
-          "선택 거래 수와 각 그룹의 값, 전체 표본, 평가 가능, 사용 불가 수를 함께 봅니다. 표·막대 비교 또는 시간 추이와 ‘값순 정렬’로 표시 방식을 바꿀 수 있습니다."
+          "고급 분석은 필요할 때 엽니다",
+          "직접 조합하려면 고급 분석에서 지원되는 지표·분류 기준·정확한 필터를 설정합니다. 일반적인 질문을 살펴보는 데 필수는 아닙니다."
         ],
         [
-          "표본과 규칙 근거를 해석합니다",
-          "표본 부족·평가 가능한 표본 없음·사용 불가 이유를 확인합니다. 준수율은 평가 가능한 규칙 중 준수 비율이고 평가 범위는 전체 규칙 중 평가 가능한 비율이므로 서로 바꾸어 해석하지 않습니다."
-        ],
-        [
-          "관찰을 다음 복기로 넘깁니다",
-          "결과는 이 표본에서 관찰된 역사적 연관성입니다. 원인이나 미래 성과의 증명이 아니므로 관련 거래를 다시 보고 거래 복기 또는 실험에서 다음 질문을 좁힙니다."
+          "관찰을 복기로 이어갑니다",
+          "결과는 이 표본의 관찰된 연관성입니다. 원인이나 미래 성과가 확정된 것은 아니므로 근거 거래를 확인하고 복기에서 다음 질문을 좁힙니다."
         ]
       ],
       "example": "예: 특정 시간대의 성과가 낮아 보여도 거래가 몇 건인지 먼저 확인합니다. 시간대가 손실의 원인이라는 결론으로 곧바로 이어지지는 않습니다.",
       "connection": "저널의 기록과 플레이북 버전이 비교의 기준이 됩니다. 발견한 패턴은 거래 복기에서 검토하고 실험에서 측정할 가설로 연결할 수 있습니다.",
-      "screenshot": "분석 작업공간의 지표·조건 선택, 결과 표와 표본 수"
+      "screenshot": "이전 지표·분류 설정 화면입니다. 현재 기본 진입 화면은 질문을 선택하는 안내형 분석이며, 직접 설정은 고급 분석에서 제공합니다."
     },
     "en": {
-      "title": "Analytics Workspace · Explore recorded patterns",
-      "description": "Compare metrics by strategy, setup, psychology, symbol, direction, time, and rule evidence with filters and sample counts.",
+      "title": "Guided Analytics · Start with a question",
+      "description": "Choose a question about psychology, strategy, symbol, direction, rules, or time and inspect recorded differences with their samples. Advanced Analytics is optional.",
       "capabilities": [
         [
           "Performance and strategy",
@@ -312,37 +300,33 @@ export const featurePages = [
       ],
       "steps": [
         [
-          "Choose an analysis section",
-          "In Trade Analysis, open Analytics Workspace and choose Edge Explorer, Strategy, Psychology, Rules, or Time for the question you want to inspect."
+          "Choose your question",
+          "In Guided Analytics, select a question about psychology, strategy, symbol, direction, rules, or time. You can begin without configuring Metric and Dimension first."
         ],
         [
-          "Select Metric and Dimension",
-          "Choose the value under Metric and a supported grouping under Dimension, such as Strategy, Strategy Version, Setup, Psychology, Symbol, Direction, or Rule results."
+          "Read the answer and samples",
+          "Selecting a question compares recorded trades. Read observed differences alongside evaluable samples and unrecorded or unavailable evidence for each group."
         ],
         [
-          "Set period and filters",
-          "Enter the required Start time and End time, then open Filters to narrow recorded conditions or an exact Strategy Version. Time breakdowns use the displayed close / exit time and UTC basis."
+          "Adjust the scope if needed",
+          "Expand Adjust period and filters, edit the conditions, and select Run analysis to apply them. Dates use the displayed UTC closing-time basis."
         ],
         [
-          "Run the analysis",
-          "Select Run analysis to submit the current Metric, Dimension, and filter combination. After changing the setup, run it again to refresh the result scope."
+          "Distinguish rule measures",
+          "Adherence is the followed share of evaluable rules; Coverage is the evaluable share of all rules. Not evaluable is not a violation."
         ],
         [
-          "Read summary and grouped results",
-          "Review selected trades plus each group’s Value, Total sample, Evaluable, and Unavailable counts. Switch between Table, Bar comparison or Time series, and Rank by value as useful."
+          "Open Advanced Analytics when needed",
+          "Use Advanced Analytics to combine supported metrics, dimensions, and exact filters yourself. It is not required for ordinary guided questions."
         ],
         [
-          "Interpret sample and rule evidence",
-          "Check Limited sample, No evaluable samples, and unavailable reasons. Adherence is the followed share of evaluable rules; Coverage is the evaluable share of all rules, so they answer different questions."
-        ],
-        [
-          "Carry the observation forward",
-          "The result is an observed historical association within this sample, not proof of cause or future performance. Revisit relevant trades, then refine the question in Trading Review or an Experiment."
+          "Continue with Review",
+          "Results describe an observed association in this sample, not a proven cause or future performance. Inspect supporting trades and narrow the next question in Review."
         ]
       ],
       "example": "Example: if a time bucket looks weaker, check how many trades it contains. That difference alone does not establish time of day as the cause.",
       "connection": "Journal records and Playbook versions provide comparison criteria. Review findings in Trading Review and connect them to a measurable experiment.",
-      "screenshot": "Analytics Workspace metric/filter controls, result table, and sample counts"
+      "screenshot": "Earlier metric/dimension configuration screen. The current default is question-driven Guided Analytics; manual configuration is available in Advanced Analytics."
     }
   },
   {
@@ -354,11 +338,11 @@ export const featurePages = [
     ],
     "ko": {
       "title": "거래 복기 · 전략과 실행을 함께 검토하기",
-      "description": "기간별 복기에서 반복 패턴과 전략·실행 근거를 나눠 보고, 다음에 확인할 문제를 좁혀 보세요.",
+      "description": "최대 3개의 핵심 발견부터 읽고 의미·표본·다음 확인 행동을 살펴보세요. 상세 분석은 필요할 때 펼칩니다.",
       "capabilities": [
         [
-          "구조화된 복기",
-          "기간 성과와 전략·실행·심리 기록을 함께 검토합니다."
+          "핵심 발견 우선",
+          "최대 3개의 발견에서 관찰 내용·의미·표본·다음 확인 행동부터 읽습니다. 전체 상세를 먼저 해석할 필요가 없습니다."
         ],
         [
           "반복 패턴",
@@ -375,41 +359,37 @@ export const featurePages = [
       ],
       "steps": [
         [
-          "복기 화면을 엽니다",
-          "매매분석의 ‘복기’ 탭에서 시작 시각·종료 시각으로 종료 거래 복기 기간을 정합니다. 필요하면 ‘기록된 필터 / 정확한 전략 버전’에서 대상을 좁힙니다."
+          "복기 범위를 정합니다",
+          "매매분석의 복기에서 종료 거래 기간을 선택합니다. 필요하면 필터나 직전 동일 기간 비교를 설정하고 복기 실행을 누릅니다."
         ],
         [
-          "비교 범위를 선택합니다",
-          "직전 동일 길이 기간과 비교하려면 ‘직전 동일 기간과 비교’를 선택한 뒤 ‘복기 실행’을 누릅니다. 비교하지 않아도 현재 기간 복기 결과는 생성됩니다."
+          "핵심 발견부터 읽습니다",
+          "최대 3개 발견에서 무엇이 관찰됐고 왜 살펴볼 만한지, 어떤 표본이 뒷받침하는지 확인합니다. 뚜렷한 발견이 없을 수도 있습니다."
         ],
         [
-          "기간 요약을 읽습니다",
-          "성과, 전략, 실행, 심리, 근거 품질을 순서대로 확인합니다. 각 값과 함께 거래·표본·평가 가능·사용 불가 수를 읽어 근거 범위를 확인합니다."
+          "근거의 한계를 확인합니다",
+          "관찰된 연관성, 근거 부족, 판단 보류를 구분합니다. 표본 부족이나 서로 다른 신호를 실행 실패나 손실의 원인으로 단정하지 않습니다."
         ],
         [
-          "발견한 패턴을 검토합니다",
-          "관찰 그룹과 기준값, 차이, 적격 근거 또는 근거 부족을 함께 봅니다. 차이는 선택 표본의 관찰이며 원인이나 금융 조언이 아닙니다."
+          "필요한 상세만 펼칩니다",
+          "비교 근거나 전략·실행 근거를 열어 그룹·기준값·표본과 기술적 정의를 확인합니다. 전체 규칙 준수율과 진단의 실행 근거는 같은 지표가 아닙니다."
         ],
         [
-          "전략과 실행을 구분합니다",
-          "전략 축은 관찰된 결과를, 실행 축은 선택된 과정 규칙과 진입 이탈 근거를 보여줍니다. 전략 문제가 실행 문제와 같지 않으며, 근거가 부족하거나 충돌하면 결론 유보로 남습니다."
-        ],
-        [
-          "다음 검토 행동을 정합니다",
-          "계획과 실행 차이가 궁금하면 계획 분석에서 거래를 비교합니다. 측정할 행동이 명확하면 ‘발견에서 실험 만들기’ 또는 ‘진단에서 실험 만들기’로 실험 초안을 만듭니다."
+          "다음 확인 행동을 선택합니다",
+          "계획 이력이 궁금하면 계획 분석으로 이동합니다. 비교를 계속 살펴보려면 해당 비교의 실험 초안을 열고 관찰을 읽은 뒤 시험할 행동을 직접 적습니다."
         ]
       ],
       "example": "예: 전략 성과는 양호해 보이는데 실행 근거가 약하다면, 전략 전체를 바꾸기 전에 규칙 위반이나 계획 이탈의 근거부터 검토할 수 있습니다.",
       "connection": "분석 결과와 저널의 맥락을 복기로 연결합니다. 계획 비교가 필요하면 계획 분석으로, 측정할 행동이 정해졌다면 실험으로 이어갑니다.",
-      "screenshot": "거래 복기의 기간 요약, 패턴과 전략·실행 근거"
+      "screenshot": "이전 복기 상세 화면입니다. 현재는 핵심 발견 요약이 먼저 나오며 기술적 근거는 필요할 때 펼칩니다."
     },
     "en": {
       "title": "Trading Review · Review strategy and execution",
-      "description": "Structure a period review around recurring patterns and separate strategy outcomes from execution evidence.",
+      "description": "Start with up to three key findings, their meaning, sample evidence, and next actions. Expand analytical details when needed.",
       "capabilities": [
         [
-          "Structured review",
-          "Examine period performance, strategy, execution, and recorded psychology together."
+          "Key findings first",
+          "Read up to three findings with their observation, meaning, sample, and next action before opening full details."
         ],
         [
           "Recurring patterns",
@@ -426,33 +406,29 @@ export const featurePages = [
       ],
       "steps": [
         [
-          "Open Review",
-          "In Trade Analysis, open the Review tab and set Start time and End time for the closed-trade period. Use Recorded filters / exact StrategyVersion when you need a narrower cohort."
+          "Choose the review scope",
+          "In Review, select the closed-trade period. Add filters or a preceding equal-length comparison if useful, then run the review."
         ],
         [
-          "Choose the comparison scope",
-          "Enable Compare immediately preceding equal-length period when useful, then select Run review. The current-period Review still runs when period comparison is off."
+          "Read the key findings first",
+          "Up to three findings explain what was observed, why it merits inspection, and the supporting samples. There may be no strong finding to highlight."
         ],
         [
-          "Read the period summary",
-          "Work through Performance, Strategy, Execution, Psychology, and Evidence quality. Read trades, samples, evaluable, and unavailable counts alongside each value to understand its evidence scope."
+          "Check evidence limits",
+          "Distinguish observed association, insufficient evidence, and inconclusive assessments. Small samples or conflicting signals do not establish execution failure or the cause of a loss."
         ],
         [
-          "Inspect Pattern findings",
-          "Compare the observed group with its baseline, Delta, and Eligible evidence or Insufficient evidence status. The difference is a sample observation, not a causal conclusion or financial advice."
+          "Expand the details you need",
+          "Open comparison or Strategy and Execution evidence to inspect groups, baselines, samples, and technical definitions. Overall rule adherence is not the same measure as diagnosis execution evidence."
         ],
         [
-          "Separate Strategy from Execution",
-          "Strategy axis shows observed outcomes; Execution axis shows selected process-rule and entry-deviation evidence. A strategy problem is not the same as an execution problem, and limited or conflicting evidence remains Inconclusive."
-        ],
-        [
-          "Choose the next review action",
-          "Use Plan Lab to inspect plan-versus-execution gaps. When a behavior is specific enough to measure, select Create experiment from finding or Create experiment from diagnosis to start a draft."
+          "Choose what to inspect next",
+          "Open Plan Lab to inspect plan history. To explore a comparison further, open its Experiment draft, read the observation, and write the behavior you want to test yourself."
         ]
       ],
       "example": "Example: positive strategy outcomes with weak execution evidence can prompt a closer review of rule violations or plan deviations before changing the strategy.",
       "connection": "Bring Analytics results and Journal context into review. Follow up in Plan Lab for plan comparisons or Experiments for a defined behavior change.",
-      "screenshot": "Trading Review period summary, patterns, and Strategy vs Execution evidence"
+      "screenshot": "Earlier Review detail screen. The current experience starts with key findings and reveals technical evidence on demand."
     }
   },
   {
@@ -464,7 +440,7 @@ export const featurePages = [
     ],
     "ko": {
       "title": "계획 분석 · 계획과 실행을 비교하기",
-      "description": "사전·진행중·회고 계획과 수정 이력을 구분하고, 손절·목표·손익비를 실제 실행과 비교하세요.",
+      "description": "진입 전에 무엇을 기록했고 이후 무엇을 바꿨는지, 최신 계획은 무엇인지 이력을 잃지 않고 확인하세요.",
       "capabilities": [
         [
           "기록 시점 구분",
@@ -475,12 +451,12 @@ export const featurePages = [
           "계획한 진입·손절·목표와 최대 보유시간을 기록하고, 필요한 가격이 있을 때 손익비를 확인합니다."
         ],
         [
-          "추가되는 수정 이력",
-          "계획 변경은 새 수정 이력으로 남습니다. 기존 수정 이력을 덮어쓰지 않아 당시 저장한 값과 수정 순서를 보존합니다."
+          "진입 전 기록과 이후 변경",
+          "진입 당시 근거, 나중에 바꾼 값, 최신 계획을 구분합니다. 이후 수정은 진입 당시 근거를 대체하지 않으며 정확한 전체 이력도 확인할 수 있습니다."
         ],
         [
           "계획 대비 실행",
-          "사용 가능한 계획과 시장 경로로 실제 결과와 계획 결과를 비교합니다. 데이터 부족이나 부적격 계획은 제한을 표시합니다."
+          "사용 가능한 근거로 실제 결과와 계획 결과를 비교합니다. 계산할 수 없으면 결과 옆에 이유를 설명하며 0이나 실패로 처리하지 않습니다."
         ]
       ],
       "steps": [
@@ -502,11 +478,11 @@ export const featurePages = [
         ],
         [
           "변경은 수정 이력으로 추가합니다",
-          "저장된 계획에서 ‘수정 이력 추가’를 눌러 변경값을 저장합니다. 새 수정 이력이 추가되며 이전에 저장한 계획은 조용히 덮어써지지 않습니다. 저장 전 현재 초안은 아직 새 기록이 아닙니다."
+          "저장된 계획에서 수정 이력을 추가합니다. 진입 전에 기록한 내용·이후 변경·최신 계획을 구분해 읽고 필요한 경우 정확한 이력을 펼칩니다. 이후 변경이 진입 당시 근거를 바꾸지는 않습니다."
         ],
         [
           "계획과 실제 실행을 비교합니다",
-          "종료 거래의 ‘분석 보기’ 또는 계획 상세에서 실제 결과, 계획 결과, 실행 차이와 기록 시점을 확인합니다. 비교 가능 여부는 계획 출처와 사용 가능한 과거 가격 경로에 따라 달라집니다."
+          "계획 상세에서 실제 결과·계획 결과·실행 차이를 확인합니다. 계획 비교를 계산할 수 없으면 결과 옆 이유를 읽으세요. 가격 경로 부족 등 사유는 상황에 따라 다르며 판정 불가는 0이나 실패가 아닙니다."
         ],
         [
           "범위 분석을 불러옵니다",
@@ -515,11 +491,11 @@ export const featurePages = [
       ],
       "example": "예: 거래 중 손절을 변경했다면 변경 이력을 남깁니다. 종료 후 입력한 계획도 복기에 활용할 수 있지만, 거래 전부터 존재한 계획으로 취급하지 않습니다.",
       "connection": "저널의 거래를 계획 기록과 연결해 의도와 실행을 살펴봅니다. 반복되는 차이는 거래 복기와 다음 행동 실험에서 검토할 질문이 됩니다.",
-      "screenshot": "사전·진행중·회고 표시, 계획 수정 이력, 계획 대비 실제 실행"
+      "screenshot": "이전 계획 상세 화면입니다. 현재는 진입 전·이후 변경·최신 계획을 풀어 설명하고 계산 불가 결과 옆에 이유를 표시합니다."
     },
     "en": {
       "title": "Plan Lab · Compare plan and execution",
-      "description": "Distinguish pre-trade, in-trade, and retrospective plans with immutable revisions; compare stops, targets, and reward-risk with execution.",
+      "description": "See what was recorded before entry, what changed later, and the current plan revision without losing the underlying history.",
       "capabilities": [
         [
           "Record timing",
@@ -530,12 +506,12 @@ export const featurePages = [
           "Record intended entry, stop, targets, and maximum holding time; inspect reward-risk when required prices are available."
         ],
         [
-          "Append-only revisions",
-          "Changes create a new revision without overwriting earlier revisions, preserving saved values and their order."
+          "Before entry and later changes",
+          "Distinguish entry-time evidence, later edits, and the latest plan. Later revisions do not replace entry-time evidence; the exact full history remains inspectable."
         ],
         [
           "Plan vs execution",
-          "Use eligible plans and available market paths to compare actual and planned outcomes; missing data and ineligible plans retain their limitations."
+          "Compare actual and planned outcomes from available evidence. When a comparison cannot be calculated, a reason appears beside it rather than treating it as zero or failure."
         ]
       ],
       "steps": [
@@ -557,11 +533,11 @@ export const featurePages = [
         ],
         [
           "Add changes as a Revision",
-          "From a saved plan, select Add revision and save the changed values. A new Revision is appended; the earlier saved Plan is not silently rewritten. Until saved, the current draft is not a new historical record."
+          "Add a revision to the saved plan. Read what existed before entry, what changed later, and the latest plan, then inspect the exact history if needed. Later changes do not rewrite entry-time evidence."
         ],
         [
           "Compare plan and execution",
-          "Use View analysis or the plan detail to inspect Actual, Plan result, Execution delta, and record timing. Eligibility depends on plan provenance and available historical price-path evidence."
+          "Inspect Actual, Plan result, and Execution delta in plan detail. If a comparison is unavailable, read the reason beside it. Reasons vary, including missing price-path evidence; unavailable is not zero or failure."
         ],
         [
           "Load aggregate analysis when needed",
@@ -570,7 +546,7 @@ export const featurePages = [
       ],
       "example": "Example: record a revision after changing a stop in trade. A retrospective plan can support review, but is not treated as a plan that existed before entry.",
       "connection": "Connect Journal trades to plan records to inspect intent and execution. Recurring gaps inform Trading Review and the next behavior experiment.",
-      "screenshot": "Plan timing labels, revision history, and plan-versus-execution results"
+      "screenshot": "Earlier plan detail screen. The current view explains before-entry records, later changes, and the latest plan, with reasons beside unavailable results."
     }
   },
   {
@@ -582,11 +558,11 @@ export const featurePages = [
     ],
     "ko": {
       "title": "실험 · 정한 기준으로 변화를 측정하기",
-      "description": "행동 실험의 가설·지표·목표를 정의하고 활성화한 뒤, 측정 기능으로 기준 기간 대비 변화와 목표 충족 여부를 확인하세요.",
+      "description": "복기에서 관찰된 차이를 읽고 직접 시험할 행동을 정한 뒤, 같은 측정 정의로 다음 기간을 비교하세요.",
       "capabilities": [
         [
           "행동·과정 실험",
-          "관찰한 문제를 사용자가 소유한 가설로 정리합니다. 패턴이나 진단에서 초안을 만들 수 있습니다."
+          "앱은 관찰 내용과 비교 맥락을 제공합니다. 시험할 행동과 가설은 사용자가 직접 작성합니다."
         ],
         [
           "측정 가능한 목표",
@@ -603,45 +579,45 @@ export const featurePages = [
       ],
       "steps": [
         [
-          "실험 초안을 엽니다",
-          "매매분석의 실험 화면에서 ‘새 실험’을 누르거나 복기의 ‘발견에서 실험 만들기’ 또는 ‘진단에서 실험 만들기’로 관찰 조건이 채워진 초안을 엽니다."
+          "복기에서 실험 초안을 엽니다",
+          "비교의 실험 초안을 열면 관찰 내용, 읽기 쉬운 비교 맥락과 설명형 이름을 먼저 확인할 수 있습니다. 실험 화면에서 직접 새 초안을 만들 수도 있습니다."
         ],
         [
-          "행동 가설과 측정 대상을 정의합니다",
-          "이름과 가설에 시험할 행동·과정을 적고 목표 지표, 측정 기준, 실험 기간과 필요한 기록 필터를 선택합니다."
+          "시험할 행동을 직접 적습니다",
+          "복기에서 넘어온 행동·가설 입력란은 비어 있습니다. 앱은 관찰을 제공하고 사용자가 시험할 행동을 결정합니다. 관찰된 연관성만으로 행동을 추천하지 않습니다."
         ],
         [
-          "기준 기간과 판정 조건을 정합니다",
-          "실험 기간보다 앞선 겹치지 않는 기준 기간을 입력합니다. 판정 기준, 이상·이하 연산자, 목표값, 최소 판정 가능 표본과 거래 수를 설정합니다."
+          "무엇을 비교할지 확인합니다",
+          "초안의 비교 요약을 읽고 다음 기간에 살펴볼 질문을 정합니다. 고급 측정 설정은 기본적으로 접혀 있습니다."
         ],
         [
-          "초안을 저장하고 시작합니다",
-          "‘초안 만들기’ 또는 ‘초안 저장’으로 검토 가능한 초안을 저장합니다. 조건이 확정되면 ‘실험 시작’을 누르고 확인하면 상태가 활성으로 바뀌며 정의가 잠깁니다."
+          "필요한 측정 조건을 검토합니다",
+          "고급 설정을 펼치면 정확한 지표·그룹·연산자·필터·기간을 확인할 수 있습니다. 실험보다 앞선 겹치지 않는 기준 기간, 목표와 최소 표본도 시작 전에 검토합니다."
         ],
         [
-          "관찰 기간을 채웁니다",
-          "고정한 기간·필터·그룹에 맞는 거래 기록을 계속 쌓습니다. 표본이 부족하거나 값이 평가 불가하면 측정 기능이 강제로 결론을 만들지 않습니다."
+          "저장하고 실험을 시작합니다",
+          "초안을 저장한 뒤 정의가 확정되면 실험 시작을 확인합니다. 활성화하면 정의가 잠기므로 결과를 본 뒤 기준을 바꾸지 않습니다."
         ],
         [
-          "완료하거나 측정을 실행합니다",
-          "필요할 때 ‘측정’으로 현재 근거를 볼 수 있고, 관찰을 끝내려면 ‘실험 완료’를 누릅니다. 완료 상태 자체는 목표 달성을 뜻하지 않습니다."
+          "다음 기간을 측정합니다",
+          "정한 조건에 맞는 기록을 쌓고 측정을 실행해 같은 정의의 현재값·기준값·표본을 비교합니다. 실험 완료는 관찰을 마쳤다는 상태이지 목표 달성을 뜻하지 않습니다."
         ],
         [
-          "판정과 근거를 읽습니다",
-          "측정 결과의 현재값, 기준값, 관찰 차이와 표본을 확인합니다. 기준 충족은 정한 목표 달성, 기준 미충족은 미달, 판정 불가는 충분히 평가할 수 없음을 뜻하며 인과관계를 증명하지 않습니다."
+          "근거와 한계를 읽습니다",
+          "기준 충족·미충족·판정 불가를 구분합니다. 표본 부족은 실패가 아니며 차이가 있어도 행동이 수익 변화를 일으켰다는 인과 증명은 아닙니다."
         ]
       ],
       "example": "예: 규칙 준수율을 목표 지표로 정하고 최소 표본을 확보한 뒤 측정합니다. 목표를 충족해도 그 행동이 수익 개선을 일으켰다는 인과 증명은 아닙니다.",
-      "connection": "거래 복기의 발견을 실행할 가설로 바꾸고, 분석 작업공간과 같은 지표 정의로 비교합니다. 검토한 결과는 다음 계획과 저널 기록에 반영합니다.",
-      "screenshot": "실험 가설·목표·활성 상태와 측정 결과의 기준값·현재값·판정"
+      "connection": "앱이 제공한 복기 관찰과 사용자가 정한 행동 가설을 구분합니다. 같은 분석 정의로 다음 기간을 비교하고 다음 기록과 계획에 참고합니다.",
+      "screenshot": "이전 활성 실험·측정 화면입니다. 현재 복기에서 여는 초안은 관찰 요약과 빈 행동·가설 입력란부터 보여주고 고급 설정은 접혀 있습니다."
     },
     "en": {
       "title": "Experiments · Measure change against a target",
-      "description": "Define and activate a behavior experiment with a hypothesis, metric, and target, then use Measure to compare with a baseline.",
+      "description": "Read an observed difference from Review, choose the behavior you want to test, then compare the next period using the same measurement definition.",
       "capabilities": [
         [
           "Behavior and process experiments",
-          "Write a user-owned hypothesis from an observed issue or draft it from a pattern or diagnosis."
+          "The app supplies an observation and comparison context. You write the behavior and hypothesis you choose to test."
         ],
         [
           "Measurable goals",
@@ -658,37 +634,37 @@ export const featurePages = [
       ],
       "steps": [
         [
-          "Open an Experiment draft",
-          "In Trade Analysis, open Experiments and select New experiment, or use Create experiment from finding/diagnosis in Review to carry an observed condition into a draft."
+          "Open a draft from Review",
+          "Open an Experiment draft for a comparison to see the observation, readable comparison context, and a descriptive name first. You can also create a new draft directly in Experiments."
         ],
         [
-          "Define behavior and measurement",
-          "Use Name and Hypothesis for the behavior or process being tested, then choose Target metric, Measurement dimension, experiment period, and any recorded filters."
+          "Write the behavior you choose",
+          "The behavior/hypothesis field in a Review-created draft starts empty. The app provides the observation; you decide what to try. An association is not a behavior recommendation."
         ],
         [
-          "Set baseline and criterion",
-          "Enter a non-overlapping Baseline period earlier than the experiment. Set Criterion basis, the At least/At most Operator, Target, and Minimum evaluable sample and trades."
+          "Check what will be compared",
+          "Read the comparison summary and choose the question for the next period. Advanced measurement settings start collapsed."
         ],
         [
-          "Save and start the draft",
-          "Use Create draft or Save draft while reviewing the definition. When it is final, select Start experiment and confirm; its status becomes ACTIVE and the definition is locked."
+          "Inspect measurement details as needed",
+          "Expand advanced settings for exact metrics, groups, operators, filters, and periods. Before starting, review the earlier non-overlapping baseline, target, and minimum sample."
         ],
         [
-          "Fill the observation window",
-          "Continue recording trades that match the fixed period, filters, and group. If the sample or values are unavailable, Measure does not force a conclusion."
+          "Save and start",
+          "Save the draft, then confirm Start experiment when its definition is ready. Activation locks the definition so criteria do not move after you see the result."
         ],
         [
-          "Complete or run Measure",
-          "Select Measure whenever you need the current evidence, and use Complete experiment when observation is finished. COMPLETED is a lifecycle state, not a successful result."
+          "Measure the next period",
+          "Accumulate matching records and run Measure to compare current and baseline values with their samples under the same definition. Completed means observation ended, not that the target was met."
         ],
         [
-          "Read criterion and evidence",
-          "Compare Current, Baseline, Observed delta, and samples. MET means the defined target was met, NOT_MET means it was not, and NOT_EVALUABLE means the evidence cannot support a result; none proves causation."
+          "Read the evidence and limits",
+          "Distinguish criterion met, not met, and not evaluable. Insufficient samples are not failure; an observed difference does not prove the behavior caused a change in profit."
         ]
       ],
       "example": "Example: set a rule-adherence target and measure once sufficient samples are available. Meeting the target does not prove the behavior caused an increase in profit.",
-      "connection": "Turn a Trading Review finding into a hypothesis and compare using shared Analytics definitions. Carry the review into the next plan and Journal records.",
-      "screenshot": "Experiment hypothesis, target, active state, and Measure baseline/current values and criterion result"
+      "connection": "Keep the observation supplied by Review separate from your chosen behavior hypothesis. Compare the next period with the same analytical definition and use the evidence in your next records and plans.",
+      "screenshot": "Earlier active Experiment and Measure screen. Current Review-created drafts start with an observation summary and an empty behavior/hypothesis field; advanced settings are collapsed."
     }
   }
 ] as const;

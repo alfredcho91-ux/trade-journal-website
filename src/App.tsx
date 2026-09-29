@@ -86,14 +86,23 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = language;
     document.title = isEnglish
-      ? 'Trade Journal | Find patterns in your trades'
-      : 'Trade Journal | 내 거래에서 패턴을 찾으세요';
+      ? 'Trade Journal | Record, review, and choose what to test'
+      : 'Trade Journal | 기록하고 복기하고 다음 행동을 정하세요';
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (description) {
       description.content = isEnglish
-        ? 'A local-first Windows trade journal for reviewing closed trades, finding patterns, and tracing analysis back to the trades behind it.'
-        : '종료 거래를 분석하고 패턴을 찾으며 결과를 만든 근거 거래까지 추적하는 로컬 우선 Windows 트레이딩 저널.';
+        ? 'Try a sample without API credentials. Record trade context, explore Guided Analytics and Review, then choose what to test in a local-first Windows journal.'
+        : 'API 없는 샘플부터 시작하세요. 거래 맥락을 기록하고 안내형 분석·복기로 근거를 살펴본 뒤 시험할 행동을 정하는 로컬 우선 Windows 매매일지.';
     }
+    document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute('content', document.title);
+    document.querySelector<HTMLMetaElement>('meta[property="og:description"]')?.setAttribute('content', description?.content ?? '');
+    document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')?.setAttribute('content', document.title);
+    document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')?.setAttribute('content', description?.content ?? '');
+    document.querySelector<HTMLMetaElement>('meta[property="og:locale"]')?.setAttribute('content', isEnglish ? 'en_US' : 'ko_KR');
+    document.querySelector<HTMLMetaElement>('meta[property="og:locale:alternate"]')?.setAttribute('content', isEnglish ? 'ko_KR' : 'en_US');
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', language);
+    window.history.replaceState(null, '', url);
   }, [isEnglish, language]);
 
   useEffect(() => {
@@ -124,7 +133,7 @@ export default function App() {
     [featureUrl, isEnglish ? 'Features' : '기능 안내'],
     ['#analysis', t.nav.analysis],
     ['#security', t.nav.security],
-    ['/guide', t.nav.workflow],
+    [`/guide?lang=${language}`, t.nav.workflow],
     ['#faq', t.nav.faq],
   ] as const;
 
@@ -330,7 +339,7 @@ export default function App() {
                 );
               })}
             </ol>
-            <a className="guide-entry" href="/guide">
+            <a className="guide-entry" href={`/guide?lang=${language}`}>
               <span><KeyRound size={19} aria-hidden="true" /></span>
               <div><strong>{t.workflow.guideCta}</strong><p>{t.workflow.guideCopy}</p></div>
               <ArrowRight size={18} aria-hidden="true" />

@@ -6,8 +6,8 @@ import type { Language } from './content';
 const screenshots: Record<string, { src: string; en: string; ko: string }> = {
   journal: {
     src: '/screenshots/feature-journal.png',
-    en: 'Trade Journal report for a closed synthetic trade, showing rule evaluation and the behavior journal',
-    ko: '합성 완료 거래의 규칙 평가와 행동 기록을 보여주는 매매일지 리포트',
+    en: 'Earlier Plan Lab list of synthetic closed trades; not a Journal detail screenshot',
+    ko: '합성 종료 거래를 보여주는 이전 계획 분석 목록: 매매일지 상세 캡처가 아님',
   },
   'strategy-playbook': {
     src: '/screenshots/feature-strategy-playbook.png',
@@ -46,12 +46,16 @@ export default function FeatureDetail({ page, language }: { page: typeof feature
     <section className="docs-section" aria-labelledby="purpose-title">
       <div className="docs-heading"><span className="eyebrow">{summary.name}</span><h2 id="purpose-title">{summary.question}</h2><p>{summary.copy}</p></div>
       <p className="detail-learning">{summary.takeaway}</p>
-      <figure className="detail-screenshot">
+      <details className="detail-screenshot">
+        <summary>{en ? 'Earlier product screenshot (reference)' : '이전 제품 화면 참고'}</summary>
+        <p className="detail-learning">{t.screenshot}</p>
+        <figure>
         <a href={screenshot.src} target="_blank" rel="noreferrer" aria-label={en ? 'Enlarge product screenshot in a new tab' : '제품 화면 크게 보기 (새 탭)'}>
           <img src={screenshot.src} width="1440" height="900" alt={screenshot[language]} />
         </a>
-        <figcaption>{t.screenshot}</figcaption>
-      </figure>
+        <figcaption>{en ? 'Existing capture retained for reference; it does not show the current default experience.' : '참고용으로 보존한 기존 캡처이며 현재 기본 사용 화면과 다릅니다.'}</figcaption>
+        </figure>
+      </details>
     </section>
     <section id="capabilities" className="docs-section" aria-labelledby="capabilities-title">
       <div className="docs-heading"><h2 id="capabilities-title">{en ? 'What you can do' : '할 수 있는 일'}</h2></div>
@@ -76,7 +80,7 @@ export default function FeatureDetail({ page, language }: { page: typeof feature
     </section>
     <section className="docs-section" aria-labelledby="local-title">
       <div className="docs-heading"><h2 id="local-title">{en ? 'Your records, stored locally' : '내 컴퓨터에 저장되는 기록'}</h2><p>{en ? 'Trade Journal is a local-first Windows app with SQLite storage. Read-only exchange connections communicate with your selected exchange, and market-data features make external data requests. It does not execute orders or automated buy/sell trades, is not a trading bot, and has no AI/LLM dependency. Windows app credentials are kept in Windows Credential Manager.' : 'Trade Journal은 SQLite에 기록을 저장하는 로컬 우선 Windows 앱입니다. 읽기 전용 연결은 선택한 거래소와 통신하며 시장 데이터 기능도 외부 데이터를 요청합니다. 주문 실행·자동 매수·매도를 제공하지 않는 앱으로, 트레이딩 봇이 아니며 인공지능 모델 의존성이 없습니다. Windows 앱 자격 증명은 Windows 자격 증명 관리자에 보관합니다.'}</p></div>
-      <a className="text-link" href="/guide#security">{en ? 'Storage and connection guide' : '저장·연결 가이드'}<ArrowRight size={15} aria-hidden="true" /></a>
+      <a className="text-link" href={`/guide?lang=${language}#security`}>{en ? 'Storage and connection guide' : '저장·연결 가이드'}<ArrowRight size={15} aria-hidden="true" /></a>
     </section>
   </>;
 }

@@ -12,17 +12,25 @@ function Heading({ eyebrow, title, copy }: { eyebrow: string; title: string; cop
 }
 
 export default function GuidePage() {
-  const [language, setLanguage] = useState<Language>('ko');
+  const [language, setLanguage] = useState<Language>(() => new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'ko');
   const [exchange, setExchange] = useState<Exchange>('deepcoin');
   const t = guideContent[language];
   const isEnglish = language === 'en';
+  const homeUrl = isEnglish ? '/?lang=en' : '/';
   const selected = t.api.exchanges[exchange];
+
+  useEffect(() => {
+    document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' });
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = language;
     document.title = t.meta.title;
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (description) description.content = t.meta.description;
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', language);
+    window.history.replaceState(null, '', url);
   }, [language, t.meta.description, t.meta.title]);
 
   return (
@@ -30,9 +38,9 @@ export default function GuidePage() {
       <a className="skip-link" href="#guide-content">{isEnglish ? 'Skip to guide' : '가이드 본문으로 건너뛰기'}</a>
       <header className="docs-header">
         <div className="container docs-header-inner">
-          <a className="brand" href="/" aria-label={isEnglish ? 'Trade Journal product home' : 'Trade Journal 제품 홈페이지'}><img src="/trading-journal-logo.png" alt="Trade Journal" /></a>
+          <a className="brand" href={homeUrl} aria-label={isEnglish ? 'Trade Journal product home' : 'Trade Journal 제품 홈페이지'}><img src="/trading-journal-logo.png" alt="Trade Journal" /></a>
           <div className="docs-header-actions">
-            <a className="docs-home" href="/"><ArrowLeft size={15} aria-hidden="true" />{t.header.home}</a>
+            <a className="docs-home" href={homeUrl}><ArrowLeft size={15} aria-hidden="true" />{t.header.home}</a>
             <button type="button" className="language-toggle" onClick={() => setLanguage(isEnglish ? 'ko' : 'en')} aria-label={t.header.language}>{t.header.languageLabel}</button>
             <a className="button button-primary button-compact" href={releaseUrl}><Download size={16} aria-hidden="true" />{t.header.download}</a>
           </div>
@@ -74,6 +82,16 @@ export default function GuidePage() {
               <ol className="docs-instructions">{t.install.steps.map(([title, copy], index) => <li key={title}><span>{index + 1}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol>
               <div className="docs-note"><ShieldCheck size={19} aria-hidden="true" /><div><h3>{t.install.noteTitle}</h3><p>{t.install.note}</p></div></div>
               <div className="docs-note"><Power size={19} aria-hidden="true" /><div><h3>{t.install.exitTitle}</h3><p>{t.install.exit}</p></div></div>
+            </section>
+
+            <section id="sample" className="docs-section">
+              <Heading eyebrow={t.sample.eyebrow} title={t.sample.title} copy={t.sample.copy} />
+              <ol className="docs-instructions">{t.sample.steps.map(([title, copy], index) => <li key={title}><span>{index + 1}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol>
+              <div className="feature-inline-links">
+                <a className="text-link feature-guide-cta" href={`/features/journal?lang=${language}`}>{isEnglish ? 'Journal guide' : '매매일지 안내'}<ArrowRight size={15} /></a>
+                <a className="text-link feature-guide-cta" href={`/features/analytics?lang=${language}`}>{isEnglish ? 'Guided Analytics' : '안내형 분석'}<ArrowRight size={15} /></a>
+                <a className="text-link feature-guide-cta" href="#api">{isEnglish ? 'Connect my own trades' : '내 거래 연결하기'}<ArrowRight size={15} /></a>
+              </div>
             </section>
 
             <section id="api" className="docs-section">
@@ -127,9 +145,9 @@ export default function GuidePage() {
           </div>
         </div>
 
-        <section className="docs-finish"><div className="container docs-finish-inner"><div><span className="eyebrow">{t.finish.eyebrow}</span><h2>{t.finish.title}</h2><p>{t.finish.copy}</p></div><div><a className="button button-secondary" href="/"><ArrowLeft size={17} />{t.finish.home}</a><a className="button button-primary" href={releaseUrl}><Download size={18} />{t.finish.download}</a></div></div></section>
+        <section className="docs-finish"><div className="container docs-finish-inner"><div><span className="eyebrow">{t.finish.eyebrow}</span><h2>{t.finish.title}</h2><p>{t.finish.copy}</p></div><div><a className="button button-secondary" href={homeUrl}><ArrowLeft size={17} />{t.finish.home}</a><a className="button button-primary" href={releaseUrl}><Download size={18} />{t.finish.download}</a></div></div></section>
       </main>
-      <footer className="docs-footer"><div className="container"><a className="brand" href="/"><img src="/trading-journal-logo.png" alt="Trade Journal" /></a><p>{t.footer}</p><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub<ExternalLink size={13} /></a></div></footer>
+      <footer className="docs-footer"><div className="container"><a className="brand" href={homeUrl}><img src="/trading-journal-logo.png" alt="Trade Journal" /></a><p>{t.footer}</p><a href={sourceUrl} target="_blank" rel="noreferrer">GitHub<ExternalLink size={13} /></a></div></footer>
     </div>
   );
 }
