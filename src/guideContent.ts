@@ -13,7 +13,7 @@ export const guideContent = {
       start: '빠른 시작 보기',
     },
     tocTitle: '이 페이지에서',
-    toc: [['#quick-start', '전체 과정'], ['#install', 'Windows 설치'], ['#sample', '샘플 또는 내 거래'], ['#api', '선택: API 키 발급'], ['#permissions', '권한 설정'], ['#connect', '앱 연결'], ['#sync', '동기화'], ['#troubleshoot', '문제 해결'], ['#security', '보관과 삭제']],
+    toc: [['#quick-start', '전체 과정'], ['#install', 'Windows 설치'], ['#sample', '샘플 또는 내 거래'], ['#workspace', '새 화면 사용법'], ['#api', '선택: API 키 발급'], ['#permissions', '권한 설정'], ['#connect', '앱 연결'], ['#sync', '동기화'], ['#troubleshoot', '문제 해결'], ['#security', '보관과 삭제']],
     quick: {
       eyebrow: '빠른 시작', title: '샘플부터 시작해도 됩니다.', copy: 'API 연결은 내 거래를 가져올 때 선택합니다. 샘플 체험에는 자격 증명이 필요하지 않습니다.',
       steps: [['01', '프로그램 설치', '공식 Windows ZIP을 받아 완전히 압축 해제합니다.'], ['02', '샘플 또는 내 거래 선택', 'API 없이 샘플을 열거나 내 프로필에서 읽기 전용 연결을 선택합니다.'], ['03', '기록과 질문 살펴보기', '저널의 짧은 기록, 안내형 분석 질문, 복기 핵심 발견을 살펴봅니다.'], ['04', '필요할 때 내 거래 연결', '샘플에서 일반 프로필로 돌아온 뒤 아래 API·권한·연결 안내를 따릅니다.']],
@@ -28,7 +28,7 @@ export const guideContent = {
     sample: {
   "eyebrow": "API 없이 먼저 체험",
   "title": "샘플로 살펴보거나 내 거래로 시작하세요.",
-  "copy": "샘플은 합성 거래임을 표시하는 별도 작업공간입니다. 실제 거래소 자격 증명이나 동기화를 사용하지 않으며 샘플 데이터가 일반 프로필로 이전되지 않습니다.",
+  "copy": "샘플은 합성 거래임을 표시하는 별도 작업공간입니다. 실제 거래소 자격 증명이나 동기화를 사용하지 않으며 샘플 데이터가 일반 프로필로 이전되지 않습니다. 가격 경로가 필요한 분석은 사용할 수 없다고 표시됩니다.",
   "steps": [
     [
       "샘플 작업공간 열기",
@@ -48,6 +48,17 @@ export const guideContent = {
     ]
   ]
 },
+    workspace: {
+      eyebrow: 'v1.0.28 · 제한 베타 사용법', title: '요약부터 보고 필요한 상세를 펼치세요.',
+      copy: '아래는 최근 UI가 적용된 제한 베타 기준입니다. 기본 다운로드는 v1.0.26이며, v1.0.28은 새 Windows 환경·실시간 거래소 검증이 남아 있습니다.',
+      steps: [
+        ['기간 요약 확인', '매매일지에서 기간을 정하고 핵심 손익·승률·거래당 기대값·종료 거래 수를 확인한 뒤 거래 목록을 살펴보세요. 불러오는 중이나 오류는 별도 상태로 표시됩니다.'],
+        ['상세 성과 펼치기', '상세 성과 · 차트 · 달력을 펼치면 나머지 통계와 달력을 볼 수 있습니다. 넓은 거래 표는 표 안에서 가로로 스크롤하세요.'],
+        ['샘플 안내와 리포트 열기', '샘플 안내를 펼쳐 예시 거래나 기록이 있는 날짜로 이동하세요. 닫은 예시 리포트가 다시 열리지 않으면 거래 목록의 거래 리포트 버튼으로 여세요. 샘플은 가격 차트를 제공하지 않습니다.'],
+        ['키보드로 편집하기', '주요 대화상자에서 Tab·Shift+Tab으로 이동하고 Escape로 닫을 수 있습니다. 미저장 변경이 있으면 확인창이 열리며 계속 편집하거나 변경을 버릴 수 있습니다.'],
+      ],
+      link: '베타 변경 내용·검증 범위 확인',
+    },
     api: {
       eyebrow: '선택 · 내 거래 연결', title: '거래소에서 읽기 전용 API 키를 만듭니다.', copy: '거래소의 메뉴 이름은 바뀔 수 있지만 원칙은 같습니다. Trade Journal 전용 키를 만들고 조회 권한만 허용하세요.', choose: '연결할 거래소', required: '필요한 입력값',
       exchanges: {
@@ -83,14 +94,14 @@ export const guideContent = {
     header: { home: 'Product overview', language: '한국어로 보기', languageLabel: '한국어', download: 'Download for Windows' },
     hero: { eyebrow: 'TRADE JOURNAL USER GUIDE', title: 'From installation to a sample and your own review', copy: 'After installing, try the sample without API credentials or connect your exchange read-only. Explore short Journal records, Guided Analytics questions, and Review summaries, then follow the API instructions if you want to import your own trades.', time: 'Estimated time', timeValue: 'About 10 minutes', platform: 'Platform', platformValue: 'Windows 10/11 · x64', support: 'Supported exchanges', supportValue: 'Deepcoin SWAP · Binance SWAP', start: 'View quick start' },
     tocTitle: 'ON THIS PAGE',
-    toc: [['#quick-start', 'Overview'], ['#install', 'Windows setup'], ['#sample', 'Sample or your trades'], ['#api', 'Optional: API key'], ['#permissions', 'Permissions'], ['#connect', 'Connect app'], ['#sync', 'Sync'], ['#troubleshoot', 'Troubleshoot'], ['#security', 'Storage and removal']],
+    toc: [['#quick-start', 'Overview'], ['#install', 'Windows setup'], ['#sample', 'Sample or your trades'], ['#workspace', 'Updated screens'], ['#api', 'Optional: API key'], ['#permissions', 'Permissions'], ['#connect', 'Connect app'], ['#sync', 'Sync'], ['#troubleshoot', 'Troubleshoot'], ['#security', 'Storage and removal']],
     quick: { eyebrow: 'QUICK START', title: 'You can start with the sample.', copy: 'An API connection is optional for importing your own trades. No credentials are required to try the sample.', steps: [['01', 'Install the app', 'Download the official Windows ZIP and extract every file.'], ['02', 'Choose sample or your trades', 'Open the sample without API keys, or choose a read-only connection in your normal profile.'], ['03', 'Explore records and questions', 'Look at short Journal records, Guided Analytics questions, and key Review findings.'], ['04', 'Connect your trades when ready', 'Return from the sample to your normal profile, then follow the API, permission, and connection instructions below.']] },
     safety: { title: 'The most important security rule', copy: 'Enable Read / View only. Disable orders, futures orders, withdrawals, and asset transfers. Never send anyone your API Key, Secret, or Passphrase or include them in screenshots.' },
     install: { eyebrow: 'STEP 01 · WINDOWS', title: 'Download and launch the app.', steps: [['Download the official file', 'Get Trade-Journal-Windows.zip from GitHub Releases.'], ['Check Unblock', 'Right-click the ZIP, open Properties, select Unblock if shown, and apply.'], ['Extract everything', 'Do not run from inside the ZIP. Extract every file to a folder first.'], ['Open the executable', 'Run Trade Journal\\Trade Journal.exe from the extracted folder.'], ['Confirm SmartScreen', 'Verify the official GitHub source, then choose More info → Run anyway.'], ['Check the local page', 'Trade Journal opens its local interface in your default browser.']], noteTitle: 'You do not need to disable Windows security.', note: 'The public build may be unsigned and trigger SmartScreen. Keep real-time protection enabled and verify that the file came from official GitHub Releases.', exitTitle: 'Exit cleanly', exit: 'Use the power icon in the top-right to stop the local server. Closing the browser does not delete saved credentials.' },
     sample: {
   "eyebrow": "TRY BEFORE API SETUP",
   "title": "Explore the sample or start with your trades.",
-  "copy": "The sample is a separate workspace with clearly labelled synthetic trades. It uses no real exchange credentials or sync, and sample data never migrates into your normal profile.",
+  "copy": "The sample is a separate workspace with clearly labelled synthetic trades. It uses no real exchange credentials or sync, and sample data never migrates into your normal profile. Analyses requiring price-path evidence are marked unavailable.",
   "steps": [
     [
       "Open the sample workspace",
@@ -110,6 +121,17 @@ export const guideContent = {
     ]
   ]
 },
+    workspace: {
+      eyebrow: 'v1.0.28 · LIMITED BETA GUIDE', title: 'Read the summary, then expand the details.',
+      copy: 'These steps describe the recent limited-beta UI. The standard download remains v1.0.26; v1.0.28 still needs clean-machine Windows and live exchange acceptance checks.',
+      steps: [
+        ['Read the period summary', 'Choose a period in Journal, read key profit/return, win rate, expectancy per trade, and closed-trade count, then inspect the trade list. Loading and errors appear as separate states.'],
+        ['Expand detailed performance', 'Open Detailed performance · charts · calendar for additional statistics and the calendar. Scroll wide trade tables within their own area.'],
+        ['Open sample guidance and reports', 'Expand Sample guide for an example trade or populated day. If a closed example report does not reopen, use Trade report in the trade list. The sample does not provide price charts.'],
+        ['Edit with the keyboard', 'Use Tab and Shift+Tab in the main dialogs and Escape to close them. Unsaved changes open a confirmation so you can keep editing or discard them.'],
+      ],
+      link: 'Read beta changes and validation scope',
+    },
     api: { eyebrow: 'OPTIONAL · CONNECT YOUR TRADES', title: 'Create a read-only API key at the exchange.', copy: 'Menu names may change, but the rule does not: create a dedicated Trade Journal key and allow read access only.', choose: 'Choose an exchange', required: 'Credentials required', exchanges: {
       deepcoin: { name: 'Deepcoin', badge: 'Passphrase required', fields: ['API Key', 'API Secret', 'Passphrase'], steps: ['Sign in to Deepcoin and open API Management or API Keys.', 'Create a new key with a recognizable name such as Trade Journal.', 'Set a separate Passphrase while creating the key.', 'Keep Read or View only. Disable trading, withdrawals, and asset transfers.', 'If possible, allow only this computer’s public IP.', 'Copy the API Key and Secret safely. The Secret may not be shown again.'], warning: 'API Secret and Passphrase are different values. Do not swap them in the app.' },
       binance: { name: 'Binance', badge: 'No passphrase', fields: ['API Key', 'API Secret'], steps: ['Sign in to Binance and open API Management or API Keys.', 'Create a new key with a recognizable name such as Trade Journal.', 'Keep only Enable Reading.', 'Disable Spot & Margin Trading, Futures Trading, withdrawals, and asset transfers.', 'If possible, allow only this computer’s public IP.', 'Copy the API Key and Secret safely. Do not enter a Passphrase for Binance.'], warning: 'The current desktop release supports Binance SWAP closed trades. Binance SPOT history is outside the supported scope.' },

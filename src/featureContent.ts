@@ -32,7 +32,7 @@ export const featureContent: Record<Language, FeatureContent> = {
           {
             id: 'journal', name: '매매일지', question: '무엇을 거래했고, 어떤 생각으로 진입했나요?',
             copy: '자신감·집중도·FOMO·메모·진입 유형 태그와 사용한 전략 버전으로 당시 맥락을 짧게 남깁니다. 모든 항목을 채울 필요는 없고 모르는 값은 미기록으로 둘 수 있습니다.',
-            actions: ['기간별 거래와 성과 확인', '진입 유형과 실수 태그 등 복기 기록 추가', '거래에 실제 사용한 전략 버전 연결'],
+            actions: ['핵심 기간 성과와 거래 목록부터 확인', '진입 유형과 실수 태그 등 복기 기록 추가', '거래에 실제 사용한 전략 버전 연결'],
             takeaway: '나중에 전략이나 행동별 결과를 비교할 수 있도록, 각 거래에 판단의 근거를 남깁니다.',
           },
           {
@@ -101,7 +101,7 @@ export const featureContent: Record<Language, FeatureContent> = {
           {
             id: 'journal', name: 'Trade Journal', question: 'What did I trade, and what was I thinking?',
             copy: 'Keep short records of confidence, focus, FOMO, notes, setup tags, and the Strategy Version used. You do not need to fill every field; unknown values can remain unrecorded.',
-            actions: ['Review trades and performance by period', 'Add review notes such as setup and mistake tags', 'Assign the strategy version actually used'],
+            actions: ['Read key period performance and trade history first', 'Add review notes such as setup and mistake tags', 'Assign the strategy version actually used'],
             takeaway: 'Keep the reasoning with each trade so you can later compare results by strategy or recorded behavior.',
           },
           {

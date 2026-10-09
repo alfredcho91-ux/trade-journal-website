@@ -19,14 +19,9 @@ import {
 } from 'lucide-react';
 import { content, type Language } from './content';
 import { featureDetailHref } from './featurePages';
+import { previewRelease, releaseInfo, releaseUrl } from './releases';
 
-const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
-const releaseInfo = {
-  version: 'v1.0.26',
-  platform: 'Windows 10/11 · x64',
-  size: '53.9 MB',
-} as const;
 
 type ScreenshotKey = 'analysis' | 'exit';
 
@@ -72,7 +67,7 @@ export default function App() {
 
   const screenshots = {
     analysis: {
-      src: '/screenshots/trade-analysis-evidence.png',
+      src: `/screenshots/journal-v1.0.28-${language}.jpg`,
       alt: t.hero.imageAlt,
       title: t.hero.visualTitle,
     },
@@ -138,6 +133,7 @@ export default function App() {
     ['#product', t.nav.product],
     [featureUrl, isEnglish ? 'Features' : '기능 안내'],
     ['#analysis', t.nav.analysis],
+    ['#updates', isEnglish ? 'What’s new' : '최근 업데이트'],
     ['#security', t.nav.security],
     [`/guide?lang=${language}`, t.nav.workflow],
     ['#faq', t.nav.faq],
@@ -194,7 +190,7 @@ export default function App() {
                 <small>{isEnglish ? 'Windows desktop' : 'Windows 데스크톱'}</small>
               </span>
               <span className="product-image-viewport">
-                <img src="/screenshots/trade-analysis-evidence.png" alt={t.hero.imageAlt} />
+                <img src={screenshots.analysis.src} width="1432" height="847" alt={t.hero.imageAlt} />
               </span>
             </button>
             <div className="product-shot-caption">
@@ -353,6 +349,18 @@ export default function App() {
           </div>
         </section>
 
+        <section id="updates" className="section updates-section" aria-labelledby="updates-title">
+          <div className="container">
+            <div className="flow-heading"><span className="eyebrow">{t.updates.eyebrow}</span><h2 id="updates-title">{t.updates.title}</h2><p>{t.updates.copy}</p></div>
+            <div className="update-highlights">{t.updates.items.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div>
+            <p className="detail-learning">{t.updates.status}</p>
+            <div className="feature-inline-links">
+              <a className="text-link feature-guide-cta" href={previewRelease.url} target="_blank" rel="noreferrer">{t.updates.link}<ExternalLink size={15} aria-hidden="true" /></a>
+              <a className="text-link feature-guide-cta" href={`/guide?lang=${language}#workspace`}>{t.updates.guide}<ArrowRight size={15} aria-hidden="true" /></a>
+            </div>
+          </div>
+        </section>
+
         <section className="section release-section">
           <div className="container release-layout">
             <div className="release-copy">
@@ -409,7 +417,7 @@ export default function App() {
         <div className="container footer-top">
           <div><ProductLogo language={language} /><p>{t.footer.copy}</p></div>
           <nav aria-label={isEnglish ? 'Footer navigation' : '하단 메뉴'}>
-            {navItems.slice(0, 4).map(([href, label]) => <a key={href} href={href}>{label}</a>)}
+            {navItems.slice(0, 5).map(([href, label]) => <a key={href} href={href}>{label}</a>)}
             <a href={sourceUrl} target="_blank" rel="noreferrer">{t.footer.source}<ExternalLink size={13} aria-hidden="true" /></a>
             <a href={`${sourceUrl}/issues`} target="_blank" rel="noreferrer">{t.footer.contact}<ExternalLink size={13} aria-hidden="true" /></a>
           </nav>

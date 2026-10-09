@@ -12,7 +12,7 @@ export const featurePages = [
       "capabilities": [
         [
           "거래 내역과 맥락",
-          "종료 거래의 종목·방향·진입·청산·성과를 확인하고 당시 판단을 메모합니다."
+          "v1.0.28 제한 베타에서는 기간의 핵심 손익·승률·기대값·종료 거래 수와 거래 목록을 먼저 봅니다. 상세 성과·차트·달력은 펼쳐 확인합니다."
         ],
         [
           "진입 유형과 행동 기록",
@@ -31,6 +31,10 @@ export const featurePages = [
         [
           "샘플 또는 내 거래를 엽니다",
           "API 없이 샘플 거래를 열거나 읽기 전용으로 가져온 내 종료 거래에서 거래 리포트를 엽니다."
+        ],
+        [
+          "요약에서 거래 목록으로 이동합니다",
+          "기간 요약을 확인하고 거래 목록에서 리포트를 엽니다. v1.0.28 제한 베타에서는 추가 통계와 달력이 상세 성과 · 차트 · 달력 안에 있습니다."
         ],
         [
           "기억나는 맥락만 남깁니다",
@@ -55,7 +59,7 @@ export const featurePages = [
       ],
       "example": "예: 이익으로 끝난 거래라도 ‘추격 진입’으로 기록했다면, 이후 분석 작업공간에서 해당 행동과 결과의 연관성을 따로 살펴볼 수 있습니다.",
       "connection": "저널은 제품의 바탕입니다. 플레이북의 기준을 거래에 연결하고, 쌓인 기록을 분석 작업공간과 거래 복기에서 검토합니다.",
-      "screenshot": "이전 화면 참고: 이 캡처는 매매일지 상세가 아닌 계획 분석 목록입니다. 현재 저널 안내는 아래 사용 방법을 확인하세요."
+      "screenshot": "v1.0.28 제한 베타의 실제 샘플 화면: 핵심 성과를 먼저 보고 상세 성과·차트·달력을 펼칩니다. 모든 수치는 합성 거래 예시입니다."
     },
     "en": {
       "title": "Trade Journal · Keep the context",
@@ -63,7 +67,7 @@ export const featurePages = [
       "capabilities": [
         [
           "History and context",
-          "Review symbol, direction, entry, exit, and performance beside notes on your decision."
+          "In the v1.0.28 limited beta, read key profit/return, win rate, expectancy, and closed-trade count before the trade list. Expand detailed performance, charts, and the calendar as needed."
         ],
         [
           "Setup and behavior",
@@ -82,6 +86,10 @@ export const featurePages = [
         [
           "Open sample or personal trades",
           "Open a sample trade without API credentials, or open Trade report for one of your imported closed trades."
+        ],
+        [
+          "Move from summary to trade history",
+          "Read the period summary, then open a report from the trade list. In the v1.0.28 limited beta, additional statistics and the calendar sit under Detailed performance · charts · calendar."
         ],
         [
           "Record what you remember",
@@ -106,7 +114,7 @@ export const featurePages = [
       ],
       "example": "Example: a winning trade tagged as a FOMO entry can later be reviewed in Analytics for its association with outcomes.",
       "connection": "Journal is the foundation: link Playbook criteria to individual trades, then review accumulated records in Analytics and Trading Review.",
-      "screenshot": "Earlier screen reference: this capture shows the Plan Lab list, not Journal detail. Follow the usage guide below for the current Journal flow."
+      "screenshot": "Actual v1.0.28 limited-beta sample: key performance first, with detailed performance, charts, and calendar available to expand. All figures are synthetic examples."
     }
   },
   {
@@ -165,7 +173,7 @@ export const featurePages = [
       ],
       "example": "예: 최대 보유시간을 바꿨다면 새 버전을 만듭니다. 이전 거래는 이전 버전에 연결된 상태로 남아 당시 기준으로 복기할 수 있습니다.",
       "connection": "‘따르려던 전략’은 플레이북에, ‘실제로 한 일’은 저널에 남깁니다. 분석 작업공간과 거래 복기가 두 기록을 함께 검토하도록 연결합니다.",
-      "screenshot": "이전 플레이북 화면: 현재는 사람이 읽기 쉬운 조건을 먼저 보여주고 정확한 규칙 정의는 펼쳐 확인합니다."
+      "screenshot": "v1.0.28 제한 베타의 합성 샘플: 전략 버전 이력, 읽기 쉬운 조건과 펼쳐 보는 정확한 규칙 정의입니다."
     },
     "en": {
       "title": "Strategy Playbook · Review the strategy you used",
@@ -216,7 +224,7 @@ export const featurePages = [
       ],
       "example": "Example: change the maximum holding time in a new version. Earlier trades stay linked to the old version for review against their original criteria.",
       "connection": "Playbook captures the intended strategy; Journal captures recorded execution. Analytics and Trading Review help examine the two together.",
-      "screenshot": "Earlier Playbook screen: current rules show readable conditions first, with exact definitions available on demand."
+      "screenshot": "v1.0.28 limited-beta synthetic sample, shown in Korean: version history, readable conditions, and expandable exact rule definitions."
     }
   },
   {
@@ -275,7 +283,7 @@ export const featurePages = [
       ],
       "example": "예: 특정 시간대의 성과가 낮아 보여도 거래가 몇 건인지 먼저 확인합니다. 시간대가 손실의 원인이라는 결론으로 곧바로 이어지지는 않습니다.",
       "connection": "저널의 기록과 플레이북 버전이 비교의 기준이 됩니다. 발견한 패턴은 거래 복기에서 검토하고 실험에서 측정할 가설로 연결할 수 있습니다.",
-      "screenshot": "이전 지표·분류 설정 화면입니다. 현재 기본 진입 화면은 질문을 선택하는 안내형 분석이며, 직접 설정은 고급 분석에서 제공합니다."
+      "screenshot": "v1.0.28 제한 베타의 합성 샘플: 롱·숏 질문의 비교 요약과 표본 한계를 함께 확인합니다."
     },
     "en": {
       "title": "Guided Analytics · Start with a question",
@@ -326,7 +334,7 @@ export const featurePages = [
       ],
       "example": "Example: if a time bucket looks weaker, check how many trades it contains. That difference alone does not establish time of day as the cause.",
       "connection": "Journal records and Playbook versions provide comparison criteria. Review findings in Trading Review and connect them to a measurable experiment.",
-      "screenshot": "Earlier metric/dimension configuration screen. The current default is question-driven Guided Analytics; manual configuration is available in Advanced Analytics."
+      "screenshot": "v1.0.28 limited-beta synthetic sample, shown in Korean: a long-versus-short question with summary results and sample limitations."
     }
   },
   {
@@ -381,7 +389,7 @@ export const featurePages = [
       ],
       "example": "예: 전략 성과는 양호해 보이는데 실행 근거가 약하다면, 전략 전체를 바꾸기 전에 규칙 위반이나 계획 이탈의 근거부터 검토할 수 있습니다.",
       "connection": "분석 결과와 저널의 맥락을 복기로 연결합니다. 계획 비교가 필요하면 계획 분석으로, 측정할 행동이 정해졌다면 실험으로 이어갑니다.",
-      "screenshot": "이전 복기 상세 화면입니다. 현재는 핵심 발견 요약이 먼저 나오며 기술적 근거는 필요할 때 펼칩니다."
+      "screenshot": "v1.0.28 제한 베타의 합성 샘플: 관찰된 발견과 근거를 먼저 보여주는 복기 화면입니다."
     },
     "en": {
       "title": "Trading Review · Review strategy and execution",
@@ -428,7 +436,7 @@ export const featurePages = [
       ],
       "example": "Example: positive strategy outcomes with weak execution evidence can prompt a closer review of rule violations or plan deviations before changing the strategy.",
       "connection": "Bring Analytics results and Journal context into review. Follow up in Plan Lab for plan comparisons or Experiments for a defined behavior change.",
-      "screenshot": "Earlier Review detail screen. The current experience starts with key findings and reveals technical evidence on demand."
+      "screenshot": "v1.0.28 limited-beta synthetic sample, shown in Korean: Review begins with observed findings and their supporting evidence."
     }
   },
   {
@@ -491,7 +499,7 @@ export const featurePages = [
       ],
       "example": "예: 거래 중 손절을 변경했다면 변경 이력을 남깁니다. 종료 후 입력한 계획도 복기에 활용할 수 있지만, 거래 전부터 존재한 계획으로 취급하지 않습니다.",
       "connection": "저널의 거래를 계획 기록과 연결해 의도와 실행을 살펴봅니다. 반복되는 차이는 거래 복기와 다음 행동 실험에서 검토할 질문이 됩니다.",
-      "screenshot": "이전 계획 상세 화면입니다. 현재는 진입 전·이후 변경·최신 계획을 풀어 설명하고 계산 불가 결과 옆에 이유를 표시합니다."
+      "screenshot": "v1.0.28 제한 베타의 합성 샘플: 종료 거래 목록과 계획 입력 현황입니다. 샘플에는 실제 진행중 포지션이 없습니다."
     },
     "en": {
       "title": "Plan Lab · Compare plan and execution",
@@ -546,7 +554,7 @@ export const featurePages = [
       ],
       "example": "Example: record a revision after changing a stop in trade. A retrospective plan can support review, but is not treated as a plan that existed before entry.",
       "connection": "Connect Journal trades to plan records to inspect intent and execution. Recurring gaps inform Trading Review and the next behavior experiment.",
-      "screenshot": "Earlier plan detail screen. The current view explains before-entry records, later changes, and the latest plan, with reasons beside unavailable results."
+      "screenshot": "v1.0.28 limited-beta synthetic sample, shown in Korean: closed trades and plan-entry coverage. The sample has no real open positions."
     }
   },
   {

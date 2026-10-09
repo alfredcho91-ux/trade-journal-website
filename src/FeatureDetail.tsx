@@ -3,36 +3,55 @@ import { featureContent } from './featureContent';
 import { featurePages } from './featurePages';
 import type { Language } from './content';
 
-const screenshots: Record<string, { src: string; en: string; ko: string }> = {
-  journal: {
-    src: '/screenshots/feature-journal.png',
-    en: 'Earlier Plan Lab list of synthetic closed trades; not a Journal detail screenshot',
-    ko: '합성 종료 거래를 보여주는 이전 계획 분석 목록: 매매일지 상세 캡처가 아님',
+const screenshots: Record<string, { src: string; enSrc?: string; current: boolean; width: number; height: number; en: string; ko: string }> = {
+  "journal": {
+    src: "/screenshots/journal-v1.0.28-ko.jpg",
+    enSrc: "/screenshots/journal-v1.0.28-en.jpg",
+    current: true,
+    width: 1432,
+    height: 847,
+    en: "v1.0.28 limited beta: Journal period summary and collapsed detailed performance, using synthetic trades",
+    ko: "v1.0.28 제한 베타: 합성 거래의 매매일지 기간 요약과 접힌 상세 성과",
   },
-  'strategy-playbook': {
-    src: '/screenshots/feature-strategy-playbook.png',
-    en: 'Strategy Playbook showing an active strategy, version history, and entry, risk, and exit rules',
-    ko: '활성 전략, 버전 이력, 진입·리스크·청산 규칙을 보여주는 전략 플레이북',
+  "strategy-playbook": {
+    src: "/screenshots/playbook-v1.0.28-ko.jpg",
+    current: true,
+    width: 1440,
+    height: 852,
+    en: "v1.0.28 limited beta: Korean Playbook with synthetic strategy versions and readable rules",
+    ko: "v1.0.28 제한 베타: 가상 전략의 버전 이력과 읽기 쉬운 규칙",
   },
-  analytics: {
-    src: '/screenshots/feature-analytics.png',
-    en: 'Analytics Edge Explorer showing a confidence-score analysis across 24 synthetic trades',
-    ko: '24건의 합성 거래를 신뢰도 점수로 분석한 패턴 탐색 화면',
+  "analytics": {
+    src: "/screenshots/analytics-v1.0.28-ko.jpg",
+    current: true,
+    width: 1432,
+    height: 847,
+    en: "v1.0.28 limited beta: Korean Guided Analytics comparing long and short synthetic trades with sample limitations",
+    ko: "v1.0.28 제한 베타: 합성 거래의 롱·숏 비교와 표본 한계를 보여주는 안내형 분석",
   },
-  review: {
-    src: '/screenshots/feature-trading-review.png',
-    en: 'Trading Review showing observed patterns and Strategy versus Execution evidence',
-    ko: '관찰된 패턴과 전략·실행 근거를 보여주는 거래 복기 화면',
+  "review": {
+    src: "/screenshots/review-v1.0.28-ko.jpg",
+    current: true,
+    width: 1432,
+    height: 847,
+    en: "v1.0.28 limited beta: Korean Review showing the first observed finding from synthetic trades",
+    ko: "v1.0.28 제한 베타: 합성 거래에서 관찰된 핵심 발견을 먼저 보여주는 복기",
   },
-  'plan-lab': {
-    src: '/screenshots/feature-plan-lab.png',
-    en: 'Plan Lab detail showing a verified pre-trade plan, targets, reward-risk result, and actual-versus-plan comparison',
-    ko: '검증된 사전 계획, 목표가, 손익비 결과와 실제 대비 계획 비교를 보여주는 계획 분석 화면',
+  "plan-lab": {
+    src: "/screenshots/plan-v1.0.28-ko.jpg",
+    current: true,
+    width: 1432,
+    height: 847,
+    en: "v1.0.28 limited beta: Korean Plan Lab list with synthetic closed trades, plan coverage and no open positions",
+    ko: "v1.0.28 제한 베타: 진행중 포지션 없이 합성 종료 거래와 계획 입력 현황을 보여주는 계획 목록",
   },
-  experiments: {
-    src: '/screenshots/feature-experiments-measure.png',
-    en: 'Active experiment showing its hypothesis, measurement target, baseline, current result, and criterion met status',
-    ko: '가설, 측정 목표, 기준 구간, 현재 결과와 기준 충족 상태를 보여주는 활성 실험',
+  "experiments": {
+    src: "/screenshots/feature-experiments-measure.png",
+    current: false,
+    width: 1440,
+    height: 900,
+    en: "Earlier active experiment and measurement screenshot, retained as a historical reference",
+    ko: "이전 활성 실험과 측정 화면 참고",
   },
 };
 
@@ -41,21 +60,27 @@ export default function FeatureDetail({ page, language }: { page: typeof feature
   const t = page[language];
   const summary = featureContent[language].groups.flatMap(group => group.features).find(item => item.id === page.featureId)!;
   const screenshot = screenshots[page.slug];
+  const screenshotSrc = en && screenshot.enSrc ? screenshot.enSrc : screenshot.src;
 
   return <>
     <section className="docs-section" aria-labelledby="purpose-title">
       <div className="docs-heading"><span className="eyebrow">{summary.name}</span><h2 id="purpose-title">{summary.question}</h2><p>{summary.copy}</p></div>
       <p className="detail-learning">{summary.takeaway}</p>
-      <details className="detail-screenshot">
+      {screenshot.current ? <figure className="detail-screenshot">
+        <a href={screenshotSrc} target="_blank" rel="noreferrer" aria-label={en ? 'Enlarge limited-beta screenshot' : '제한 베타 화면 크게 보기'}>
+          <img src={screenshotSrc} width={screenshot.width} height={screenshot.height} alt={screenshot[language]} loading="lazy" />
+        </a>
+        <figcaption>{t.screenshot}</figcaption>
+      </figure> : <details className="detail-screenshot">
         <summary>{en ? 'Earlier product screenshot (reference)' : '이전 제품 화면 참고'}</summary>
         <p className="detail-learning">{t.screenshot}</p>
         <figure>
-        <a href={screenshot.src} target="_blank" rel="noreferrer" aria-label={en ? 'Enlarge product screenshot in a new tab' : '제품 화면 크게 보기 (새 탭)'}>
-          <img src={screenshot.src} width="1440" height="900" alt={screenshot[language]} />
-        </a>
-        <figcaption>{en ? 'Existing capture retained for reference; it does not show the current default experience.' : '참고용으로 보존한 기존 캡처이며 현재 기본 사용 화면과 다릅니다.'}</figcaption>
+          <a href={screenshotSrc} target="_blank" rel="noreferrer" aria-label={en ? 'Enlarge earlier product screenshot' : '이전 제품 화면 크게 보기'}>
+            <img src={screenshotSrc} width={screenshot.width} height={screenshot.height} alt={screenshot[language]} loading="lazy" />
+          </a>
+          <figcaption>{en ? 'Historical reference; not the current default experience.' : '참고용 이전 화면이며 현재 기본 사용 화면과 다릅니다.'}</figcaption>
         </figure>
-      </details>
+      </details>}
     </section>
     <section id="capabilities" className="docs-section" aria-labelledby="capabilities-title">
       <div className="docs-heading"><h2 id="capabilities-title">{en ? 'What you can do' : '할 수 있는 일'}</h2></div>

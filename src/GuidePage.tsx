@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { AlertTriangle, ArrowLeft, ArrowRight, Check, ChevronDown, Database, Download, ExternalLink, KeyRound, LockKeyhole, MonitorDown, Power, RefreshCw, ShieldCheck, Trash2 } from 'lucide-react';
 import type { Language } from './content';
 import { guideContent } from './guideContent';
+import { previewRelease, releaseUrl } from './releases';
 
-const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
 const sourceUrl = 'https://github.com/alfredcho91-ux/trade-journal-free';
 type Exchange = 'deepcoin' | 'binance';
 
@@ -92,6 +92,12 @@ export default function GuidePage() {
                 <a className="text-link feature-guide-cta" href={`/features/analytics?lang=${language}`}>{isEnglish ? 'Guided Analytics' : '안내형 분석'}<ArrowRight size={15} /></a>
                 <a className="text-link feature-guide-cta" href="#api">{isEnglish ? 'Connect my own trades' : '내 거래 연결하기'}<ArrowRight size={15} /></a>
               </div>
+            </section>
+
+            <section id="workspace" className="docs-section">
+              <Heading eyebrow={t.workspace.eyebrow} title={t.workspace.title} copy={t.workspace.copy} />
+              <ol className="docs-instructions">{t.workspace.steps.map(([title, copy], index) => <li key={title}><span>{index + 1}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol>
+              <a className="text-link" href={previewRelease.url} target="_blank" rel="noreferrer">{t.workspace.link}<ExternalLink size={15} aria-hidden="true" /></a>
             </section>
 
             <section id="api" className="docs-section">

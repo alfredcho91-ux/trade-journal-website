@@ -1,11 +1,10 @@
+import { previewRelease, releaseUrl } from './releases';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Download } from 'lucide-react';
 import type { Language } from './content';
 import { featureContent } from './featureContent';
 import { featurePages, featureDetailHref } from './featurePages';
 import FeatureDetail from './FeatureDetail';
-
-const releaseUrl = import.meta.env.VITE_WINDOWS_RELEASE_URL || 'https://github.com/alfredcho91-ux/trade-journal-free/releases/latest/download/Trade-Journal-Windows.zip';
 
 export default function FeaturesPage({ slug }: { slug?: string }) {
   const [language, setLanguage] = useState<Language>(() => new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'ko');
@@ -58,6 +57,7 @@ export default function FeaturesPage({ slug }: { slug?: string }) {
               <span className="eyebrow">{isEnglish ? 'FEATURE GUIDE · WINDOWS DESKTOP' : '기능 안내 · Windows 데스크톱'}</span>
               <h1>{title}</h1>
               <p>{intro}</p>
+              <p className="release-context">{isEnglish ? 'Recent screen guidance reflects the v1.0.28 limited beta. The standard Windows download remains v1.0.26.' : '최근 화면 안내는 v1.0.28 제한 베타 기준입니다. 기본 Windows 다운로드는 v1.0.26입니다.'} <a className="text-link" href={previewRelease.url} target="_blank" rel="noreferrer">{isEnglish ? 'Beta release notes' : '베타 변경 내용'}</a></p>
             </div>
             <nav className="feature-groups" aria-label={isEnglish ? 'Choose a review stage' : '사용 단계 선택'}>
               {page ? [['#capabilities', isEnglish ? 'Capabilities' : '주요 기능'], ['#how-it-works', isEnglish ? 'How to use' : '사용 방법'], ['#next-step', isEnglish ? 'Next steps' : '다음 단계']].map(([href, label], index) => <a href={href} key={href}><span>0{index + 1}</span><strong>{label}</strong><ArrowRight size={18} aria-hidden="true" /></a>) : t.groups.map((group, index) => <a href={`#${group.id}`} key={group.id}><span>0{index + 1}</span><strong>{group.title}</strong><ArrowRight size={18} aria-hidden="true" /></a>)}
